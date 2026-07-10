@@ -178,7 +178,42 @@ const AdminNews = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div></div>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[700px]">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 uppercase tracking-wider text-xs">
+                  <th className="p-5 font-semibold">Image</th>
+                  <th className="p-5 font-semibold">Title</th>
+                  <th className="p-5 font-semibold">Date</th>
+                  <th className="p-5 font-semibold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {[1, 2, 3, 4, 5].map((index) => (
+                  <tr key={index} className="animate-pulse">
+                    <td className="p-5 align-middle w-32">
+                      <div className="w-20 h-14 rounded-lg bg-gray-200"></div>
+                    </td>
+                    <td className="p-5 align-middle">
+                      <div className="h-4 bg-gray-200 rounded-md w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded-md w-1/2"></div>
+                    </td>
+                    <td className="p-5 align-middle">
+                      <div className="h-6 bg-gray-200 rounded-full w-24"></div>
+                    </td>
+                    <td className="p-5 align-middle text-right whitespace-nowrap">
+                      <div className="flex justify-end gap-2">
+                        <div className="w-9 h-9 bg-gray-200 rounded-lg"></div>
+                        <div className="w-9 h-9 bg-gray-200 rounded-lg"></div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
