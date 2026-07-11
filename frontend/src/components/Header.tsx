@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-gradient-to-r from-[#9A2220] via-[#D76918] to-[#EBA525] text-white shadow-md sticky top-0 z-50">
+    <header className="w-full bg-[#BD0B32] text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
@@ -19,6 +19,9 @@ const Header = () => {
           <NavLink to="/" className="flex items-center gap-3 cursor-pointer">
             {/* Logo Emblem Placeholder */}
             <img src={logo} alt="Sovannaphumi School" className="w-25 h-16" />
+            <h1 className="text-xl font-bold">
+              <span className="text-white">AMERICA SCHOOL</span>
+            </h1> 
           </NavLink>
 
           {/* Navigation Desktop */}
