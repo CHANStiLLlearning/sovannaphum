@@ -18,6 +18,7 @@ const NewsPage = () => {
   const [recentNews, setRecentNews] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [visibleCount, setVisibleCount] = useState(6);
   const [searchParams] = useSearchParams();
   const search = searchParams.get('search') || '';
 
@@ -25,7 +26,7 @@ const NewsPage = () => {
   useEffect(() => {
     const fetchRecentNews = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/news?limit=2`);
+        const response = await fetch(`${API_BASE_URL}/api/news?limit=5`);
         if (response.ok) {
           const result = await response.json();
           setRecentNews(result.data || []);
@@ -47,6 +48,7 @@ const NewsPage = () => {
         const result = await response.json();
         const data = result.data || [];
         setNewsArticles(data);
+        setVisibleCount(6);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -114,51 +116,56 @@ const NewsPage = () => {
             )}
 
             {!loading && !error && newsArticles.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {newsArticles.map((article) => (
-                  <Link to={`/news/${article.id}`} key={article.id} className="bg-[#f9fafb] rounded-2xl overflow-hidden hover:shadow-md transition-shadow duration-300 border border-gray-100 flex flex-col group cursor-pointer">
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img 
-                        src={article.image} 
-                        alt={article.title} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-5 flex flex-col gap-2">
-                      <div className="flex items-center gap-2 text-gray-500 text-sm font-medium">
-                        <Calendar className="w-4 h-4 text-[#9A2220]" />
-                        <span>{article.date}</span>
+              <div className="space-y-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {newsArticles.slice(0, visibleCount).map((article) => (
+                    <Link to={`/news/${article.id}`} key={article.id} className="bg-[#f9fafb] rounded-2xl overflow-hidden hover:shadow-md transition-shadow duration-300 border border-gray-100 flex flex-col group cursor-pointer">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <img 
+                          src={article.image} 
+                          alt={article.title} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
                       </div>
-                      <h3 className="font-bold text-gray-800 leading-snug group-hover:text-[#9A2220] transition-colors line-clamp-2">
-                        {article.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm mt-2 line-clamp-3">
-                        {(article.description || '').replace(/<[^>]+>/g, '')}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
+                      <div className="p-5 flex flex-col gap-2">
+                        <div className="flex items-center gap-2 text-gray-500 text-sm font-medium">
+                          <Calendar className="w-4 h-4 text-[#9A2220]" />
+                          <span>{article.date}</span>
+                        </div>
+                        <h3 className="font-bold text-gray-800 leading-snug group-hover:text-[#9A2220] transition-colors line-clamp-2">
+                          {article.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm mt-2 line-clamp-3">
+                          {(article.description || '')
+                            .replace(/<[^>]+>/g, '')
+                            .replace(/\u00A0/g, ' ')
+                            .replace(/&amp;nbsp;/g, ' ')
+                            .replace(/&nbsp;/g, ' ')
+                            .replace(/&nbsp/g, ' ')}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                
+                {newsArticles.length > visibleCount && (
+                  <div className="flex justify-center mt-6">
+                    <button
+                      onClick={() => setVisibleCount((prev) => prev + 6)}
+                      className="bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3.5 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                    >
+                      View More
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
           {/* Right Column: Sidebar */}
-          <div className="lg:col-span-4 flex flex-col gap-10">
+          <div className="lg:col-span-4 flex flex-col gap-10 lg:sticky lg:top-24 h-fit">
             
-            {/* New Course Banner */}
-            <div>
-              <h2 className="text-[22px] font-bold text-gray-800 flex items-center gap-3 border-b-2 border-gray-100 pb-3 mb-8">
-                <div className="w-1.5 h-6 bg-[#9A2220] rounded-full shadow-sm"></div>
-                New course, General English class!
-              </h2>
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer">
-                <img 
-                  src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=600" 
-                  alt="New Course Poster" 
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </div>
+
 
             {/* Recent News */}
             <div>

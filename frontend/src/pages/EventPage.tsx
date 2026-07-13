@@ -1,0 +1,256 @@
+import { useState, useEffect } from 'react';
+import { Calendar, MapPin, Search, Sparkles, ChevronRight, X } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
+
+type SchoolEvent = {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  date: string;
+  image?: string;
+};
+
+const EventPage = () => {
+  const [events, setEvents] = useState<SchoolEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCampus, setSelectedCampus] = useState('all');
+
+  const fetchEvents = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      // Fetch events from API
+      const response = await fetch(`${API_BASE_URL}/api/events?limit=50&search=${encodeURIComponent(searchQuery)}`);
+      if (!response.ok) throw new Error('Failed to fetch events');
+      const result = await response.json();
+      setEvents(result.data || []);
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong while fetching events.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, [searchQuery]);
+
+  // Filter events client-side for campus locations
+  const filteredEvents = events.filter(event => {
+    if (selectedCampus === 'all') return true;
+    return event.location.toLowerCase().includes(selectedCampus.toLowerCase());
+  });
+
+  return (
+    <div className="w-full bg-[#f8f9fa] flex flex-col min-h-screen font-sans">
+      
+      {/* Hero Section */}
+      <div className="relative w-full h-[40vh] min-h-[350px] bg-gradient-to-r from-[#9A2220] via-[#D76918] to-[#EBA525] flex flex-col justify-center items-center text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/35"></div>
+        
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] left-[-5%] w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
+          <div className="absolute bottom-[-10%] right-[-5%] w-80 h-80 rounded-full bg-white/10 blur-3xl"></div>
+        </div>
+
+        <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
+          <span className="inline-flex py-1 px-3.5 rounded-full bg-white/20 backdrop-blur-md text-sm font-semibold uppercase tracking-wider mb-4 border border-white/30">
+            Life at SPS
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-md">
+            School Events & Activities
+          </h1>
+          <p className="text-lg md:text-xl opacity-95 drop-shadow-sm font-medium leading-relaxed">
+            Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full flex-grow">
+        
+        {/* Search & Filter Controls */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
+          
+          {/* Search bar */}
+          <div className="relative w-full md:max-w-md">
+            <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="w-5 h-5 text-gray-400" />
+            </span>
+            <input
+              type="text"
+              placeholder="Search events by title or keyword..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900 placeholder-gray-400 transition-all"
+            />
+            {searchQuery && (
+              <button 
+                onClick={() => setSearchQuery('')}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Campus Filter */}
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <label className="text-sm font-bold text-gray-600 whitespace-nowrap hidden sm:inline">Filter Campus:</label>
+            <select
+              value={selectedCampus}
+              onChange={(e) => setSelectedCampus(e.target.value)}
+              className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+            >
+              <option value="all">All Campuses</option>
+              <option value="Phnom Penh">Phnom Penh Campus</option>
+              <option value="Siem Reap">Siem Reap Campus</option>
+              <option value="Head Office">Head Office</option>
+            </select>
+          </div>
+
+        </div>
+
+        {/* Loading Skeleton */}
+        {loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm animate-pulse">
+                <div className="h-48 bg-gray-200"></div>
+                <div className="p-6 space-y-4">
+                  <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                  </div>
+                  <div className="flex gap-4 pt-2">
+                    <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error message */}
+        {error && (
+          <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm px-6 max-w-lg mx-auto">
+            <p className="text-red-500 font-semibold mb-4">Error loading events: {error}</p>
+            <button 
+              onClick={fetchEvents}
+              className="px-6 py-2.5 bg-[#9A2220] text-white font-semibold rounded-xl hover:bg-[#8A1A18] transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Events Grid */}
+        {!loading && !error && (
+          <>
+            {filteredEvents.length === 0 ? (
+              <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm px-6">
+                <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="w-8 h-8 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">No Events Found</h3>
+                <p className="text-gray-500 max-w-md mx-auto">
+                  We couldn't find any events matching your criteria. Try adjusting your search query or filters.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredEvents.map((event) => (
+                  <div 
+                    key={event.id} 
+                    className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+                  >
+                    {/* Event image with fallback */}
+                    <div className="relative h-48 md:h-52 bg-gray-100 overflow-hidden shrink-0">
+                      <img 
+                        src={event.image || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800'} 
+                        alt={event.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800';
+                        }}
+                      />
+                      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 border border-white/20">
+                        <Sparkles className="w-3.5 h-3.5 text-[#EBA525]" />
+                        Featured Event
+                      </div>
+                    </div>
+
+                    {/* Card Content */}
+                    <div className="p-6 flex flex-col flex-grow">
+                      {/* Meta dates and location */}
+                      <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-3.5 h-3.5 text-[#9A2220]" />
+                          {event.date}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#9A2220]" />
+                          {event.location}
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#9A2220] transition-colors leading-tight">
+                        {event.title}
+                      </h3>
+
+                      <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+                        {event.description}
+                      </p>
+
+                      <div className="pt-4 border-t border-gray-50 mt-auto flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#9A2220] uppercase tracking-wider">
+                          Open Event
+                        </span>
+                        <NavLink 
+                          to="/contact" 
+                          className="inline-flex items-center gap-1 text-sm font-bold text-gray-900 hover:text-[#9A2220] transition-colors"
+                        >
+                          Inquire Details
+                          <ChevronRight className="w-4 h-4" />
+                        </NavLink>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+      </div>
+
+      {/* General Inquiry Banner */}
+      <div className="relative py-20 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Want to schedule a campus tour?</h2>
+          <p className="text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto text-base">
+            We hold regular parent information sessions and interactive tours during our school events. Let us know when you'd like to visit!
+          </p>
+          <NavLink 
+            to="/contact" 
+            className="inline-flex items-center justify-center gap-2 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            Contact Admissions
+            <ChevronRight className="w-4 h-4" />
+          </NavLink>
+        </div>
+      </div>
+
+    </div>
+  );
+};
+
+export default EventPage;

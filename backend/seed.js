@@ -44,35 +44,35 @@ async function main() {
     console.log('Sample news articles seeded.');
   }
 
-  // 3. Seed Default Job Openings (if empty)
-  const jobCount = await prisma.jobOpening.count();
-  if (jobCount === 0) {
-    await prisma.jobOpening.createMany({
+  // 3. Seed Default Events (if empty)
+  const eventCount = await prisma.event.count();
+  if (eventCount === 0) {
+    await prisma.event.createMany({
       data: [
         {
-          title: "Primary English Teacher",
-          department: "General English Program",
+          title: "Annual Science and Technology Fair",
+          description: "Our students showcase incredible innovation and scientific projects. Join us to experience creative projects in robotics, chemistry, and environmental science.",
           location: "Phnom Penh Campus",
-          type: "Full-Time",
-          posted: "08 July 2026"
+          date: "25 October 2026",
+          image: "https://picsum.photos/id/1015/800/450"
         },
         {
-          title: "High School Physics Instructor",
-          department: "Khmer General Education",
+          title: "SPS Sports Championship 2026",
+          description: "Witness the excitement, team spirit, and outstanding athleticism of our students in football, basketball, and track events.",
           location: "Siem Reap Campus",
-          type: "Full-Time",
-          posted: "09 July 2026"
+          date: "12 November 2026",
+          image: "https://picsum.photos/id/1018/800/450"
         },
         {
-          title: "Admissions Counselor",
-          department: "Administration",
-          location: "Phnom Penh Campus",
-          type: "Full-Time",
-          posted: "10 July 2026"
+          title: "Cultural Arts & Music Exhibition",
+          description: "A celebration of traditional Khmer dances, musical performances, and creative art displays by our talented students.",
+          location: "Head Office Main Hall",
+          date: "05 December 2026",
+          image: "https://picsum.photos/id/1060/800/450"
         }
       ]
     });
-    console.log('Sample job openings seeded.');
+    console.log('Sample events seeded.');
   }
 }
 

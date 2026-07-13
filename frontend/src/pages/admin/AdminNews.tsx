@@ -64,7 +64,10 @@ const AdminNews = () => {
       setFormData({ title: article.title, image: article.image, date: article.date, description: article.description || '' });
     } else {
       setEditingArticle(null);
-      setFormData({ title: '', image: '', date: '', description: '' });
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const today = new Date();
+      const formattedDate = `${months[today.getMonth()]} ${String(today.getDate()).padStart(2, '0')}, ${today.getFullYear()}`;
+      setFormData({ title: '', image: '', date: formattedDate, description: '' });
     }
     setImageFile(null);
     setIsModalOpen(true);

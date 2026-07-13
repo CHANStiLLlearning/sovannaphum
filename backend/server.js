@@ -189,8 +189,8 @@ app.delete('/api/news/:id', async (req, res) => {
   }
 });
 
-// --- Jobs API ---
-app.get('/api/jobs', async (req, res) => {
+// --- Events API ---
+app.get('/api/events', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -200,23 +200,23 @@ app.get('/api/jobs', async (req, res) => {
 
     const where = search ? {
       OR: [
-        { title: { contains: search } },
-        { department: { contains: search } }
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } }
       ]
     } : {};
 
-    const [jobs, total] = await Promise.all([
-      prisma.jobOpening.findMany({
+    const [events, total] = await Promise.all([
+      prisma.event.findMany({
         where,
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
       }),
-      prisma.jobOpening.count({ where })
+      prisma.event.count({ where })
     ]);
 
     res.json({
-      data: jobs,
+      data: events,
       pagination: {
         total,
         page,
@@ -225,43 +225,43 @@ app.get('/api/jobs', async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch jobs" });
+    res.status(500).json({ error: "Failed to fetch events" });
   }
 });
 
-app.post('/api/jobs', async (req, res) => {
+app.post('/api/events', async (req, res) => {
   try {
-    const { title, department, location, type, posted } = req.body;
-    const job = await prisma.jobOpening.create({
-      data: { title, department, location, type, posted }
+    const { title, description, location, date, image } = req.body;
+    const event = await prisma.event.create({
+      data: { title, description, location, date, image }
     });
-    res.status(201).json(job);
+    res.status(201).json(event);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create job" });
+    res.status(500).json({ error: "Failed to create event" });
   }
 });
 
-app.put('/api/jobs/:id', async (req, res) => {
+app.put('/api/events/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const { title, department, location, type, posted } = req.body;
-    const job = await prisma.jobOpening.update({
+    const { title, description, location, date, image } = req.body;
+    const event = await prisma.event.update({
       where: { id },
-      data: { title, department, location, type, posted }
+      data: { title, description, location, date, image }
     });
-    res.json(job);
+    res.json(event);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update job" });
+    res.status(500).json({ error: "Failed to update event" });
   }
 });
 
-app.delete('/api/jobs/:id', async (req, res) => {
+app.delete('/api/events/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    await prisma.jobOpening.delete({ where: { id } });
+    await prisma.event.delete({ where: { id } });
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete job" });
+    res.status(500).json({ error: "Failed to delete event" });
   }
 });
 

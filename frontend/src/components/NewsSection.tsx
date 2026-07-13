@@ -86,7 +86,12 @@ const NewsSection = () => {
                     {news.title}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
-                    {(news.description || '').replace(/<[^>]+>/g, '')}
+                    {(news.description || '')
+                      .replace(/<[^>]+>/g, '')
+                      .replace(/\u00A0/g, ' ')
+                      .replace(/&amp;nbsp;/g, ' ')
+                      .replace(/&nbsp;/g, ' ')
+                      .replace(/&nbsp/g, ' ')}
                   </p>
                   <Link to={`/news/${news.id}`} className="text-[#D76918] font-semibold text-sm hover:underline self-start">
                     Read Article

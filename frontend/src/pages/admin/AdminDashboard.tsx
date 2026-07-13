@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Newspaper, Briefcase, Mail, Users, Clock, Calendar as CalendarIcon, Filter } from 'lucide-react';
+import { Newspaper, Mail, Users, Clock, Calendar as CalendarIcon, Filter } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell } from 'recharts';
 import { API_BASE_URL } from '../../config';
@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   
   const [rawData, setRawData] = useState({
     news: [] as DataItem[],
-    jobs: [] as DataItem[],
+    events: [] as DataItem[],
     contacts: [] as DataItem[],
     subscribers: [] as DataItem[]
   });
@@ -29,21 +29,21 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [newsRes, jobsRes, contactsRes, subsRes] = await Promise.all([
+        const [newsRes, eventsRes, contactsRes, subsRes] = await Promise.all([
           fetch(`${API_BASE_URL}/api/news`),
-          fetch(`${API_BASE_URL}/api/jobs`),
+          fetch(`${API_BASE_URL}/api/events`),
           fetch(`${API_BASE_URL}/api/contact`),
           fetch(`${API_BASE_URL}/api/subscribe`)
         ]);
         
         const news = await newsRes.json();
-        const jobs = await jobsRes.json();
+        const events = await eventsRes.json();
         const contacts = await contactsRes.json();
         const subs = await subsRes.json();
 
         setRawData({ 
           news: news.data || [], 
-          jobs: jobs.data || [], 
+          events: events.data || [], 
           contacts, 
           subscribers: subs 
         });
@@ -78,21 +78,21 @@ const AdminDashboard = () => {
 
   const filteredStats = {
     news: filterByDate(rawData.news).length,
-    jobs: filterByDate(rawData.jobs).length,
+    events: filterByDate(rawData.events).length,
     contacts: filterByDate(rawData.contacts).length,
     subscribers: filterByDate(rawData.subscribers).length,
   };
 
   const cards = [
     { title: 'News Articles', value: filteredStats.news, icon: <Newspaper className="w-8 h-8 text-blue-500" />, path: '/admin/news', bg: 'bg-blue-50' },
-    { title: 'Job Openings', value: filteredStats.jobs, icon: <Briefcase className="w-8 h-8 text-green-500" />, path: '/admin/jobs', bg: 'bg-green-50' },
+    { title: 'Events', value: filteredStats.events, icon: <CalendarIcon className="w-8 h-8 text-green-500" />, path: '/admin/events', bg: 'bg-green-50' },
     { title: 'Contact Messages', value: filteredStats.contacts, icon: <Mail className="w-8 h-8 text-purple-500" />, path: '/admin/contacts', bg: 'bg-purple-50' },
     { title: 'Subscribers', value: filteredStats.subscribers, icon: <Users className="w-8 h-8 text-orange-500" />, path: '/admin/subscribers', bg: 'bg-orange-50' },
   ];
 
   const chartData = [
     { name: 'News', count: filteredStats.news, color: '#3b82f6' },
-    { name: 'Jobs', count: filteredStats.jobs, color: '#22c55e' },
+    { name: 'Events', count: filteredStats.events, color: '#22c55e' },
     { name: 'Contacts', count: filteredStats.contacts, color: '#a855f7' },
     { name: 'Subscribers', count: filteredStats.subscribers, color: '#f97316' },
   ];

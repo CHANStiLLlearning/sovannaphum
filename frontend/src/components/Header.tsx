@@ -102,13 +102,13 @@ const Header = () => {
               Contact Us
             </NavLink>
             <NavLink
-              to="/careers"
+              to="/eventpage"
               className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-white text-black' : 'border-transparent text-black/90 hover:text-black hover:border-black/30'}`}
             >
-              Careers
+              Events
             </NavLink>
           </nav>
-
+        
           {/* Action Icons */}
           <div className="flex items-center gap-2">
             {/* Desktop Search Bar (visible on lg and up) */}
@@ -211,11 +211,11 @@ const Header = () => {
             Contact Us
           </NavLink>
           <NavLink
-            to="/careers"
+            to="/eventpage"
             onClick={toggleMobileMenu}
             className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
-            Careers
+            Events
           </NavLink>
         </div>
       )}

@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Battambang', 'sans-serif'],
+      },
       colors: {
         primary: {
           50: '#f0fdfa',
@@ -24,6 +27,7 @@ export default {
       animation: {
         'blob': 'blob 7s infinite',
         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+        'fade-in': 'fadeIn 0.6s ease-out forwards',
       },
       keyframes: {
         blob: {
@@ -33,8 +37,12 @@ export default {
           '100%': { transform: 'translate(0px, 0px) scale(1)' },
         },
         fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%': { opacity: '0', transform: 'translateY(15px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         }
       }
     },

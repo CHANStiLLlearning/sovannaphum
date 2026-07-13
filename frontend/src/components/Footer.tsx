@@ -1,5 +1,6 @@
 import { FaFacebook, FaYoutube, FaInstagram, FaTelegram } from 'react-icons/fa';
 import { API_BASE_URL } from '../config';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -16,7 +17,7 @@ const Footer = () => {
             <ul className="space-y-3 mb-8">
               <li><a href="#" className="hover:text-[#EBA525] transition-colors">Contact to America School</a></li>
               <li><a href="#" className="hover:text-[#EBA525] transition-colors">Location & Maps</a></li>
-              <li><a href="#" className="hover:text-[#EBA525] transition-colors">Careers</a></li>
+              <li><NavLink to="/eventpage" className="hover:text-[#EBA525] transition-colors">Event</NavLink></li>
               <li><a href="#" className="hover:text-[#EBA525] transition-colors">E-Class</a></li>
             </ul>
             
@@ -98,7 +99,7 @@ const Footer = () => {
               />
               <button 
                 type="submit" 
-                className="w-full px-4 py-3 border border-white/40 rounded-lg font-semibold hover:bg-white hover:text-[#9A2220] transition-colors"
+                className="w-full px-4 py-3 border bg-[#FE0034] border-white/40 rounded-lg font-semibold hover:bg-white hover:text-[#FE0034] transition-colors"
               >
                 Subscribe
               </button>

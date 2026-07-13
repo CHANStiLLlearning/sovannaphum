@@ -19,14 +19,14 @@ model NewsArticle {
   createdAt   DateTime @default(now())
 }
 
-model JobOpening {
-  id         Int      @id @default(autoincrement())
-  title      String
-  department String
-  location   String
-  type       String
-  posted     String
-  createdAt  DateTime @default(now())
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  location    String
+  date        String
+  image       String?
+  createdAt   DateTime @default(now())
 }
 
 model ContactMessage {
