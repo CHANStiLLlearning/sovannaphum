@@ -24,7 +24,7 @@ const ManagementTeam = () => {
           
           <div className="w-full md:w-2/3">
             <h4 className="text-2xl font-bold text-[#9A2220] mb-4">Welcome to Khmer America School</h4>
-            <div className="prose prose-lg text-gray-600">
+            <div className="prose prose-lg text-gray-600 text-justify">
               <p className="mb-4">
                 Education is the most powerful weapon which you can use to change the world. At Khmer America School, we are committed to providing the highest quality education to build the future leaders of Cambodia.
               </p>

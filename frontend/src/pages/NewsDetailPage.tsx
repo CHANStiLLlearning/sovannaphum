@@ -216,7 +216,7 @@ const NewsDetailPage = () => {
 
           {/* Render Rich Text Content with Drop-Cap class styling */}
           <div 
-            className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:text-[#9A2220] prose-a:text-[#D76918] hover:prose-a:text-[#9A2220] break-words premium-article"
+            className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:text-[#9A2220] prose-a:text-[#D76918] hover:prose-a:text-[#9A2220] break-words premium-article text-justify"
             dangerouslySetInnerHTML={{ __html: cleanDescription }}
           />
 

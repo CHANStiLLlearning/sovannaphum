@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import { FaFacebook, FaYoutube, FaInstagram, FaTelegram } from 'react-icons/fa';
 import { API_BASE_URL } from '../config';
 import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
+  const [modal, setModal] = useState<{ open: boolean; message: string; type: 'success' | 'error' }>({
+    open: false,
+    message: '',
+    type: 'success'
+  });
+
   return (
     <footer className="bg-[#002768] text-white pt-16 pb-8 relative overflow-hidden">
       {/* Decorative dot pattern background */}
@@ -78,14 +85,14 @@ const Footer = () => {
                   body: JSON.stringify({ email })
                 });
                 if (res.ok) {
-                  alert('Subscribed successfully!');
+                  setModal({ open: true, message: 'Thank you! You have subscribed successfully to our newsletter.', type: 'success' });
                   form.reset();
                 } else {
                   const data = await res.json();
-                  alert(data.error || 'Failed to subscribe');
+                  setModal({ open: true, message: data.error || 'Failed to subscribe. Please verify your details.', type: 'error' });
                 }
               } catch (err) {
-                alert('An error occurred. Please try again later.');
+                setModal({ open: true, message: 'An error occurred while subscribing. Please try again later.', type: 'error' });
               }
             }}>
               <label htmlFor="email" className="block text-sm mb-2 text-white/90">Email</label>
@@ -119,6 +126,49 @@ const Footer = () => {
           <p>©2026 America School (AS). All Rights Reserved. Designed with passion.</p>
         </div>
       </div>
+
+      {/* Modal Popup overlay */}
+      {modal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop blur overlay */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setModal(prev => ({ ...prev, open: false }))}
+          />
+          
+          {/* Modal Container */}
+          <div className="relative bg-white text-gray-800 rounded-3xl shadow-2xl p-8 max-w-sm w-full border border-gray-100 flex flex-col items-center text-center animate-fade-in duration-200">
+            {/* Modal Icon Header */}
+            {modal.type === 'success' ? (
+              <div className="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            ) : (
+              <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </div>
+            )}
+            
+            <h4 className="text-xl font-bold text-gray-900 mb-2">
+              {modal.type === 'success' ? 'Subscription Complete' : 'Subscription Error'}
+            </h4>
+            <p className="text-gray-500 mb-6 text-sm leading-relaxed">
+              {modal.message}
+            </p>
+            
+            <button 
+              onClick={() => setModal(prev => ({ ...prev, open: false }))}
+              className="w-full py-3.5 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold rounded-xl shadow-md transition-colors cursor-pointer text-sm"
+            >
+              Great, thanks!
+            </button>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

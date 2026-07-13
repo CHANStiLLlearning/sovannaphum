@@ -1,7 +1,16 @@
+import { Link } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
+
 const IntegratedEnglish = () => {
   return (
     <div className="py-16 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Link 
+          to="/programs" 
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-[#9A2220] mb-6 font-bold transition-all hover:-translate-x-1 group text-sm"
+        >
+          <ChevronLeft className="w-5 h-5" /> Back to Programs
+        </Link>
         <h2 className="text-3xl font-bold text-[#EBA525] mb-6">Integrated English Program (IEP)</h2>
         <div className="prose prose-lg text-gray-600 max-w-none">
           <p>
