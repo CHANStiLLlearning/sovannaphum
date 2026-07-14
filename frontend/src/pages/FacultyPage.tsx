@@ -116,7 +116,7 @@ const FacultyPage = () => {
 
         {/* Loading Skeleton */}
         {loading && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(n => (
               <div key={n} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm animate-pulse">
                 <div className="h-56 bg-gray-200" />
@@ -158,7 +158,7 @@ const FacultyPage = () => {
                 <p className="text-sm text-gray-500 mb-6 font-medium">
                   Showing <span className="font-bold text-gray-800">{filtered.length}</span> faculty member{filtered.length !== 1 ? 's' : ''}
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                   {filtered.slice(0, 12).map(teacher => (
                     <div
                       key={teacher.id}
