@@ -168,7 +168,7 @@ const NewsDetailPage = () => {
               <span>{article.date}</span>
             </div>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-[1.4] drop-shadow-md">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight drop-shadow-md">
             {article.title}
           </h1>
         </div>
