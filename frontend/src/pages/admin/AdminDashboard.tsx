@@ -8,7 +8,8 @@ type DataItem = { createdAt: string };
 
 const AdminDashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [filterMode, setFilterMode] = useState('all'); // all, today, month, year
+  const [filterMode, setFilterMode] = useState('all'); // all, today, month, year, custom
+  const [selectedDate, setSelectedDate] = useState('');
   
   const [rawData, setRawData] = useState({
     news: [] as DataItem[],
@@ -62,6 +63,7 @@ const AdminDashboard = () => {
     
     const now = new Date();
     return items.filter(item => {
+      if (!item.createdAt) return false;
       const itemDate = new Date(item.createdAt);
       if (filterMode === 'today') {
         return itemDate.toDateString() === now.toDateString();
@@ -71,6 +73,12 @@ const AdminDashboard = () => {
       }
       if (filterMode === 'year') {
         return itemDate.getFullYear() === now.getFullYear();
+      }
+      if (filterMode === 'custom' && selectedDate) {
+        const yyyy = itemDate.getFullYear();
+        const mm = String(itemDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(itemDate.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}` === selectedDate;
       }
       return true;
     });
@@ -118,14 +126,28 @@ const AdminDashboard = () => {
             <Filter className="w-5 h-5 text-gray-400" />
             <select 
               value={filterMode}
-              onChange={(e) => setFilterMode(e.target.value)}
-              className="bg-transparent text-gray-700 font-medium outline-none cursor-pointer"
+              onChange={(e) => {
+                setFilterMode(e.target.value);
+                if (e.target.value !== 'custom') {
+                  setSelectedDate('');
+                }
+              }}
+              className="bg-transparent text-gray-700 font-semibold outline-none cursor-pointer text-sm"
             >
               <option value="all">All Time</option>
               <option value="today">Today</option>
               <option value="month">This Month</option>
               <option value="year">This Year</option>
+              <option value="custom">Select Date</option>
             </select>
+            {filterMode === 'custom' && (
+              <input 
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="ml-1 border border-gray-200 rounded-lg px-2 py-1 text-sm text-gray-700 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] cursor-pointer"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -157,7 +179,17 @@ const AdminDashboard = () => {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Content Distribution</h2>
               <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full uppercase tracking-wider">
-                {filterMode === 'all' ? 'All Time' : filterMode === 'today' ? 'Today' : filterMode === 'month' ? 'This Month' : 'This Year'}
+                {filterMode === 'all' 
+                  ? 'All Time' 
+                  : filterMode === 'today' 
+                  ? 'Today' 
+                  : filterMode === 'month' 
+                  ? 'This Month' 
+                  : filterMode === 'year' 
+                  ? 'This Year' 
+                  : selectedDate 
+                  ? `Date: ${selectedDate}` 
+                  : 'Select Date'}
               </span>
             </div>
             <div className="h-80 w-full">
