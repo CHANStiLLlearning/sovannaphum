@@ -44,7 +44,7 @@ const AdminEvents = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/events?page=${page}&limit=5&search=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`${API_BASE_URL}/api/events?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}`);
       const result = await res.json();
       setEvents(result.data || []);
       setTotalPages(result?.pagination?.totalPages || 1);

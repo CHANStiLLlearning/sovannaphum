@@ -43,7 +43,7 @@ const AdminNews = () => {
 
   const fetchNews = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/news?page=${page}&limit=5&search=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`${API_BASE_URL}/api/news?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}`);
       const result = await res.json();
       setArticles(result.data || []);
       setTotalPages(result?.pagination?.totalPages || 1);
@@ -193,7 +193,7 @@ const AdminNews = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                {[1, 2, 3, 4, 5].map((index) => (
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
                   <tr key={index} className="animate-pulse">
                     <td className="p-5 align-middle w-32">
                       <div className="w-20 h-14 rounded-lg bg-gray-200"></div>

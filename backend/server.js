@@ -200,8 +200,8 @@ app.get('/api/events', async (req, res) => {
 
     const where = search ? {
       OR: [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } }
+        { title: { contains: search } },
+        { description: { contains: search } }
       ]
     } : {};
 
