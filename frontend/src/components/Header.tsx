@@ -77,12 +77,6 @@ const Header = () => {
               About Us
             </NavLink>
             <NavLink
-              to="/admissions"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-white text-black' : 'border-transparent text-black/90 hover:text-black hover:border-black/30'}`}
-            >
-              Admissions
-            </NavLink>
-            <NavLink
               to="/programs"
               className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-white text-black' : 'border-transparent text-black/90 hover:text-black hover:border-black/30'}`}
             >
@@ -106,6 +100,12 @@ const Header = () => {
               className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-white text-black' : 'border-transparent text-black/90 hover:text-black hover:border-black/30'}`}
             >
               Events
+            </NavLink>
+            <NavLink
+              to="/faculty"
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-white text-black' : 'border-transparent text-black/90 hover:text-black hover:border-black/30'}`}
+            >
+              Faculty
             </NavLink>
           </nav>
         
@@ -182,13 +182,6 @@ const Header = () => {
             About Us
           </NavLink>
           <NavLink
-            to="/admissions"
-            onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
-          >
-            Admissions
-          </NavLink>
-          <NavLink
             to="/programs"
             onClick={toggleMobileMenu}
             className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
@@ -216,6 +209,13 @@ const Header = () => {
             className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
             Events
+          </NavLink>
+          <NavLink
+            to="/faculty"
+            onClick={toggleMobileMenu}
+            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
+          >
+            Faculty
           </NavLink>
         </div>
       )}

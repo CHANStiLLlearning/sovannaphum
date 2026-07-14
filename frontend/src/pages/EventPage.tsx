@@ -12,6 +12,10 @@ type SchoolEvent = {
   image?: string;
 };
 
+// Strip inline style attributes from HTML to avoid editor color overrides
+const stripStyles = (html: string) =>
+  html.replace(/ style="[^"]*"/gi, '').replace(/<span\b[^>]*>([^<]*)<\/span>/gi, '$1');
+
 const EventPage = () => {
   const [events, setEvents] = useState<SchoolEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -206,9 +210,10 @@ const EventPage = () => {
                         {event.title}
                       </h3>
 
-                      <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
-                        {event.description}
-                      </p>
+                      <div 
+                        className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-5"
+                        dangerouslySetInnerHTML={{ __html: stripStyles(event.description) }}
+                      />
 
                       <div className="pt-4 border-t border-gray-50 mt-auto flex items-center justify-between">
                         <span className="text-xs font-bold text-[#9A2220] uppercase tracking-wider">

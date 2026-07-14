@@ -265,6 +265,77 @@ app.delete('/api/events/:id', async (req, res) => {
   }
 });
 
+// --- Teachers / Faculty API ---
+app.get('/api/teachers', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || '';
+    const skip = (page - 1) * limit;
+
+    const where = search ? {
+      OR: [
+        { name: { contains: search } },
+        { role: { contains: search } },
+        { subject: { contains: search } }
+      ]
+    } : {};
+
+    const [teachers, total] = await Promise.all([
+      prisma.teacher.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+      }),
+      prisma.teacher.count({ where })
+    ]);
+
+    res.json({
+      data: teachers,
+      pagination: { total, page, limit, totalPages: Math.ceil(total / limit) }
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch teachers" });
+  }
+});
+
+app.post('/api/teachers', async (req, res) => {
+  try {
+    const { name, role, subject, nationality, image } = req.body;
+    const teacher = await prisma.teacher.create({
+      data: { name, role, subject, nationality: nationality || 'Cambodian', image }
+    });
+    res.status(201).json(teacher);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create teacher" });
+  }
+});
+
+app.put('/api/teachers/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { name, role, subject, nationality, image } = req.body;
+    const teacher = await prisma.teacher.update({
+      where: { id },
+      data: { name, role, subject, nationality: nationality || 'Cambodian', image }
+    });
+    res.json(teacher);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update teacher" });
+  }
+});
+
+app.delete('/api/teachers/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    await prisma.teacher.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete teacher" });
+  }
+});
+
 // --- Contact API ---
 app.get('/api/contact', async (req, res) => {
   try {

@@ -32,7 +32,9 @@ import AdminLogin from './pages/admin/AdminLogin';
 import ScrollToTop from './components/ScrollToTop'
 import ProtectedRoute from './components/ProtectedRoute';
 import EventPage from './pages/EventPage';
+import FacultyPage from './pages/FacultyPage';
 import NotFoundPage from './pages/NotFoundPage';
+import AdminFaculty from './pages/admin/AdminFaculty';
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-white font-sans flex flex-col">
@@ -60,6 +62,7 @@ function App() {
                 <Route index element={<AdminDashboard />} />
                 <Route path="news" element={<AdminNews />} />
                 <Route path="events" element={<AdminEvents />} />
+                <Route path="faculty" element={<AdminFaculty />} />
                 <Route path="contacts" element={<AdminContacts />} />
                 <Route path="subscribers" element={<AdminSubscribers />} />
               </Route>
@@ -88,6 +91,7 @@ function App() {
                   <Route path="/news/:id" element={<NewsDetailPage />} />
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/eventpage" element={<EventPage />} />
+                  <Route path="/faculty" element={<FacultyPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </PublicLayout>

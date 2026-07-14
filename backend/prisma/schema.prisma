@@ -29,6 +29,16 @@ model Event {
   createdAt   DateTime @default(now())
 }
 
+model Teacher {
+  id          Int      @id @default(autoincrement())
+  name        String
+  role        String
+  subject     String
+  nationality String   @default("Cambodian")
+  image       String?
+  createdAt   DateTime @default(now())
+}
+
 model ContactMessage {
   id        Int      @id @default(autoincrement())
   name      String

@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut } from 'lucide-react';
+import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const AdminLayout = () => {
@@ -9,6 +9,7 @@ const AdminLayout = () => {
     { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard className="w-5 h-5" />, exact: true },
     { name: 'News Articles', path: '/admin/news', icon: <Newspaper className="w-5 h-5" /> },
     { name: 'Events', path: '/admin/events', icon: <Calendar className="w-5 h-5" /> },
+    { name: 'Faculty', path: '/admin/faculty', icon: <GraduationCap className="w-5 h-5" /> },
     { name: 'Contact Messages', path: '/admin/contacts', icon: <Mail className="w-5 h-5" /> },
     { name: 'Subscribers', path: '/admin/subscribers', icon: <Users className="w-5 h-5" /> },
   ];
