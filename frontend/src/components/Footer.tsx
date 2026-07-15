@@ -30,7 +30,7 @@ const Footer = () => {
             
             <p className="mb-4 text-white/90">Follow us on social media to receive important updates:</p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 flex items-center justify-center hover:scale-110 transition-transform">
+              <a href="#" className="w-10 h-10 rounded-full bg-[#E1306C] flex items-center justify-center hover:scale-110 transition-transform">
                 <FaInstagram className="text-white text-xl" />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-[#0088cc] flex items-center justify-center hover:scale-110 transition-transform">

@@ -53,7 +53,7 @@ const EventPage = () => {
     <div className="w-full bg-[#f8f9fa] flex flex-col min-h-screen font-sans">
       
       {/* Hero Section */}
-      <div className="relative w-full h-[40vh] min-h-[350px] bg-gradient-to-r from-[#9A2220] via-[#D76918] to-[#EBA525] flex flex-col justify-center items-center text-white overflow-hidden">
+      <div className="relative w-full h-[40vh] min-h-[350px] bg-[#9A2220] flex flex-col justify-center items-center text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/35"></div>
         
         {/* Decorative background elements */}

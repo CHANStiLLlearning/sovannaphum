@@ -50,7 +50,7 @@ const ContactPage = () => {
     <div className="w-full bg-white flex flex-col min-h-screen font-sans">
       
       {/* Hero Section */}
-      <div className="relative w-full h-[25vh] min-h-[220px] bg-gradient-to-r from-[#9A2220] via-[#D76918] to-[#EBA525] flex flex-col justify-center items-center text-white overflow-hidden">
+      <div className="relative w-full h-[25vh] min-h-[220px] bg-[#9A2220] flex flex-col justify-center items-center text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-md">Contact Us</h1>

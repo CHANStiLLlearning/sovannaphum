@@ -115,7 +115,6 @@ const AdminLayout = () => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 flex flex-col relative min-h-screen">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-50 -z-10"></div>
         <div className="p-4 sm:p-6 md:p-10 flex-1">
           <Outlet />
         </div>

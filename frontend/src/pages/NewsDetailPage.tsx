@@ -140,7 +140,7 @@ const NewsDetailPage = () => {
       {/* Reading Progress Scrollbar */}
       <div className="fixed top-0 left-0 w-full h-[4px] z-50 bg-gray-100">
         <div 
-          className="h-full bg-gradient-to-r from-[#9A2220] via-[#D76918] to-[#EBA525] transition-all duration-100"
+          className="h-full bg-[#9A2220] transition-all duration-100"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -153,7 +153,7 @@ const NewsDetailPage = () => {
           style={{ backgroundImage: `url(${article.image})` }}
         />
         {/* Soft blur visual filter overlay */}
-        <div className="absolute inset-0 bg-black/60 bg-gradient-to-t from-[#fafafa] via-black/30 to-black/60 z-10" />
+        <div className="absolute inset-0 bg-black/50 z-10" />
 
         <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 w-full pb-24 text-white">
           <Link to="/news" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-6 font-bold transition-all hover:-translate-x-1 group text-sm">

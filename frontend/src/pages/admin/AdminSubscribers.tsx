@@ -120,34 +120,36 @@ const AdminSubscribers = () => {
         <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div></div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden max-w-4xl">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 uppercase tracking-wider text-xs">
-                <th className="p-5 font-semibold">Email Address</th>
-                <th className="p-5 font-semibold">Subscribed Date</th>
-                <th className="p-5 font-semibold text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {subscribers.length === 0 ? (
-                <tr><td colSpan={3} className="p-10 text-center text-gray-500 italic">No subscribers found.</td></tr>
-              ) : subscribers.map((sub) => (
-                <tr key={sub.id} className="hover:bg-gray-50/50 transition-colors group">
-                  <td className="p-5 align-middle font-medium text-gray-800">{sub.email}</td>
-                  <td className="p-5 align-middle text-gray-500 text-sm">{new Date(sub.createdAt).toLocaleDateString()}</td>
-                  <td className="p-5 align-middle text-right">
-                    <button 
-                      onClick={() => setSubToDelete(sub.id)} 
-                      className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-red-200 outline-none"
-                      title="Remove Subscriber"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[550px]">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 uppercase tracking-wider text-xs">
+                  <th className="p-4 md:p-5 font-semibold">Email Address</th>
+                  <th className="p-4 md:p-5 font-semibold">Subscribed Date</th>
+                  <th className="p-4 md:p-5 font-semibold text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {subscribers.length === 0 ? (
+                  <tr><td colSpan={3} className="p-10 text-center text-gray-500 italic">No subscribers found.</td></tr>
+                ) : subscribers.map((sub) => (
+                  <tr key={sub.id} className="hover:bg-gray-50/50 transition-colors group">
+                    <td className="p-4 md:p-5 align-middle font-medium text-gray-800 text-sm whitespace-nowrap">{sub.email}</td>
+                    <td className="p-4 md:p-5 align-middle text-gray-500 text-xs md:text-sm whitespace-nowrap">{new Date(sub.createdAt).toLocaleDateString()}</td>
+                    <td className="p-4 md:p-5 align-middle text-right flex items-center justify-end">
+                      <button 
+                        onClick={() => setSubToDelete(sub.id)} 
+                        className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-red-200 outline-none"
+                        title="Remove Subscriber"
+                      >
+                        <Trash2 className="w-4 h-4 md:w-5 md:h-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 

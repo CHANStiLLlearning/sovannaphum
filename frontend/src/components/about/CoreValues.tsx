@@ -5,25 +5,25 @@ const coreValues = [
     title: 'Ownership',
     icon: <Users className="w-8 h-8" />,
     description: 'We take responsibility for our actions and learning. We act like owners of our school community, fostering a sense of belonging and accountability.',
-    color: 'from-blue-500 to-blue-600'
+    color: 'bg-blue-600'
   },
   {
     title: 'Innovation',
     icon: <Lightbulb className="w-8 h-8" />,
     description: 'We embrace change and continuously seek new, creative ways to improve our teaching, learning, and operational processes.',
-    color: 'from-[#EBA525] to-orange-500'
+    color: 'bg-[#EBA525]'
   },
   {
     title: 'Respect',
     icon: <HeartHandshake className="w-8 h-8" />,
     description: 'We honor the dignity of every individual. We celebrate diversity and treat everyone with kindness, fairness, and understanding.',
-    color: 'from-green-500 to-emerald-600'
+    color: 'bg-green-600'
   },
   {
     title: 'Professionalism',
     icon: <Briefcase className="w-8 h-8" />,
     description: 'We maintain high standards of integrity, ethical behavior, and dedication in everything we do, serving as role models for our students.',
-    color: 'from-[#9A2220] to-red-700'
+    color: 'bg-[#9A2220]'
   }
 ];
 
@@ -43,7 +43,7 @@ const CoreValues = () => {
           {coreValues.map((value, index) => (
             <div key={index} className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
               <div className="flex items-start gap-6">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${value.color} text-white flex items-center justify-center flex-shrink-0 shadow-lg transform group-hover:-translate-y-2 transition-transform duration-300`}>
+                <div className={`w-16 h-16 rounded-2xl ${value.color} text-white flex items-center justify-center flex-shrink-0 shadow-lg transform group-hover:-translate-y-2 transition-transform duration-300`}>
                   {value.icon}
                 </div>
                 <div>

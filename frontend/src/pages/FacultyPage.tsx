@@ -54,7 +54,7 @@ const FacultyPage = () => {
     <div className="w-full bg-[#f8f9fa] flex flex-col min-h-screen font-sans">
 
       {/* Hero */}
-      <div className="relative w-full h-[40vh] min-h-[350px] bg-gradient-to-r from-[#1D055F] via-[#9A2220] to-[#D76918] flex flex-col justify-center items-center text-white overflow-hidden">
+      <div className="relative w-full h-[40vh] min-h-[350px] bg-[#1D055F] flex flex-col justify-center items-center text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute top-[-10%] left-[-5%] w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-5%] w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
@@ -168,7 +168,7 @@ const FacultyPage = () => {
                       className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
                     >
                       {/* Photo */}
-                      <div className="relative h-[480px] bg-gradient-to-br from-[#1D055F]/10 to-[#9A2220]/10 overflow-hidden shrink-0">
+                      <div className="relative h-[480px] bg-[#1D055F]/10 overflow-hidden shrink-0">
                         <img
                           src={teacher.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(teacher.name)}&background=9A2220&color=fff&size=300`}
                           alt={teacher.name}

@@ -86,8 +86,8 @@ const HeroBanner = () => {
                 currentSlide === idx ? 'scale-105' : 'scale-100'
               }`}
             />
-            {/* Gradient Overlay for high text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent z-10"></div>
+            {/* Dark Solid Overlay for high text legibility */}
+            <div className="absolute inset-0 bg-black/50 z-10"></div>
           </div>
         ))}
       </div>
