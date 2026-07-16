@@ -82,7 +82,7 @@ const AdminLogin = () => {
             <div className="space-y-1.5">
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-500">Username</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-[-10px] flex items-center pointer-events-none">
                   <User className="h-4 w-4 text-gray-400" />
                 </div>
                 <input 
@@ -99,7 +99,7 @@ const AdminLogin = () => {
             <div className="space-y-1.5">
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-500">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-[-10px]  flex items-center pointer-events-none">
                   <Lock className="h-4 w-4 text-gray-400" />
                 </div>
                 <input 
