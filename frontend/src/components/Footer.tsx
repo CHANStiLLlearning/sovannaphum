@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFacebook, FaYoutube, FaInstagram, FaTelegram } from 'react-icons/fa';
 import { API_BASE_URL } from '../config';
 import { NavLink } from 'react-router-dom';
@@ -9,6 +9,29 @@ const Footer = () => {
     message: '',
     type: 'success'
   });
+
+  const [socials, setSocials] = useState({
+    contact_facebook: '#',
+    contact_instagram: '#',
+    contact_telegram: '#',
+    contact_youtube: '#',
+  });
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/settings`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data) {
+          setSocials({
+            contact_facebook: data.contact_facebook || '#',
+            contact_instagram: data.contact_instagram || '#',
+            contact_telegram: data.contact_telegram ? `https://${data.contact_telegram.replace(/^https?:\/\//, '')}` : '#',
+            contact_youtube: data.contact_youtube || '#',
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <footer className="bg-[#002768] text-white pt-16 pb-8 relative overflow-hidden">
@@ -22,24 +45,40 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-6 pb-2 border-b border-white/20 inline-block">CONTACT US</h3>
             <ul className="space-y-3 mb-8">
-              <li><a href="#" className="hover:text-[#EBA525] transition-colors">Contact to America School</a></li>
-              <li><a href="#" className="hover:text-[#EBA525] transition-colors">Location & Maps</a></li>
-              <li><NavLink to="/eventpage" className="hover:text-[#EBA525] transition-colors">Event</NavLink></li>
+              <li><NavLink to="/contact" className="hover:text-[#EBA525] transition-colors">Contact to America School</NavLink></li>
+              <li><NavLink to="/contact" className="hover:text-[#EBA525] transition-colors">Location &amp; Maps</NavLink></li>
+              <li><NavLink to="/events" className="hover:text-[#EBA525] transition-colors">Events</NavLink></li>
               <li><a href="#" className="hover:text-[#EBA525] transition-colors">E-Class</a></li>
             </ul>
             
             <p className="mb-4 text-white/90">Follow us on social media to receive important updates:</p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-[#E1306C] flex items-center justify-center hover:scale-110 transition-transform">
+              <a
+                href={socials.contact_instagram !== '#' ? `https://instagram.com/${socials.contact_instagram.replace(/^@/, '')}` : '#'}
+                target="_blank" rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#E1306C] flex items-center justify-center hover:scale-110 transition-transform"
+              >
                 <FaInstagram className="text-white text-xl" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#0088cc] flex items-center justify-center hover:scale-110 transition-transform">
+              <a
+                href={socials.contact_telegram}
+                target="_blank" rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#0088cc] flex items-center justify-center hover:scale-110 transition-transform"
+              >
                 <FaTelegram className="text-white text-xl" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#FF0000] flex items-center justify-center hover:scale-110 transition-transform">
+              <a
+                href={socials.contact_youtube !== '#' ? socials.contact_youtube : '#'}
+                target="_blank" rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#FF0000] flex items-center justify-center hover:scale-110 transition-transform"
+              >
                 <FaYoutube className="text-white text-xl" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center hover:scale-110 transition-transform">
+              <a
+                href={socials.contact_facebook !== '#' ? `https://facebook.com/${socials.contact_facebook.replace(/^@/, '')}` : '#'}
+                target="_blank" rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center hover:scale-110 transition-transform"
+              >
                 <FaFacebook className="text-white text-xl" />
               </a>
             </div>
@@ -95,10 +134,10 @@ const Footer = () => {
                 setModal({ open: true, message: 'An error occurred while subscribing. Please try again later.', type: 'error' });
               }
             }}>
-              <label htmlFor="email" className="block text-sm mb-2 text-white/90">Email</label>
+              <label htmlFor="footer-email" className="block text-sm mb-2 text-white/90">Email</label>
               <input 
                 type="email" 
-                id="email"
+                id="footer-email"
                 name="email"
                 placeholder="Enter your email address" 
                 className="w-full px-4 py-3 rounded-lg text-gray-800 mb-3 outline-none focus:ring-2 focus:ring-[#EBA525]"
@@ -113,32 +152,24 @@ const Footer = () => {
             </form>
             
             <h3 className="text-sm font-bold mb-3 uppercase tracking-wider">Accredited by</h3>
-            {/* <div className="bg-white p-3 rounded-lg flex items-center gap-4">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Emblem_of_the_Ministry_of_Education%2C_Youth_and_Sport_of_Cambodia.svg/100px-Emblem_of_the_Ministry_of_Education%2C_Youth_and_Sport_of_Cambodia.svg.png" alt="MoEYS" className="h-10 object-contain" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/IELTS_logo.svg/100px-IELTS_logo.svg.png" alt="IELTS" className="h-6 object-contain" />
-              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Cambridge_Assessment_logo.svg/100px-Cambridge_Assessment_logo.svg.png" alt="Cambridge Assessment" className="h-6 object-contain" />
-            </div> */}
           </div>
           
         </div>
         
         <div className="border-t border-white/20 pt-8 text-center text-sm text-white/70">
-          <p>©2026 America School (AS). All Rights Reserved. Designed with passion.</p>
+          <p>©{new Date().getFullYear()} America School (AS). All Rights Reserved. Designed with passion.</p>
         </div>
       </div>
 
       {/* Modal Popup overlay */}
       {modal.open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop blur overlay */}
           <div 
             className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setModal(prev => ({ ...prev, open: false }))}
           />
           
-          {/* Modal Container */}
           <div className="relative bg-white text-gray-800 rounded-3xl shadow-2xl p-8 max-w-sm w-full border border-gray-100 flex flex-col items-center text-center animate-fade-in duration-200">
-            {/* Modal Icon Header */}
             {modal.type === 'success' ? (
               <div className="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

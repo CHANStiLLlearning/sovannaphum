@@ -1,28 +1,39 @@
-
+import { useState, useEffect } from 'react';
 import { Quote } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
-const testimonials = [
-  {
-    name: 'Sok Dara',
-    role: 'Alumni, Class of 2024',
-    image: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&q=80&w=200',
-    quote: 'Khmer America School provided me with the best foundation for my university studies. The teachers are incredibly supportive and the environment is highly encouraging for students to grow.',
-  },
-  {
-    name: 'Chea Sreyneath',
-    role: 'Grade 12 Student',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200',
-    quote: 'I have been studying here since kindergarten. The English program here is top-notch, and it gave me the confidence to participate in international competitions.',
-  },
-  {
-    name: 'Meas Sopheap',
-    role: 'Parent',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200',
-    quote: 'As a parent, I am very satisfied with the curriculum and the care that the school provides. My children are always happy to go to school and their academic results are excellent.',
-  }
-];
+type Testimonial = {
+  id: number;
+  name: string;
+  role: string;
+  image: string;
+  quote: string;
+};
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/testimonials`)
+      .then(res => res.json())
+      .then(data => setTestimonials(data))
+      .catch(err => console.error("Failed to fetch testimonials", err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-[#1A627B] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center"><div className="w-8 h-8 border-4 border-[#EBA525] border-t-transparent rounded-full animate-spin"></div></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="py-16 bg-[#1A627B] text-white relative overflow-hidden">
       {/* Decorative background element */}
@@ -36,15 +47,15 @@ const Testimonials = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl relative">
+          {testimonials.map((testimonial) => (
+            <div key={testimonial.id} className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl relative">
               <Quote className="absolute top-6 right-6 w-10 h-10 text-white/20 transform rotate-180" />
               <p className="text-gray-100 mb-8 italic relative z-10 leading-relaxed">
                 "{testimonial.quote}"
               </p>
               <div className="flex items-center">
                 <img 
-                  src={testimonial.image} 
+                  src={testimonial.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=random`} 
                   alt={testimonial.name} 
                   className="w-14 h-14 rounded-full object-cover border-2 border-[#EBA525] mr-4"
                 />

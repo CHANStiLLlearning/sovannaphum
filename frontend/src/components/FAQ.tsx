@@ -1,51 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 interface FAQItem {
+  id: number;
   question: string;
   answer_kh: string;
   answer_en: string;
 }
 
-const faqs: FAQItem[] = [
-  {
-    question: "ដាក់ពាក្យបម្រើការងារ / Work with Us",
-    answer_kh: "ជំរាបសួរបង\nសម្រាប់ព័ត៌មានទាក់ទងនឹងការដាក់ពាក្យបម្រើការងារ សូមផ្ញើប្រវត្តិរូបសង្ខេបមកកាន់\n→អ៊ីម៉ែល: recruitment@khmeramericaschool.edu.kh\n→ទំនាក់ទំនងផ្នែកធនធានមនុស្សតាមរយៈលេខទូរស័ព្ទ: 015 838 944",
-    answer_en: "Dear Richard Ntc,\nPlease send your CVs to our HR Department via\n→email: recruitment@khmeramericaschool.edu.kh\n→call: 015 838 499."
-  },
-  {
-    question: "សូមស្វាគមន៍មកកាន់ផេកសាលារៀនសុវណ្ណភូមិ!!!",
-    answer_kh: "សូមស្វាគមន៍មកកាន់ផេកសាលារៀនសុវណ្ណភូមិ!!!",
-    answer_en: "Welcome to Khmer America School Page!!!"
-  },
-  {
-    question: "អាសយដ្ឋាន និងលេខទំនាក់ទំនងតាមទីតាំងនីមួយៗ | Address and Contact Details",
-    answer_kh: "ជំរាបសួរបង🙏\nអរគុណសម្រាប់សំនួរ។ បងអាចទាក់ទងទីតាំងនីមួយៗតាមតំណរភ្ជាប់នេះ\nhttps://t.me/SPSCustomerService\nសូមអរគុណ!",
-    answer_en: "Dear Mr./Ms,\nPlease contact our campuses here:\nhttps://t.me/SPSCustomerService\nWarm Regards!"
-  },
-  {
-    question: "ចាប់ទទួលសិស្សពីអាយុប៉ុន្មាន? / Eligible age to enroll in our programs!",
-    answer_kh: "ជំរាបសួរបង​🙏\nសាលាយើងខ្ញុំចាប់ទទួលសិស្សពីអាយុពី​ ៣ឆ្នាំ ឡើងទៅ\nព៌ត៌មានលម្អិតសូមទាក់ទង\n→☎️ទូរស័ព្ទលេខ: 015 ​838​ 902\n→📩តេឡេក្រាម:\nhttps://t.me/SPSCustomerService",
-    answer_en: "Dear Mr./Ms,\nChidren in the age from 3 years old are eligible to enroll in our programs.\nFor more information, please contact\n→☎️Tel: 015 838 902\n→📩Telegram:\nhttps://t.me/SPSCustomerService\nWarm Regards!"
-  },
-  {
-    question: "កម្មវិធីសិក្សា / Programs",
-    answer_kh: "សាលារៀនសុវណ្ណភូមិផ្តល់ជូននូវកម្មវិធីសិក្សាដូចតទៅ📚៖\n១. កម្មវិធីចំណេះទូទៅខ្មែរ\n២. កម្មវិធីអន្តរភាសា ខែ្មរ-អង់គ្លេស-ចិន\n៣. កម្មវិធីភាសាអង់គ្លេសពេញម៉ោង និងក្រៅម៉ោងគ្រប់កម្រិត\n៤. កម្មវិធីភាសាចិនក្រៅម៉ោង",
-    answer_en: "Khmer America School provides educational programs as follwoings📚:\n1. Khmer General Education\n2. Integrated English Program\n3. General English Program\n4. Chinese Part-Time Program"
-  },
-  {
-    question: "តម្លៃសិក្សា / Tuition Fees",
-    answer_kh: "ជម្រាបសួរបង 🙏\nអរគុណសម្រាប់ការសាកសួររបស់បង។​\nបងអាចពិនិត្យចម្លើយតាម\n→📩 តេឡេក្រាម https://t.me/SPSCustomerService\n→☎️ ទាក់ទងទូរស័ព្ទលេខ 015 838 902\nសូមអរគុណ!",
-    answer_en: "Dear Mr./Ms,\nThank you for your question.\nPlease kindly check out the answer on\n→📩 telegram: https://t.me/SPSCustomerService\n→☎️ call 015​ 838 902\nRegards,\nWarm Regards!"
-  }
-];
-
 const FAQ = () => {
+  const [faqs, setFaqs] = useState<FAQItem[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/faqs`)
+      .then(res => res.json())
+      .then(data => setFaqs(data))
+      .catch(err => console.error("Failed to fetch faqs", err))
+      .finally(() => setLoading(false));
+  }, []);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  if (loading) {
+    return (
+      <section className="w-full bg-white py-12 md:py-20 relative z-10">
+        <div className="container mx-auto px-4 max-w-4xl flex justify-center">
+          <div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (faqs.length === 0) return null;
 
   return (
     <section className="w-full bg-white py-12 md:py-20 relative z-10">
@@ -58,7 +49,7 @@ const FAQ = () => {
             
             return (
               <div 
-                key={index} 
+                key={faq.id} 
                 className="rounded-lg overflow-hidden border border-gray-100 shadow-sm"
               >
                 <button

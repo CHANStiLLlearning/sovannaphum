@@ -6,11 +6,7 @@ import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import CoreValuesPage from './pages/CoreValuesPage'
-import AdmissionsLayout from './pages/admissions/AdmissionsLayout'
-import AdmissionsIndex from './pages/admissions/AdmissionsIndex'
-import AdmissionProcess from './pages/admissions/AdmissionProcess'
-import OurTeachers from './pages/admissions/OurTeachers'
-import PaymentMethod from './pages/admissions/PaymentMethod'
+
 import ProgramsLayout from './pages/programs/ProgramsLayout'
 import ProgramsIndex from './pages/programs/ProgramsIndex'
 import KhmerGeneralEducation from './pages/programs/KhmerGeneralEducation'
@@ -40,6 +36,8 @@ import AdminFaculty from './pages/admin/AdminFaculty';
 import AdminPrograms from './pages/admin/AdminPrograms';
 import AdminAboutUs from './pages/admin/AdminAboutUs';
 import AdminContactUs from './pages/admin/AdminContactUs';
+import AdminFAQ from './pages/admin/AdminFAQ';
+import AdminPartners from './pages/admin/AdminPartners';
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-white font-sans flex flex-col">
@@ -72,6 +70,8 @@ function App() {
                 <Route path="programs" element={<AdminPrograms />} />
                 <Route path="about-us" element={<AdminAboutUs />} />
                 <Route path="contact-us" element={<AdminContactUs />} />
+                <Route path="faq" element={<AdminFAQ />} />
+                <Route path="partners" element={<AdminPartners />} />
                 <Route path="contacts" element={<AdminContacts />} />
                 <Route path="subscribers" element={<AdminSubscribers />} />
               </Route>
@@ -84,12 +84,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/about/core-values" element={<CoreValuesPage />} />
-                  <Route path="/admissions" element={<AdmissionsLayout />}>
-                    <Route index element={<AdmissionsIndex />} />
-                    <Route path="process" element={<AdmissionProcess />} />
-                    <Route path="teachers" element={<OurTeachers />} />
-                    <Route path="payment" element={<PaymentMethod />} />
-                  </Route>
+
                   <Route path="/programs" element={<ProgramsLayout />}>
                     <Route index element={<ProgramsIndex />} />
                     <Route path="kge" element={<KhmerGeneralEducation />} />

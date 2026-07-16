@@ -15,9 +15,17 @@ const AdminAboutUs = () => {
     about_mission_desc: '',
     about_vision_title: '',
     about_vision_desc: '',
+    mgmt_name: '',
+    mgmt_title: '',
+    mgmt_photo: '',
+    mgmt_welcome_title: '',
+    mgmt_message_1: '',
+    mgmt_message_2: '',
+    mgmt_message_3: '',
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [mgmtPhotoFile, setMgmtPhotoFile] = useState<File | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -36,6 +44,13 @@ const AdminAboutUs = () => {
           about_mission_desc: data.about_mission_desc || '',
           about_vision_title: data.about_vision_title || 'Our Vision',
           about_vision_desc: data.about_vision_desc || '',
+          mgmt_name: data.mgmt_name || 'Mr. CHAN',
+          mgmt_title: data.mgmt_title || 'Chief Executive Officer',
+          mgmt_photo: data.mgmt_photo || '',
+          mgmt_welcome_title: data.mgmt_welcome_title || 'Welcome to Khmer America School',
+          mgmt_message_1: data.mgmt_message_1 || '',
+          mgmt_message_2: data.mgmt_message_2 || '',
+          mgmt_message_3: data.mgmt_message_3 || '',
         });
       }
     } catch (err) {
@@ -53,9 +68,10 @@ const AdminAboutUs = () => {
     e.preventDefault();
     setIsSubmitting(true);
     let uploadedImageUrl = formData.about_hero_image;
+    let uploadedMgmtPhotoUrl = formData.mgmt_photo;
 
     try {
-      // 1. Handle image upload if a file was chosen
+      // 1. Handle hero image upload if a file was chosen
       if (imageFile) {
         const uploadData = new FormData();
         uploadData.append('image', imageFile);
@@ -75,10 +91,26 @@ const AdminAboutUs = () => {
         }
       }
 
+      // 2. Handle management photo upload if a file was chosen
+      if (mgmtPhotoFile) {
+        const uploadData = new FormData();
+        uploadData.append('image', mgmtPhotoFile);
+        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
+        if (uploadRes.ok) {
+          const uploadResult = await uploadRes.json();
+          uploadedMgmtPhotoUrl = uploadResult.url;
+        } else {
+          showToast('Management photo upload failed');
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       // 2. Save settings to DB
       const finalSettings = {
         ...formData,
         about_hero_image: uploadedImageUrl,
+        mgmt_photo: uploadedMgmtPhotoUrl,
       };
 
       const saveRes = await fetch(`${API_BASE_URL}/api/settings`, {
@@ -90,6 +122,7 @@ const AdminAboutUs = () => {
       if (saveRes.ok) {
         showToast('Settings saved successfully!');
         setImageFile(null);
+        setMgmtPhotoFile(null);
         fetchSettings();
       } else {
         showToast('Failed to save settings');
@@ -234,6 +267,82 @@ const AdminAboutUs = () => {
                 />
               </div>
             </div>
+          </div>
+
+          {/* Management Team Card */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
+            <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
+              <Info className="w-5 h-5 text-[#9A2220]" />
+              Management Team Section
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+                <input
+                  type="text"
+                  value={formData.mgmt_name}
+                  onChange={(e) => setFormData({ ...formData, mgmt_name: e.target.value })}
+                  placeholder="e.g. Mr. CHAN"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Title / Position</label>
+                <input
+                  type="text"
+                  value={formData.mgmt_title}
+                  onChange={(e) => setFormData({ ...formData, mgmt_title: e.target.value })}
+                  placeholder="e.g. Chief Executive Officer"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Welcome Title</label>
+              <input
+                type="text"
+                value={formData.mgmt_welcome_title}
+                onChange={(e) => setFormData({ ...formData, mgmt_welcome_title: e.target.value })}
+                placeholder="e.g. Welcome to Khmer America School"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Photo</label>
+              <div className="flex gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div className="w-16 h-16 rounded-full bg-gray-200 border border-gray-300 overflow-hidden shrink-0 flex items-center justify-center">
+                  {mgmtPhotoFile ? (
+                    <img src={URL.createObjectURL(mgmtPhotoFile)} alt="Preview" className="w-full h-full object-cover" />
+                  ) : formData.mgmt_photo ? (
+                    <img src={formData.mgmt_photo} alt="Preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <ImageIcon className="w-6 h-6 text-gray-400" />
+                  )}
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => { if (e.target.files?.[0]) setMgmtPhotoFile(e.target.files[0]); }}
+                  className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                />
+              </div>
+            </div>
+
+            {(['mgmt_message_1', 'mgmt_message_2', 'mgmt_message_3'] as const).map((key, i) => (
+              <div key={key}>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Message Paragraph {i + 1}</label>
+                <textarea
+                  rows={3}
+                  value={formData[key]}
+                  onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
+                  placeholder={`Paragraph ${i + 1}...`}
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 resize-none leading-relaxed"
+                />
+              </div>
+            ))}
           </div>
 
           {/* Submit */}

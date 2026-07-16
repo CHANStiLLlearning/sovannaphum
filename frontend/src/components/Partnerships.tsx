@@ -1,13 +1,36 @@
+import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
-
-const partners = [
-  { name: 'Cambridge Assessment', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Cambridge_Assessment_logo.svg/300px-Cambridge_Assessment_logo.svg.png' },
-  { name: 'IDP Education', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/IDP_Education_logo.svg/300px-IDP_Education_logo.svg.png' },
-  { name: 'IELTS', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/IELTS_logo.svg/300px-IELTS_logo.svg.png' },
-  { name: 'Ministry of Education', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Emblem_of_the_Ministry_of_Education%2C_Youth_and_Sport_of_Cambodia.svg/300px-Emblem_of_the_Ministry_of_Education%2C_Youth_and_Sport_of_Cambodia.svg.png' },
-];
+type Partner = {
+  id: number;
+  name: string;
+  logo: string;
+};
 
 const Partnerships = () => {
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/partners`)
+      .then(res => res.json())
+      .then(data => setPartners(data))
+      .catch(err => console.error("Failed to fetch partners", err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (partners.length === 0) return null;
+
   return (
     <section className="py-16 bg-gray-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,14 +43,13 @@ const Partnerships = () => {
         </div>
 
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-          {partners.map((partner, index) => (
-            <div key={index} className="w-32 md:w-48 h-24 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100">
+          {partners.map((partner) => (
+            <div key={partner.id} className="w-32 md:w-48 h-24 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100">
               <img 
                 src={partner.logo} 
                 alt={partner.name} 
                 className="max-w-full max-h-full object-contain"
                 onError={(e) => {
-                  // Fallback for placeholder logos if they fail to load
                   (e.target as HTMLImageElement).style.display = 'none';
                   (e.target as HTMLImageElement).parentElement!.innerHTML = `<span class="font-bold text-gray-400 text-center">${partner.name}</span>`;
                 }}

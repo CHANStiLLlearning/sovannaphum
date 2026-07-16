@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import MissionVision from '../components/about/MissionVision';
 import KeyFeatures from '../components/about/KeyFeatures';
+import FAQ from '../components/FAQ';
 import { API_BASE_URL } from '../config';
 
 const AboutPage = () => {
@@ -51,6 +52,7 @@ const AboutPage = () => {
       {/* Main Content Sections */}
       <MissionVision />
       <KeyFeatures />
+      <FAQ />
     </div>
   );
 };

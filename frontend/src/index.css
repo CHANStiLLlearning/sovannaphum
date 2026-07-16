@@ -8,6 +8,9 @@
   body {
     @apply bg-slate-900 text-slate-50 antialiased selection:bg-primary-500/30;
   }
+  input, textarea, select {
+    @apply text-black !important;
+  }
 }
 
 .glass-panel {

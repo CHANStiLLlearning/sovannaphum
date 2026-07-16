@@ -577,6 +577,138 @@ app.delete('/api/programs/:id', async (req, res) => {
   }
 });
 
+// --- Testimonials API ---
+app.get('/api/testimonials', async (req, res) => {
+  try {
+    const testimonials = await prisma.testimonial.findMany({ orderBy: { id: 'desc' } });
+    res.json(testimonials);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch testimonials" });
+  }
+});
+
+app.post('/api/testimonials', async (req, res) => {
+  try {
+    const { name, role, image, quote } = req.body;
+    const testimonial = await prisma.testimonial.create({ data: { name, role, image, quote } });
+    res.status(201).json(testimonial);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create testimonial" });
+  }
+});
+
+app.put('/api/testimonials/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { name, role, image, quote } = req.body;
+    const testimonial = await prisma.testimonial.update({
+      where: { id },
+      data: { name, role, image, quote }
+    });
+    res.json(testimonial);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update testimonial" });
+  }
+});
+
+app.delete('/api/testimonials/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    await prisma.testimonial.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete testimonial" });
+  }
+});
+
+// --- FAQ API ---
+app.get('/api/faqs', async (req, res) => {
+  try {
+    const faqs = await prisma.fAQ.findMany({ orderBy: { id: 'desc' } });
+    res.json(faqs);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch FAQs" });
+  }
+});
+
+app.post('/api/faqs', async (req, res) => {
+  try {
+    const { question, answer_kh, answer_en } = req.body;
+    const faq = await prisma.fAQ.create({ data: { question, answer_kh, answer_en } });
+    res.status(201).json(faq);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create FAQ" });
+  }
+});
+
+app.put('/api/faqs/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { question, answer_kh, answer_en } = req.body;
+    const faq = await prisma.fAQ.update({
+      where: { id },
+      data: { question, answer_kh, answer_en }
+    });
+    res.json(faq);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update FAQ" });
+  }
+});
+
+app.delete('/api/faqs/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    await prisma.fAQ.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete FAQ" });
+  }
+});
+
+// --- Partners API ---
+app.get('/api/partners', async (req, res) => {
+  try {
+    const partners = await prisma.partner.findMany({ orderBy: { id: 'desc' } });
+    res.json(partners);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch partners" });
+  }
+});
+
+app.post('/api/partners', async (req, res) => {
+  try {
+    const { name, logo } = req.body;
+    const partner = await prisma.partner.create({ data: { name, logo } });
+    res.status(201).json(partner);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create partner" });
+  }
+});
+
+app.put('/api/partners/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { name, logo } = req.body;
+    const partner = await prisma.partner.update({
+      where: { id },
+      data: { name, logo }
+    });
+    res.json(partner);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update partner" });
+  }
+});
+
+app.delete('/api/partners/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    await prisma.partner.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete partner" });
+  }
+});
+
 // --- Settings API ---
 app.get('/api/settings', async (req, res) => {
   try {
@@ -745,7 +877,14 @@ app.listen(PORT, '0.0.0.0', async () => {
       { key: 'event_hero_subtitle', value: 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.' },
       { key: 'event_hero_image', value: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1920' },
       { key: 'program_hero_title', value: 'Academic Programs' },
-      { key: 'program_hero_image', value: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1920' }
+      { key: 'program_hero_image', value: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1920' },
+      { key: 'mgmt_name', value: 'Mr. CHAN' },
+      { key: 'mgmt_title', value: 'Chief Executive Officer' },
+      { key: 'mgmt_photo', value: 'https://portfolio-web-eosin-alpha.vercel.app/assets/keokimchan-CZlzWr5F.png' },
+      { key: 'mgmt_welcome_title', value: 'Welcome to Khmer America School' },
+      { key: 'mgmt_message_1', value: 'Education is the most powerful weapon which you can use to change the world. At Khmer America School, we are committed to providing the highest quality education to build the future leaders of Cambodia.' },
+      { key: 'mgmt_message_2', value: 'Since our founding, we have continuously strived for excellence, expanding our reach and improving our curriculum to meet international standards while preserving our rich Khmer culture and heritage.' },
+      { key: 'mgmt_message_3', value: 'I invite you to join our growing community of learners, educators, and parents who share a common vision: empowering the next generation with knowledge, character, and skills for success in a rapidly changing world.' }
     ];
     const promises = defaultSettings.map(async (s) => {
       const exists = await prisma.setting.findUnique({ where: { key: s.key } });
