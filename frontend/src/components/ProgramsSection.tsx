@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Globe, MessageSquare, Languages, ChevronRight } from 'lucide-react';
+import { BookOpen, Globe, MessageSquare, Languages } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 type BackendProgram = {

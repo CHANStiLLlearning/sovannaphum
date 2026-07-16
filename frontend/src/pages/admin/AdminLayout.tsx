@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap, Menu, X, Sliders, BookOpen, Info, Phone, Quote, Handshake, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap, Menu, X, Sliders, BookOpen, Info, Phone, Handshake, HelpCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const AdminLayout = () => {

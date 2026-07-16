@@ -4,7 +4,7 @@ import { BookOpen, Globe, Languages, MessageSquare } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
 
 const ProgramsIndex = () => {
-  const [programs, setPrograms] = useState([]);
+  const [programs, setPrograms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
