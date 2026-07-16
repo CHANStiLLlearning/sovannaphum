@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Lock, User, Eye, EyeOff, GraduationCap, ArrowLeft } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
 
 const AdminLogin = () => {
@@ -78,8 +78,8 @@ const AdminLogin = () => {
 
         {/* Center welcome content */}
         <div className="relative z-10 max-w-lg my-auto space-y-6">
-          <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg border border-white/20">
-            <GraduationCap className="w-10 h-10 text-[#EBA525]" />
+          <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-white/20 p-2 overflow-hidden animate-float-medium">
+            <img src="/images/logo.png" alt="KAS Logo" className="w-full h-full object-contain" />
           </div>
           <div className="space-y-3">
             <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight leading-tight">
@@ -109,8 +109,8 @@ const AdminLogin = () => {
         <div className="w-full max-w-md space-y-8 relative z-10">
           {/* Mobile school branding header */}
           <div className="lg:hidden flex flex-col items-center text-center space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#9A2220]/10 flex items-center justify-center border border-[#9A2220]/20">
-              <GraduationCap className="w-8 h-8 text-[#9A2220]" />
+            <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center border border-gray-100 p-2 overflow-hidden shadow-sm">
+              <img src="/images/logo.png" alt="KAS Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
@@ -119,13 +119,18 @@ const AdminLogin = () => {
           </div>
 
           {/* Desktop header title */}
-          <div className="hidden lg:block">
-            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-              Welcome back
-            </h2>
-            <p className="text-sm text-gray-500 mt-2">
-              Please enter your admin credentials below
-            </p>
+          <div className="hidden lg:block space-y-4">
+            <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center border border-gray-100 p-2 overflow-hidden shadow-sm">
+              <img src="/images/logo.png" alt="KAS Logo" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+                Welcome back
+              </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Please enter your admin credentials below
+              </p>
+            </div>
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-100/80 shadow-2xl shadow-gray-200/50 p-6 sm:p-10 space-y-6">
