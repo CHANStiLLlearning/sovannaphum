@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, Save, Info, Phone, Share2, MapPin } from 'lucide-react';
+import { CheckCircle2, Save, Info, Phone, Share2, MapPin, Image as ImageIcon } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
 
 const AdminContactUs = () => {
@@ -11,6 +11,7 @@ const AdminContactUs = () => {
   const [formData, setFormData] = useState({
     contact_hero_title: '',
     contact_hero_subtitle: '',
+    contact_hero_image: '',
     contact_phone: '',
     contact_email: '',
     contact_telegram: '',
@@ -21,6 +22,8 @@ const AdminContactUs = () => {
     contact_tiktok: '',
     contact_map_iframe: '',
   });
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -35,6 +38,7 @@ const AdminContactUs = () => {
         setFormData({
           contact_hero_title: data.contact_hero_title || 'Contact Us',
           contact_hero_subtitle: data.contact_hero_subtitle || 'Get in touch with Khmer America School',
+          contact_hero_image: data.contact_hero_image || '',
           contact_phone: data.contact_phone || '',
           contact_email: data.contact_email || '',
           contact_telegram: data.contact_telegram || '',
@@ -60,16 +64,44 @@ const AdminContactUs = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    let uploadedImageUrl = formData.contact_hero_image;
 
     try {
+      // 1. Handle image upload if a file was chosen
+      if (imageFile) {
+        const uploadData = new FormData();
+        uploadData.append('image', imageFile);
+        
+        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
+          method: 'POST',
+          body: uploadData,
+        });
+
+        if (uploadRes.ok) {
+          const uploadResult = await uploadRes.json();
+          uploadedImageUrl = uploadResult.url;
+        } else {
+          showToast('Image upload failed');
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
+      // 2. Save settings to DB
+      const finalSettings = {
+        ...formData,
+        contact_hero_image: uploadedImageUrl,
+      };
+
       const res = await fetch(`${API_BASE_URL}/api/settings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(finalSettings),
       });
 
       if (res.ok) {
         showToast('Settings saved successfully!');
+        setImageFile(null);
         fetchSettings();
       } else {
         showToast('Failed to save settings');
@@ -135,6 +167,29 @@ const AdminContactUs = () => {
                   placeholder="e.g. Get in touch with Khmer America School"
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
                 />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Banner Background Image</label>
+              <div className="flex gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div className="w-24 h-16 bg-gray-200 border border-gray-300 rounded-lg overflow-hidden shrink-0 flex items-center justify-center">
+                  {imageFile ? (
+                    <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
+                  ) : formData.contact_hero_image ? (
+                    <img src={formData.contact_hero_image} alt="Preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <ImageIcon className="w-6 h-6 text-gray-400" />
+                  )}
+                </div>
+                <div className="flex-1 w-full">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => { if (e.target.files?.[0]) setImageFile(e.target.files[0]); }}
+                    className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                  />
+                </div>
               </div>
             </div>
           </div>

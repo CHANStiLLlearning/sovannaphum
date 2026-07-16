@@ -19,6 +19,12 @@ const FacultyPage = () => {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const [selectedNationality, setSelectedNationality] = useState('all');
 
+  const [settings, setSettings] = useState({
+    faculty_hero_title: 'Meet Our Faculty',
+    faculty_hero_subtitle: 'Dedicated educators shaping the next generation with passion, expertise, and care.',
+    faculty_hero_image: '',
+  });
+
   const fetchTeachers = async () => {
     setLoading(true);
     setError('');
@@ -34,8 +40,25 @@ const FacultyPage = () => {
     }
   };
 
+  const fetchFacultySettings = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/settings`);
+      if (res.ok) {
+        const data = await res.json();
+        setSettings({
+          faculty_hero_title: data.faculty_hero_title || settings.faculty_hero_title,
+          faculty_hero_subtitle: data.faculty_hero_subtitle || settings.faculty_hero_subtitle,
+          faculty_hero_image: data.faculty_hero_image || settings.faculty_hero_image,
+        });
+      }
+    } catch (err) {
+      console.warn('Fallback to local faculty page settings:', err);
+    }
+  };
+
   useEffect(() => {
     fetchTeachers();
+    fetchFacultySettings();
   }, []);
 
   const subjects = ['all', ...Array.from(new Set(teachers.map(t => t.subject).filter(Boolean)))];
@@ -54,8 +77,19 @@ const FacultyPage = () => {
     <div className="w-full bg-[#f8f9fa] flex flex-col min-h-screen font-sans">
 
       {/* Hero */}
-      <div className="relative w-full h-[40vh] min-h-[350px] bg-[#1D055F] flex flex-col justify-center items-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/30" />
+      <div className="relative w-full h-[70vh] bg-black min-h-[350px] flex flex-col justify-center items-center text-white overflow-hidden">
+        {settings.faculty_hero_image ? (
+          <div className="absolute inset-0 w-full h-full">
+            <img 
+              src={settings.faculty_hero_image} 
+              alt="" 
+              className="w-full h-full object-cover opacity-90"
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-0 bg-black/30" />
+        )}
+        <div className="absolute inset-0 bg-[#1D055F]/40"></div>
         <div className="absolute top-[-10%] left-[-5%] w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-5%] w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
@@ -63,10 +97,10 @@ const FacultyPage = () => {
             Our People
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-md">
-            Meet Our Faculty
+            {settings.faculty_hero_title}
           </h1>
           <p className="text-lg md:text-xl opacity-95 drop-shadow-sm font-medium leading-relaxed">
-            Dedicated educators shaping the next generation with passion, expertise, and care.
+            {settings.faculty_hero_subtitle}
           </p>
         </div>
       </div>

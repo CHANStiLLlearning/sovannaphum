@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit, CheckCircle2, BookOpen, Globe, MessageSquare, Languages } from 'lucide-react';
+import { Plus, Trash2, Edit, CheckCircle2, BookOpen, Globe, MessageSquare, Languages, Image as ImageIcon } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
 
 type Program = {
@@ -47,9 +47,68 @@ const AdminPrograms = () => {
   const [programToDelete, setProgramToDelete] = useState<number | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // Programs Page Header Settings
+  const [programSettings, setProgramSettings] = useState({
+    program_hero_title: 'Academic Programs',
+    program_hero_image: '',
+  });
+  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const fetchProgramSettings = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/settings`);
+      if (res.ok) {
+        const data = await res.json();
+        setProgramSettings({
+          program_hero_title: data.program_hero_title || 'Academic Programs',
+          program_hero_image: data.program_hero_image || '',
+        });
+      }
+    } catch (err) {
+      console.error('Failed to load program settings:', err);
+    }
+  };
+
+  const handleSaveProgramSettings = async () => {
+    setIsSavingSettings(true);
+    let uploadedImageUrl = programSettings.program_hero_image;
+    try {
+      if (bannerFile) {
+        const uploadData = new FormData();
+        uploadData.append('image', bannerFile);
+        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
+        if (uploadRes.ok) {
+          const uploadResult = await uploadRes.json();
+          uploadedImageUrl = uploadResult.url;
+        } else {
+          showToast('Banner image upload failed');
+          setIsSavingSettings(false);
+          return;
+        }
+      }
+      const res = await fetch(`${API_BASE_URL}/api/settings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...programSettings, program_hero_image: uploadedImageUrl }),
+      });
+      if (res.ok) {
+        showToast('Programs header saved successfully!');
+        setBannerFile(null);
+        fetchProgramSettings();
+      } else {
+        showToast('Failed to save header settings');
+      }
+    } catch {
+      showToast('An error occurred');
+    } finally {
+      setIsSavingSettings(false);
+    }
   };
 
   const fetchPrograms = async () => {
@@ -67,6 +126,7 @@ const AdminPrograms = () => {
 
   useEffect(() => {
     fetchPrograms();
+    fetchProgramSettings();
   }, []);
 
   const handleOpenModal = (program?: Program) => {
@@ -168,6 +228,55 @@ const AdminPrograms = () => {
           <span className="font-medium">{toastMessage}</span>
         </div>
       )}
+
+      {/* Programs Page Header Settings Card */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 mb-8 space-y-6 font-sans">
+        <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-[#9A2220]" />
+          Programs Page Header Settings
+        </h2>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
+          <input
+            type="text"
+            value={programSettings.program_hero_title}
+            onChange={(e) => setProgramSettings({ ...programSettings, program_hero_title: e.target.value })}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Banner Background Image</label>
+          <div className="flex gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <div className="w-24 h-16 bg-gray-200 border border-gray-300 rounded-lg overflow-hidden shrink-0 flex items-center justify-center">
+              {bannerFile ? (
+                <img src={URL.createObjectURL(bannerFile)} alt="Preview" className="w-full h-full object-cover" />
+              ) : programSettings.program_hero_image ? (
+                <img src={programSettings.program_hero_image} alt="Preview" className="w-full h-full object-cover" />
+              ) : (
+                <ImageIcon className="w-6 h-6 text-gray-400" />
+              )}
+            </div>
+            <div className="flex-1 w-full flex flex-col sm:flex-row gap-3 items-center">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => { if (e.target.files?.[0]) setBannerFile(e.target.files[0]); }}
+                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+              />
+              <button
+                type="button"
+                disabled={isSavingSettings}
+                onClick={handleSaveProgramSettings}
+                className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
+              >
+                {isSavingSettings ? (
+                  <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>Saving...</>
+                ) : 'Save Header'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">

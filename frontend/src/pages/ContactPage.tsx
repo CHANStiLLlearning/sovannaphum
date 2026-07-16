@@ -7,6 +7,7 @@ const ContactPage = () => {
   const [settings, setSettings] = useState({
     contact_hero_title: 'Contact Us',
     contact_hero_subtitle: 'Get in touch with Khmer America School',
+    contact_hero_image: '',
     contact_phone: '(+855) 15 838 015',
     contact_email: 'info@khmeramericaschool.edu.kh',
     contact_telegram: 't.me/khmeramericaschoolcambodia',
@@ -28,6 +29,7 @@ const ContactPage = () => {
         setSettings({
           contact_hero_title: data.contact_hero_title || settings.contact_hero_title,
           contact_hero_subtitle: data.contact_hero_subtitle || settings.contact_hero_subtitle,
+          contact_hero_image: data.contact_hero_image || settings.contact_hero_image,
           contact_phone: data.contact_phone || settings.contact_phone,
           contact_email: data.contact_email || settings.contact_email,
           contact_telegram: data.contact_telegram || settings.contact_telegram,
@@ -91,8 +93,17 @@ const ContactPage = () => {
     <div className="w-full bg-white flex flex-col min-h-screen font-sans">
       
       {/* Hero Section */}
-      <div className="relative w-full h-[25vh] min-h-[220px] bg-[#9A2220] flex flex-col justify-center items-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <div className="relative w-full h-[70vh] bg-black min-h-[220px] flex flex-col justify-center items-center text-white overflow-hidden">
+        {settings.contact_hero_image && (
+          <div className="absolute inset-0 w-full h-full">
+            <img 
+              src={settings.contact_hero_image} 
+              alt="" 
+              className="w-full h-full object-cover opacity-90"
+            />
+          </div>
+        )}
+        <div className="absolute inset-0 bg-[#9A2220]/20"></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-md">{settings.contact_hero_title}</h1>
           <p className="text-lg md:text-xl opacity-90 font-medium">

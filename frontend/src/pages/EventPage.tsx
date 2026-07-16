@@ -22,6 +22,11 @@ const EventPage = () => {
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCampus, setSelectedCampus] = useState('all');
+  const [settings, setSettings] = useState({
+    event_hero_title: 'School Events & Activities',
+    event_hero_subtitle: 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
+    event_hero_image: '',
+  });
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -39,9 +44,27 @@ const EventPage = () => {
     }
   };
 
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/settings`);
+      if (res.ok) {
+        const data = await res.json();
+        setSettings({
+          event_hero_title: data.event_hero_title || 'School Events & Activities',
+          event_hero_subtitle: data.event_hero_subtitle || 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
+          event_hero_image: data.event_hero_image || '',
+        });
+      }
+    } catch { /* silent */ }
+  };
+
   useEffect(() => {
     fetchEvents();
   }, [searchQuery]);
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
 
   // Filter events client-side for campus locations
   const filteredEvents = events.filter(event => {
@@ -53,24 +76,37 @@ const EventPage = () => {
     <div className="w-full bg-[#f8f9fa] flex flex-col min-h-screen font-sans">
       
       {/* Hero Section */}
-      <div className="relative w-full h-[40vh] min-h-[350px] bg-[#9A2220] flex flex-col justify-center items-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/35"></div>
-        
-        {/* Decorative background elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[-5%] w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
-          <div className="absolute bottom-[-10%] right-[-5%] w-80 h-80 rounded-full bg-white/10 blur-3xl"></div>
-        </div>
+      <div className="relative w-full h-[70vh] min-h-[350px] flex flex-col justify-center items-center text-white overflow-hidden">
+        {settings.event_hero_image ? (
+          <div className="absolute inset-0 w-full h-full">
+            <img
+              src={settings.event_hero_image}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/50"></div>
+          </div>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-[#9A2220]"></div>
+            <div className="absolute inset-0 bg-black/35"></div>
+            {/* Decorative background elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+              <div className="absolute top-[-10%] left-[-5%] w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
+              <div className="absolute bottom-[-10%] right-[-5%] w-80 h-80 rounded-full bg-white/10 blur-3xl"></div>
+            </div>
+          </>
+        )}
 
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
           <span className="inline-flex py-1 px-3.5 rounded-full bg-white/20 backdrop-blur-md text-sm font-semibold uppercase tracking-wider mb-4 border border-white/30">
             Life at SPS
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-md">
-            School Events & Activities
+            {settings.event_hero_title}
           </h1>
           <p className="text-lg md:text-xl opacity-95 drop-shadow-sm font-medium leading-relaxed">
-            Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.
+            {settings.event_hero_subtitle}
           </p>
         </div>
       </div>

@@ -30,12 +30,12 @@ const AboutPage = () => {
   return (
     <div className="w-full bg-white flex flex-col">
       {/* Hero Banner for About Page */}
-      <section className="relative w-full h-[400px] bg-gray-900 flex items-center justify-center">
+      <section className="relative w-full bg-black h-[70vh] flex items-center justify-center">
         <div className="absolute inset-0 w-full h-full">
           <img 
             src={settings.about_hero_image} 
             alt="Students collaborating" 
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-90"
           />
         </div>
         <div className="relative z-10 text-center px-4">

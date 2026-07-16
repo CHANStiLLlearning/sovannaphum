@@ -26,7 +26,7 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row relative">
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row md:items-start relative">
       
       {/* Mobile Top Header Bar */}
       <div className="flex md:hidden items-center justify-between bg-[#1D055F] text-white p-4 sticky top-0 z-30 shadow-md">
@@ -55,7 +55,7 @@ const AdminLayout = () => {
       />
 
       {/* Sidebar Container */}
-      <aside className={`fixed md:static inset-y-0 left-0 md:left-auto w-64 bg-[#1D055F] text-white flex flex-col shadow-xl z-50 md:z-auto transition-transform md:transition-none duration-300 ease-in-out md:transform-none md:flex font-sans ${
+      <aside className={`fixed md:sticky md:top-0 md:h-screen inset-y-0 left-0 w-64 bg-[#1D055F] text-white flex flex-col shadow-xl z-50 md:z-auto transition-transform md:transition-none duration-300 ease-in-out md:transform-none md:flex font-sans shrink-0 ${
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="p-6 border-b border-white/10 flex items-center justify-between gap-3">
