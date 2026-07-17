@@ -125,7 +125,7 @@ const HeroBanner = () => {
               {/* Slide Description */}
               <p 
                 style={{ animationDelay: '400ms' }}
-                className="text-sm sm:text-base md:text-lg text-white/85 max-w-xl font-medium leading-relaxed transform transition-all duration-700 translate-y-4 opacity-0 animate-fade-in-up"
+                className="text-sm sm:text-base md:text-lg text-white/85 max-w-xl font-medium leading-relaxed transform transition-all duration-700 translate-y-4 opacity-0 animate-fade-in-up line-clamp-5"
               >
                 {slide.description}
               </p>
