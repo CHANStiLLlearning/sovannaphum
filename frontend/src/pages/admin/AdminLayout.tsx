@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap, Menu, X, Sliders, BookOpen, Info, Phone, Handshake, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap, Menu, X, Sliders, Info, Phone, Handshake, HelpCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const AdminLayout = () => {
@@ -11,7 +11,6 @@ const AdminLayout = () => {
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard className="w-5 h-5" />, exact: true },
     { name: 'Hero Slides', path: '/admin/slides', icon: <Sliders className="w-5 h-5" /> },
-    { name: 'Programs', path: '/admin/programs', icon: <BookOpen className="w-5 h-5" /> },
     { name: 'About Us', path: '/admin/about-us', icon: <Info className="w-5 h-5" /> },
     { name: 'Contact Info', path: '/admin/contact-us', icon: <Phone className="w-5 h-5" /> },
     { name: 'FAQ', path: '/admin/faq', icon: <HelpCircle className="w-5 h-5" /> },

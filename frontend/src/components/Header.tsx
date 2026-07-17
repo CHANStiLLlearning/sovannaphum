@@ -71,7 +71,27 @@ const Header = () => {
               Home
             </NavLink>
 
-            <div className="relative group flex items-center py-2">
+
+            <NavLink
+              to="/news"
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+            >
+              News
+            </NavLink>
+
+            <NavLink
+              to="/contact"
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+            >
+              Contact Us
+            </NavLink>
+            <NavLink
+              to="/eventpage"
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+            >
+              Events
+            </NavLink>
+             <div className="relative group flex items-center py-2">
               <NavLink
                 to="/about"
                 className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 flex items-center gap-1 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
@@ -96,31 +116,6 @@ const Header = () => {
                 </NavLink>
               </div>
             </div>
-            <NavLink
-              to="/programs"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
-            >
-              Programs
-            </NavLink>
-            <NavLink
-              to="/news"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
-            >
-              News
-            </NavLink>
-
-            <NavLink
-              to="/contact"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
-            >
-              Contact Us
-            </NavLink>
-            <NavLink
-              to="/eventpage"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
-            >
-              Events
-            </NavLink>
           </nav>
         
           {/* Action Icons */}
@@ -211,13 +206,7 @@ const Header = () => {
           >
             <span className="text-gray-300 font-normal">└</span> Faculty
           </NavLink>
-          <NavLink
-            to="/programs"
-            onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
-          >
-            Programs
-          </NavLink>
+
           <NavLink
             to="/news"
             onClick={toggleMobileMenu}
