@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Trash2, CheckCircle2 } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 type ContactMessage = {
   id: number;

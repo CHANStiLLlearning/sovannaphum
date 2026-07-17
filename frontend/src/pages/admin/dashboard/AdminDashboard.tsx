@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Newspaper, Mail, Users, Clock, Calendar as CalendarIcon, Filter, GraduationCap, ArrowUpRight, TrendingUp } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 type DataItem = { createdAt: string };
 

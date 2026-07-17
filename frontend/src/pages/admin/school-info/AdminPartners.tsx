@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Handshake, Plus, Edit2, Trash2, X, Save, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 type Partner = {
   id: number;

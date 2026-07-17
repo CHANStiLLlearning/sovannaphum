@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, CheckCircle2, User, BookOpen, Globe, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 type Teacher = {
   id: number;

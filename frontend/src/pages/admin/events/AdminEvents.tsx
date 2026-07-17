@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, CheckCircle2, Calendar, MapPin, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 

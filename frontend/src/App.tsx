@@ -18,26 +18,26 @@ import NewsDetailPage from './pages/NewsDetailPage'
 import ContactPage from './pages/ContactPage'
 
 
-import AdminLayout from './pages/admin/AdminLayout';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminNews from './pages/admin/AdminNews';
-import AdminEvents from './pages/admin/AdminEvents';
-import AdminContacts from './pages/admin/AdminContacts';
-import AdminSubscribers from './pages/admin/AdminSubscribers';
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminSlides from './pages/admin/AdminSlides';
+import AdminLayout from './pages/admin/layout/AdminLayout';
+import AdminDashboard from './pages/admin/dashboard/AdminDashboard';
+import AdminNews from './pages/admin/news/AdminNews';
+import AdminEvents from './pages/admin/events/AdminEvents';
+import AdminContacts from './pages/admin/inbox/AdminContacts';
+import AdminSubscribers from './pages/admin/inbox/AdminSubscribers';
+import AdminLogin from './pages/admin/auth/AdminLogin';
+import AdminSlides from './pages/admin/slides/AdminSlides';
 
 import ScrollToTop from './components/ScrollToTop'
 import ProtectedRoute from './components/ProtectedRoute';
 import EventPage from './pages/EventPage';
 import FacultyPage from './pages/FacultyPage';
 import NotFoundPage from './pages/NotFoundPage';
-import AdminFaculty from './pages/admin/AdminFaculty';
-import AdminPrograms from './pages/admin/AdminPrograms';
-import AdminAboutUs from './pages/admin/AdminAboutUs';
-import AdminContactUs from './pages/admin/AdminContactUs';
-import AdminFAQ from './pages/admin/AdminFAQ';
-import AdminPartners from './pages/admin/AdminPartners';
+import AdminFaculty from './pages/admin/faculty/AdminFaculty';
+import AdminPrograms from './pages/admin/programs/AdminPrograms';
+import AdminAboutUs from './pages/admin/school-info/AdminAboutUs';
+import AdminContactUs from './pages/admin/school-info/AdminContactUs';
+import AdminFAQ from './pages/admin/school-info/AdminFAQ';
+import AdminPartners from './pages/admin/school-info/AdminPartners';
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-white font-sans flex flex-col">

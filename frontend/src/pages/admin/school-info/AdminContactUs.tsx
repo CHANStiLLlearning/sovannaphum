@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Save, Info, Phone, Share2, MapPin, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 const AdminContactUs = () => {
   const [loading, setLoading] = useState(true);

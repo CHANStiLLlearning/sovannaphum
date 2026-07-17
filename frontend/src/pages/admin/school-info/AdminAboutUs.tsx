@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Image as ImageIcon, Save, Info, Target, Eye } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 const AdminAboutUs = () => {
   const [loading, setLoading] = useState(true);
