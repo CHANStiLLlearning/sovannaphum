@@ -38,11 +38,11 @@ const AdminDashboard = () => {
     const fetchStats = async () => {
       try {
         const [newsRes, eventsRes, contactsRes, subsRes, teachersRes, programsRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/news`),
-          fetch(`${API_BASE_URL}/api/events`),
+          fetch(`${API_BASE_URL}/api/news?limit=10000`),
+          fetch(`${API_BASE_URL}/api/events?limit=10000`),
           fetch(`${API_BASE_URL}/api/contact`),
           fetch(`${API_BASE_URL}/api/subscribe`),
-          fetch(`${API_BASE_URL}/api/teachers?limit=1000`),
+          fetch(`${API_BASE_URL}/api/teachers?limit=10000`),
           fetch(`${API_BASE_URL}/api/programs`).catch(() => null), // Catch if not implemented yet
         ]);
         const news = await newsRes.json();

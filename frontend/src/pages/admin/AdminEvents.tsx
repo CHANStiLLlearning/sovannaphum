@@ -23,6 +23,7 @@ const AdminEvents = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDateFilter, setSelectedDateFilter] = useState('all');
   
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -108,7 +109,7 @@ const AdminEvents = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/events?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`${API_BASE_URL}/api/events?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}&timeframe=${selectedDateFilter}`);
       const result = await res.json();
       setEvents(result.data || []);
       setTotalPages(result?.pagination?.totalPages || 1);
@@ -121,7 +122,7 @@ const AdminEvents = () => {
 
   useEffect(() => {
     fetchEvents();
-  }, [page, searchQuery]);
+  }, [page, searchQuery, selectedDateFilter]);
 
   useEffect(() => {
     fetchEventSettings();
@@ -306,9 +307,21 @@ const AdminEvents = () => {
             }}
             className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-sm w-full sm:w-64 font-sans text-gray-900"
           />
+          <select
+            value={selectedDateFilter}
+            onChange={(e) => {
+              setSelectedDateFilter(e.target.value);
+              setPage(1);
+            }}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-sm font-sans bg-white text-gray-700 cursor-pointer"
+          >
+            <option value="all">All Events</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="past">Past</option>
+          </select>
           <button 
             onClick={() => handleOpenModal()}
-            className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans"
+            className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans shrink-0"
           >
             <Plus className="w-5 h-5" /> Add Event
           </button>

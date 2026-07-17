@@ -207,9 +207,8 @@ app.get('/api/events', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search || '';
+    const timeframe = req.query.timeframe || 'all';
     
-    const skip = (page - 1) * limit;
-
     const where = search ? {
       OR: [
         { title: { contains: search } },
@@ -217,18 +216,51 @@ app.get('/api/events', async (req, res) => {
       ]
     } : {};
 
-    const [events, total] = await Promise.all([
-      prisma.event.findMany({
-        where,
-        orderBy: { createdAt: 'desc' },
-        skip,
-        take: limit,
-      }),
-      prisma.event.count({ where })
-    ]);
+    // Get all events matching the search query
+    let events = await prisma.event.findMany({
+      where,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    // Date filtering (Upcoming vs Past) in memory
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (timeframe !== 'all') {
+      events = events.filter(event => {
+        const eventTime = Date.parse(event.date);
+        if (isNaN(eventTime)) {
+          // Fallback for unparseable dates: treat as upcoming
+          return timeframe === 'upcoming';
+        }
+        const eventDate = new Date(eventTime);
+        eventDate.setHours(0, 0, 0, 0);
+        return timeframe === 'upcoming' ? eventDate >= today : eventDate < today;
+      });
+    }
+
+    // Sort:
+    // - upcoming: ascending (nearest first)
+    // - past / all: descending (most recent first)
+    events.sort((a, b) => {
+      const timeA = Date.parse(a.date);
+      const timeB = Date.parse(b.date);
+      
+      if (isNaN(timeA)) return 1;
+      if (isNaN(timeB)) return -1;
+      
+      if (timeframe === 'upcoming') {
+        return timeA - timeB;
+      }
+      return timeB - timeA;
+    });
+
+    const total = events.length;
+    // Paginate in memory
+    const paginatedEvents = events.slice((page - 1) * limit, page * limit);
 
     res.json({
-      data: events,
+      data: paginatedEvents,
       pagination: {
         total,
         page,
