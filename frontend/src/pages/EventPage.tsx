@@ -24,6 +24,7 @@ const EventPage = () => {
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCampus, setSelectedCampus] = useState('all');
+  const [selectedDateFilter, setSelectedDateFilter] = useState('all');
   const [settings, setSettings] = useState({
     event_hero_title: 'School Events & Activities',
     event_hero_subtitle: 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
@@ -68,10 +69,50 @@ const EventPage = () => {
     fetchSettings();
   }, []);
 
-  // Filter events client-side for campus locations
+  // Filter events client-side for campus locations & date timeframe
   const filteredEvents = events.filter(event => {
-    if (selectedCampus === 'all') return true;
-    return event.location.toLowerCase().includes(selectedCampus.toLowerCase());
+    // 1. Campus location filter
+    const matchesCampus = selectedCampus === 'all' || event.location.toLowerCase().includes(selectedCampus.toLowerCase());
+    
+    // 2. Date timeframe filter
+    const eventTime = Date.parse(event.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let matchesDate = true;
+    if (!isNaN(eventTime)) {
+      const eventDate = new Date(eventTime);
+      eventDate.setHours(0, 0, 0, 0);
+      
+      if (selectedDateFilter === 'upcoming') {
+        matchesDate = eventDate >= today;
+      } else if (selectedDateFilter === 'past') {
+        matchesDate = eventDate < today;
+      }
+    } else {
+      // Fallback for unparseable dates: show under "all" and "upcoming"
+      if (selectedDateFilter === 'past') {
+        matchesDate = false;
+      }
+    }
+    
+    return matchesCampus && matchesDate;
+  });
+
+  // Sort events chronologically based on timeframe selection:
+  // - Upcoming: Show nearest events first (ascending order)
+  // - Past / All: Show newest events first (descending order)
+  const sortedEvents = [...filteredEvents].sort((a, b) => {
+    const timeA = Date.parse(a.date);
+    const timeB = Date.parse(b.date);
+    
+    if (isNaN(timeA)) return 1;
+    if (isNaN(timeB)) return -1;
+    
+    if (selectedDateFilter === 'upcoming') {
+      return timeA - timeB;
+    }
+    return timeB - timeA;
   });
 
   return (
@@ -141,19 +182,38 @@ const EventPage = () => {
             )}
           </div>
 
-          {/* Campus Filter */}
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <label className="text-sm font-bold text-gray-600 whitespace-nowrap hidden sm:inline">Filter Campus:</label>
-            <select
-              value={selectedCampus}
-              onChange={(e) => setSelectedCampus(e.target.value)}
-              className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
-            >
-              <option value="all">All Campuses</option>
-              <option value="Phnom Penh">Phnom Penh Campus</option>
-              <option value="Siem Reap">Siem Reap Campus</option>
-              <option value="Head Office">Head Office</option>
-            </select>
+          {/* Filters */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+            
+            {/* Campus Filter */}
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <label className="text-sm font-bold text-gray-600 whitespace-nowrap hidden sm:inline">Campus:</label>
+              <select
+                value={selectedCampus}
+                onChange={(e) => setSelectedCampus(e.target.value)}
+                className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+              >
+                <option value="all">All Campuses</option>
+                <option value="Phnom Penh">Phnom Penh Campus</option>
+                <option value="Siem Reap">Siem Reap Campus</option>
+                <option value="Head Office">Head Office</option>
+              </select>
+            </div>
+
+            {/* Date Filter */}
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <label className="text-sm font-bold text-gray-600 whitespace-nowrap hidden sm:inline">Timeframe:</label>
+              <select
+                value={selectedDateFilter}
+                onChange={(e) => setSelectedDateFilter(e.target.value)}
+                className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+              >
+                <option value="all">All Events</option>
+                <option value="upcoming">Upcoming Events</option>
+                <option value="past">Past Events</option>
+              </select>
+            </div>
+
           </div>
 
         </div>
@@ -197,7 +257,7 @@ const EventPage = () => {
         {/* Events Grid */}
         {!loading && !error && (
           <>
-            {filteredEvents.length === 0 ? (
+            {sortedEvents.length === 0 ? (
               <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm px-6">
                 <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Calendar className="w-8 h-8 text-gray-400" />
@@ -209,7 +269,7 @@ const EventPage = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredEvents.map((event) => (
+                {sortedEvents.map((event) => (
                   <div 
                     key={event.id} 
                     className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
