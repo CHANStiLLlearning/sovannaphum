@@ -216,7 +216,7 @@ const AdminSlides = () => {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center justify-center gap-2 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5"
+          className="flex items-center justify-center gap-2 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5"
         >
           <Plus className="w-5 h-5" /> Add Slide
         </button>
@@ -224,7 +224,7 @@ const AdminSlides = () => {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-10 h-10 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : slides.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-3xl border border-gray-100 px-6 shadow-sm">
@@ -237,7 +237,7 @@ const AdminSlides = () => {
           </p>
           <button
             onClick={() => handleOpenModal()}
-            className="inline-flex items-center gap-2 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3 px-6 rounded-xl transition-all shadow"
+            className="inline-flex items-center gap-2 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold py-3 px-6 rounded-xl transition-all shadow"
           >
             <Plus className="w-5 h-5" /> Add Your First Slide
           </button>
@@ -265,7 +265,7 @@ const AdminSlides = () => {
                     <span className="uppercase tracking-wider">{slide.iconName}</span>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight group-hover:text-[#9A2220] transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight group-hover:text-[#1E3A8A] transition-colors">
                   {slide.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
@@ -285,7 +285,7 @@ const AdminSlides = () => {
                   </button>
                   <button
                     onClick={() => setSlideToDelete(slide.id)}
-                    className="p-2 rounded-xl text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition-colors"
+                    className="p-2 rounded-xl text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-100 transition-colors"
                     title="Delete Slide"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -317,7 +317,7 @@ const AdminSlides = () => {
                     value={formData.tag}
                     onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
                     placeholder="e.g. WELCOME TO KHMER AMERICA SCHOOL"
-                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] outline-none text-sm text-gray-900"
                   />
                 </div>
                 <div>
@@ -325,7 +325,7 @@ const AdminSlides = () => {
                   <select 
                     value={formData.iconName}
                     onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-gray-200 bg-white rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900 cursor-pointer"
+                    className="w-full px-4 py-2.5 border border-gray-200 bg-white rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] outline-none text-sm text-gray-900 cursor-pointer"
                   >
                     {iconOptions.map(opt => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -343,7 +343,7 @@ const AdminSlides = () => {
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g. Shaping Leaders of the Digital Era"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] outline-none text-sm text-gray-900"
                 />
               </div>
 
@@ -356,7 +356,7 @@ const AdminSlides = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Summarize key features, programs, or admission details details..."
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900 resize-none"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] outline-none text-sm text-gray-900 resize-none"
                 />
               </div>
 
@@ -379,7 +379,7 @@ const AdminSlides = () => {
                       type="file" 
                       accept="image/*"
                       onChange={handleFileChange}
-                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
                     />
                     <p className="text-[10px] text-gray-400 mt-2">Recommended resolution: 1920x1080px (landscape aspect).</p>
                   </div>
@@ -400,7 +400,7 @@ const AdminSlides = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-6 py-2.5 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold rounded-xl shadow-md transition-colors disabled:opacity-50 disabled:pointer-events-none cursor-pointer text-sm"
+                  className="px-6 py-2.5 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold rounded-xl shadow-md transition-colors disabled:opacity-50 disabled:pointer-events-none cursor-pointer text-sm"
                 >
                   {isSubmitting ? 'Saving Slide...' : 'Save Slide'}
                 </button>
@@ -415,7 +415,7 @@ const AdminSlides = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSlideToDelete(null)}></div>
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full relative z-10 border border-gray-150 flex flex-col items-center text-center animate-fade-in duration-200">
-            <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
+            <div className="w-16 h-16 bg-blue-50 text-rose-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
               <AlertCircle className="w-8 h-8" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Slide</h3>

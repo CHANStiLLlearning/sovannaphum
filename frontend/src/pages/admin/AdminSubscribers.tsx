@@ -117,7 +117,7 @@ const AdminSubscribers = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div></div>
+        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div></div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden max-w-4xl">
           <div className="overflow-x-auto">
@@ -139,7 +139,7 @@ const AdminSubscribers = () => {
                     <td className="p-4 md:p-5 align-middle text-right flex items-center justify-end">
                       <button 
                         onClick={() => setSubToDelete(sub.id)} 
-                        className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-red-200 outline-none"
+                        className="p-2 text-blue-600 hover:bg-blue-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-blue-200 outline-none"
                         title="Remove Subscriber"
                       >
                         <Trash2 className="w-4 h-4 md:w-5 md:h-5" />
@@ -157,7 +157,7 @@ const AdminSubscribers = () => {
       {subToDelete !== null && (
         <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-bold text-center text-gray-900 mb-2">Remove Subscriber?</h2>

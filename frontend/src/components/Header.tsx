@@ -57,7 +57,8 @@ const Header = () => {
             {/* Logo Emblem Placeholder */}
             <img src={logo} alt="Khmer America School" className="w-25 h-16" />
             <h1 className="text-xl font-bold">
-              <span className="">AMERICA SCHOOL</span>
+              <span className="">សាលាខ្មែរ-អាមេរិកកាំង</span>
+              <p className="text-sm text-gray-500">Khmer America School </p> 
             </h1>
           </NavLink>
 
@@ -66,27 +67,27 @@ const Header = () => {
             <NavLink
               to="/"
               end
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-gray-700 hover:text-[#2563EB] hover:border-[#2563EB]/30'}`}
             >
               Home
             </NavLink>
              <NavLink
               to="/eventpage"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-gray-700 hover:text-[#2563EB] hover:border-[#2563EB]/30'}`}
             >
               Events
             </NavLink>
 
             <NavLink
               to="/news"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-gray-700 hover:text-[#2563EB] hover:border-[#2563EB]/30'}`}
             >
               News
             </NavLink>
 
             <NavLink
               to="/contact"
-              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+              className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 ${isActive ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-gray-700 hover:text-[#2563EB] hover:border-[#2563EB]/30'}`}
             >
               Contact Us
             </NavLink>
@@ -94,7 +95,7 @@ const Header = () => {
              <div className="relative group flex items-center py-2">
               <NavLink
                 to="/about"
-                className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 flex items-center gap-1 ${isActive ? 'border-[#A32924] text-[#A32924]' : 'border-transparent text-gray-700 hover:text-[#A32924] hover:border-[#A32924]/30'}`}
+                className={({ isActive }) => `px-4 py-2 text-[15px] font-semibold transition-all border-b-2 flex items-center gap-1 ${isActive ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-gray-700 hover:text-[#2563EB] hover:border-[#2563EB]/30'}`}
               >
                 About Us
                 <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 opacity-70" />
@@ -104,13 +105,13 @@ const Header = () => {
               <div className="absolute left-1/2 -translate-x-1/2 top-full w-52 bg-white border border-gray-100 rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                 <NavLink
                   to="/about/core-values"
-                  className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#9A2220] hover:bg-gray-50 transition-colors font-medium border-l-4 border-transparent hover:border-[#9A2220]"
+                  className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#1E3A8A] hover:bg-gray-50 transition-colors font-medium border-l-4 border-transparent hover:border-[#1E3A8A]"
                 >
                   Core Values
                 </NavLink>
                 <NavLink
                   to="/faculty"
-                  className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#9A2220] hover:bg-gray-50 transition-colors font-medium border-l-4 border-transparent hover:border-[#9A2220]"
+                  className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#1E3A8A] hover:bg-gray-50 transition-colors font-medium border-l-4 border-transparent hover:border-[#1E3A8A]"
                 >
                   Faculty
                 </NavLink>
@@ -179,7 +180,7 @@ const Header = () => {
             to="/"
             end
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
+            className={({ isActive }) => `px-6 py-3 font-semibold ${isActive ? 'text-[#2563EB] bg-blue-50 border-l-4 border-[#2563EB]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
             Home
           </NavLink>
@@ -187,7 +188,7 @@ const Header = () => {
           <NavLink
             to="/about"
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
+            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#2563EB] bg-blue-50 border-l-4 border-[#2563EB]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
             About Us
           </NavLink>
@@ -195,14 +196,14 @@ const Header = () => {
           <NavLink
             to="/about/core-values"
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `pl-12 pr-6 py-2.5 text-[15px] font-semibold border-b border-gray-100 flex items-center gap-1.5 ${isActive ? 'text-[#A32924] bg-red-50/30' : 'text-gray-500 hover:text-black hover:bg-gray-50/50'} transition-colors`}
+            className={({ isActive }) => `pl-12 pr-6 py-2.5 text-[15px] font-semibold border-b border-gray-100 flex items-center gap-1.5 ${isActive ? 'text-[#2563EB] bg-blue-50/30' : 'text-gray-500 hover:text-black hover:bg-gray-50/50'} transition-colors`}
           >
             <span className="text-gray-300 font-normal">└</span> Core Values
           </NavLink>
           <NavLink
             to="/faculty"
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `pl-12 pr-6 py-2.5 text-[15px] font-semibold border-b border-gray-100 flex items-center gap-1.5 ${isActive ? 'text-[#A32924] bg-red-50/30' : 'text-gray-500 hover:text-black hover:bg-gray-50/50'} transition-colors`}
+            className={({ isActive }) => `pl-12 pr-6 py-2.5 text-[15px] font-semibold border-b border-gray-100 flex items-center gap-1.5 ${isActive ? 'text-[#2563EB] bg-blue-50/30' : 'text-gray-500 hover:text-black hover:bg-gray-50/50'} transition-colors`}
           >
             <span className="text-gray-300 font-normal">└</span> Faculty
           </NavLink>
@@ -210,7 +211,7 @@ const Header = () => {
           <NavLink
             to="/news"
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
+            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#2563EB] bg-blue-50 border-l-4 border-[#2563EB]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
             News
           </NavLink>
@@ -218,14 +219,14 @@ const Header = () => {
           <NavLink
             to="/contact"
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
+            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#2563EB] bg-blue-50 border-l-4 border-[#2563EB]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
             Contact Us
           </NavLink>
           <NavLink
             to="/eventpage"
             onClick={toggleMobileMenu}
-            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#A32924] bg-red-50 border-l-4 border-[#A32924]' : 'text-gray-700 hover:bg-gray-50'}`}
+            className={({ isActive }) => `px-6 py-3 font-semibold border-b border-gray-100 ${isActive ? 'text-[#2563EB] bg-blue-50 border-l-4 border-[#2563EB]' : 'text-gray-700 hover:bg-gray-50'}`}
           >
             Events
           </NavLink>

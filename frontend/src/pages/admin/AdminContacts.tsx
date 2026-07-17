@@ -74,7 +74,7 @@ const AdminContacts = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div></div>
+        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div></div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {contacts.length === 0 ? (
@@ -85,7 +85,7 @@ const AdminContacts = () => {
             <div key={contact.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col relative group hover:shadow-md transition-shadow">
               <button 
                 onClick={() => setMessageToDelete(contact.id)} 
-                className="absolute top-4 right-4 p-2 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:ring-2 focus:ring-red-200 outline-none"
+                className="absolute top-4 right-4 p-2 text-blue-500 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:ring-2 focus:ring-blue-200 outline-none"
                 title="Delete Message"
               >
                 <Trash2 className="w-5 h-5" />
@@ -113,7 +113,7 @@ const AdminContacts = () => {
       {messageToDelete !== null && (
         <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-bold text-center text-gray-900 mb-2">Delete Message?</h2>

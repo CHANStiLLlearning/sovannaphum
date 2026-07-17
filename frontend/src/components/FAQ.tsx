@@ -30,7 +30,7 @@ const FAQ = () => {
     return (
       <section className="w-full bg-white py-12 md:py-20 relative z-10">
         <div className="container mx-auto px-4 max-w-4xl flex justify-center">
-          <div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       </section>
     );

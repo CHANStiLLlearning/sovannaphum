@@ -48,49 +48,49 @@ const ContactPage = () => {
 
   const contactItems = [
     {
-      icon: <Phone className="w-6 h-6 text-[#9A2220]" />,
+      icon: <Phone className="w-6 h-6 text-[#1E3A8A]" />,
       title: "Phone",
       content: settings.contact_phone,
       link: `tel:${settings.contact_phone.replace(/[^\d+]/g, '')}`
     },
     {
-      icon: <Mail className="w-6 h-6 text-[#9A2220]" />,
+      icon: <Mail className="w-6 h-6 text-[#1E3A8A]" />,
       title: "Mail",
       content: settings.contact_email,
       link: `mailto:${settings.contact_email}`
     },
     {
-      icon: <FaTelegramPlane className="w-6 h-6 text-[#9A2220]" />,
+      icon: <FaTelegramPlane className="w-6 h-6 text-[#1E3A8A]" />,
       title: "Telegram",
       content: settings.contact_telegram,
       link: settings.contact_telegram.startsWith('http') ? settings.contact_telegram : `https://${settings.contact_telegram}`
     },
     {
-      icon: <MapPin className="w-6 h-6 text-[#9A2220]" />,
+      icon: <MapPin className="w-6 h-6 text-[#1E3A8A]" />,
       title: "Location",
       content: settings.contact_address,
       link: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.contact_address)}`
     },
     {
-      icon: <FaLinkedin className="w-6 h-6 text-[#9A2220]" />,
+      icon: <FaLinkedin className="w-6 h-6 text-[#1E3A8A]" />,
       title: "LinkedIn",
       content: settings.contact_linkedin,
       link: `https://linkedin.com`
     },
     {
-      icon: <FaFacebook className="w-6 h-6 text-[#9A2220]" />,
+      icon: <FaFacebook className="w-6 h-6 text-[#1E3A8A]" />,
       title: "Facebook",
       content: settings.contact_facebook,
       link: `https://facebook.com`
     },
     {
-      icon: <FaInstagram className="w-6 h-6 text-[#9A2220]" />,
+      icon: <FaInstagram className="w-6 h-6 text-[#1E3A8A]" />,
       title: "Instagram",
       content: settings.contact_instagram,
       link: `https://instagram.com/${settings.contact_instagram.replace('@', '')}`
     },
     {
-      icon: <FaTiktok className="w-6 h-6 text-[#9A2220]" />,
+      icon: <FaTiktok className="w-6 h-6 text-[#1E3A8A]" />,
       title: "TikTok",
       content: settings.contact_tiktok,
       link: `https://tiktok.com/@${settings.contact_tiktok.replace('@', '')}`
@@ -111,7 +111,7 @@ const ContactPage = () => {
             />
           </div>
         )}
-        <div className="absolute inset-0 bg-[#9A2220]/20"></div>
+        <div className="absolute inset-0 bg-[#1E3A8A]/20"></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-md">{settings.contact_hero_title}</h1>
           <p className="text-lg md:text-xl opacity-90 font-medium">
@@ -159,22 +159,22 @@ const ContactPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input type="text" id="name" name="name" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] focus:border-[#9A2220] outline-none transition-colors text-gray-900" />
+                <input type="text" id="name" name="name" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] focus:border-[#1E3A8A] outline-none transition-colors text-gray-900" />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" id="email" name="email" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] focus:border-[#9A2220] outline-none transition-colors text-gray-900" />
+                <input type="email" id="email" name="email" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] focus:border-[#1E3A8A] outline-none transition-colors text-gray-900" />
               </div>
             </div>
             <div>
               <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-              <input type="text" id="subject" name="subject" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] focus:border-[#9A2220] outline-none transition-colors text-gray-900" />
+              <input type="text" id="subject" name="subject" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] focus:border-[#1E3A8A] outline-none transition-colors text-gray-900" />
             </div>
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-              <textarea id="message" name="message" rows={4} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] focus:border-[#9A2220] outline-none transition-colors resize-none text-gray-900"></textarea>
+              <textarea id="message" name="message" rows={4} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] focus:border-[#1E3A8A] outline-none transition-colors resize-none text-gray-900"></textarea>
             </div>
-            <button type="submit" className="w-full bg-[#9A2220] text-white font-bold py-3 rounded-lg hover:bg-[#8A1A18] transition-colors">
+            <button type="submit" className="w-full bg-[#1E3A8A] text-white font-bold py-3 rounded-lg hover:bg-[#172554] transition-colors">
               Send Message
             </button>
           </form>
@@ -187,16 +187,16 @@ const ContactPage = () => {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactItems.map((item, index) => {
-            const cardClasses = "bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group cursor-pointer hover:border-[#9A2220]/20";
+            const cardClasses = "bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group cursor-pointer hover:border-[#1E3A8A]/20";
             
             const cardContent = (
               <>
-                <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center border border-gray-100 group-hover:bg-[#9A2220]/5 group-hover:border-[#9A2220]/10 transition-colors duration-300 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center border border-gray-100 group-hover:bg-[#1E3A8A]/5 group-hover:border-[#1E3A8A]/10 transition-colors duration-300 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
                   <div className="group-hover:scale-110 transition-transform duration-300">
                     {item.icon}
                   </div>
                 </div>
-                <h3 className="text-base font-bold text-gray-900 mb-2 tracking-wide group-hover:text-[#9A2220] transition-colors">
+                <h3 className="text-base font-bold text-gray-900 mb-2 tracking-wide group-hover:text-[#1E3A8A] transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed font-semibold break-all max-w-[200px]">

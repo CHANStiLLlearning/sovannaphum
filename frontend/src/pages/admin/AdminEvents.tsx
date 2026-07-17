@@ -234,7 +234,7 @@ const AdminEvents = () => {
       {/* Event Page Header Settings Card */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 mb-8 space-y-6 font-sans">
         <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-[#9A2220]" />
+          <Calendar className="w-5 h-5 text-[#1E3A8A]" />
           Events Page Header Settings
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -244,7 +244,7 @@ const AdminEvents = () => {
               type="text"
               value={eventSettings.event_hero_title}
               onChange={(e) => setEventSettings({ ...eventSettings, event_hero_title: e.target.value })}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
             />
           </div>
           <div>
@@ -253,7 +253,7 @@ const AdminEvents = () => {
               type="text"
               value={eventSettings.event_hero_subtitle}
               onChange={(e) => setEventSettings({ ...eventSettings, event_hero_subtitle: e.target.value })}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
             />
           </div>
         </div>
@@ -274,13 +274,13 @@ const AdminEvents = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => { if (e.target.files?.[0]) setBannerFile(e.target.files[0]); }}
-                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
               />
               <button
                 type="button"
                 disabled={isSavingSettings}
                 onClick={handleSaveEventSettings}
-                className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
+                className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
               >
                 {isSavingSettings ? (
                   <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>Saving...</>
@@ -305,7 +305,7 @@ const AdminEvents = () => {
               setSearchQuery(e.target.value);
               setPage(1);
             }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-sm w-full sm:w-64 font-sans text-gray-900"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-sm w-full sm:w-64 font-sans text-gray-900"
           />
           <select
             value={selectedDateFilter}
@@ -313,7 +313,7 @@ const AdminEvents = () => {
               setSelectedDateFilter(e.target.value);
               setPage(1);
             }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-sm font-sans bg-white text-gray-700 cursor-pointer"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-sm font-sans bg-white text-gray-700 cursor-pointer"
           >
             <option value="all">All Events</option>
             <option value="upcoming">Upcoming</option>
@@ -321,7 +321,7 @@ const AdminEvents = () => {
           </select>
           <button 
             onClick={() => handleOpenModal()}
-            className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans shrink-0"
+            className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans shrink-0"
           >
             <Plus className="w-5 h-5" /> Add Event
           </button>
@@ -330,7 +330,7 @@ const AdminEvents = () => {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden font-sans">
@@ -365,13 +365,13 @@ const AdminEvents = () => {
                         <td className="p-5 align-middle font-bold text-gray-800">{event.title}</td>
                         <td className="p-5 align-middle text-gray-600 font-medium">
                           <span className="flex items-center gap-1.5">
-                            <Calendar className="w-4 h-4 text-[#9A2220]" />
+                            <Calendar className="w-4 h-4 text-[#1E3A8A]" />
                             {event.date}
                           </span>
                         </td>
                         <td className="p-5 align-middle text-gray-600">
                           <span className="flex items-center gap-1.5">
-                            <MapPin className="w-4 h-4 text-[#9A2220]" />
+                            <MapPin className="w-4 h-4 text-[#1E3A8A]" />
                             {event.location}
                           </span>
                         </td>
@@ -402,7 +402,7 @@ const AdminEvents = () => {
                             </button>
                             <button 
                               onClick={() => setEventToDelete(event.id)} 
-                              className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-red-200 outline-none" 
+                              className="p-2 text-blue-600 hover:bg-blue-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-blue-200 outline-none" 
                               title="Delete Event"
                             >
                               <Trash2 className="w-5 h-5" />
@@ -448,7 +448,7 @@ const AdminEvents = () => {
       {eventToDelete !== null && (
         <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative font-sans">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-bold text-center text-gray-900 mb-2">Delete Event?</h2>
@@ -484,7 +484,7 @@ const AdminEvents = () => {
                 <input 
                   type="text" required
                   value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                   placeholder="e.g. Annual Graduation Day"
                 />
               </div>
@@ -495,7 +495,7 @@ const AdminEvents = () => {
                   <input 
                     type="text" required
                     value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                     placeholder="e.g. 20 October 2026"
                   />
                 </div>
@@ -503,7 +503,7 @@ const AdminEvents = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Location</label>
                   <select 
                     value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none bg-white text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none bg-white text-gray-900"
                   >
                     <option value="Phnom Penh Campus">Phnom Penh Campus</option>
                     <option value="Siem Reap Campus">Siem Reap Campus</option>
@@ -518,7 +518,7 @@ const AdminEvents = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Event Status</label>
                   <select 
                     value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none bg-white text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none bg-white text-gray-900"
                   >
                     <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
@@ -528,7 +528,7 @@ const AdminEvents = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Event Badge</label>
                   <select 
                     value={formData.badge} onChange={e => setFormData({...formData, badge: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none bg-white text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none bg-white text-gray-900"
                   >
                     <option value="None">None (Disabled)</option>
                     <option value="Featured">Featured Event</option>
@@ -560,7 +560,7 @@ const AdminEvents = () => {
                           setImageFile(e.target.files[0]);
                         }
                       }}
-                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
                     />
                     <p className="text-[10px] text-gray-400 mt-2">Upload a banner or photo for this event.</p>
                   </div>
@@ -591,7 +591,7 @@ const AdminEvents = () => {
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 py-2.5 bg-[#9A2220] text-white rounded-lg hover:bg-[#8A1A18] transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-75"
+                  className="flex-1 py-2.5 bg-[#1E3A8A] text-white rounded-lg hover:bg-[#172554] transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-75"
                 >
                   {isSubmitting ? (
                     <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>

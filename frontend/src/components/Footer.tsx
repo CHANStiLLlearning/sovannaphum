@@ -177,7 +177,7 @@ const Footer = () => {
                 </svg>
               </div>
             ) : (
-              <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
+              <div className="w-16 h-16 bg-blue-50 text-rose-500 rounded-full flex items-center justify-center mb-6 shadow-sm">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -193,7 +193,7 @@ const Footer = () => {
             
             <button 
               onClick={() => setModal(prev => ({ ...prev, open: false }))}
-              className="w-full py-3.5 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold rounded-xl shadow-md transition-colors cursor-pointer text-sm"
+              className="w-full py-3.5 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold rounded-xl shadow-md transition-colors cursor-pointer text-sm"
             >
               Great, thanks!
             </button>

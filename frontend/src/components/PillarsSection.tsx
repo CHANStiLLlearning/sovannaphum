@@ -33,10 +33,10 @@ const coreValues = [
     title: 'Professionalism',
     icon: <Briefcase className="w-10 h-10" />,
     description: 'We maintain high standards of integrity, ethical behavior, and dedication in everything we do, serving as role models for our students.',
-    color: 'bg-[#9A2220]',
-    hoverColor: 'group-hover:text-[#9A2220]',
-    borderColor: 'border-red-100',
-    shadowColor: 'hover:shadow-[#9A2220]/10'
+    color: 'bg-[#1E3A8A]',
+    hoverColor: 'group-hover:text-[#1E3A8A]',
+    borderColor: 'border-blue-100',
+    shadowColor: 'hover:shadow-[#1E3A8A]/10'
   }
 ];
 
@@ -47,7 +47,7 @@ const PillarsSection = () => {
         
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-4">The Pillars of KAS</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-4">The Pillars of KAS</h2>
           <div className="w-24 h-1 bg-[#EBA525] mx-auto rounded-full"></div>
           <p className="mt-6 text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
             At Khmer America School, our daily interactions, academic expectations, and character development programs are guided by four foundational pillars. These values define our culture and help shape our students into tomorrow's leaders.
@@ -85,7 +85,7 @@ const PillarsSection = () => {
         <div className="text-center mt-12">
           <Link 
             to="/about/core-values" 
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-gray-200 text-gray-700 font-semibold text-sm hover:text-[#9A2220] hover:border-[#9A2220] hover:shadow-md transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-gray-200 text-gray-700 font-semibold text-sm hover:text-[#1E3A8A] hover:border-[#1E3A8A] hover:shadow-md transition-all"
           >
             Read More about Our Values
           </Link>

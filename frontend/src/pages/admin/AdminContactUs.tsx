@@ -134,14 +134,14 @@ const AdminContactUs = () => {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-8 font-sans max-w-4xl">
           {/* Hero Section Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-              <Info className="w-5 h-5 text-[#9A2220]" />
+              <Info className="w-5 h-5 text-[#1E3A8A]" />
               Hero Banner Section
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -153,7 +153,7 @@ const AdminContactUs = () => {
                   value={formData.contact_hero_title}
                   onChange={(e) => setFormData({ ...formData, contact_hero_title: e.target.value })}
                   placeholder="e.g. Contact Us"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -165,7 +165,7 @@ const AdminContactUs = () => {
                   value={formData.contact_hero_subtitle}
                   onChange={(e) => setFormData({ ...formData, contact_hero_subtitle: e.target.value })}
                   placeholder="e.g. Get in touch with Khmer America School"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
             </div>
@@ -187,7 +187,7 @@ const AdminContactUs = () => {
                     type="file"
                     accept="image/*"
                     onChange={(e) => { if (e.target.files?.[0]) setImageFile(e.target.files[0]); }}
-                    className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                    className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
                   />
                 </div>
               </div>
@@ -197,7 +197,7 @@ const AdminContactUs = () => {
           {/* Core Channels Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-              <Phone className="w-5 h-5 text-[#9A2220]" />
+              <Phone className="w-5 h-5 text-[#1E3A8A]" />
               Core Channels Info
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -209,7 +209,7 @@ const AdminContactUs = () => {
                   value={formData.contact_phone}
                   onChange={(e) => setFormData({ ...formData, contact_phone: e.target.value })}
                   placeholder="e.g. (+855) 15 838 015"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -221,7 +221,7 @@ const AdminContactUs = () => {
                   value={formData.contact_email}
                   onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
                   placeholder="e.g. info@khmeramericaschool.edu.kh"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 font-mono text-xs"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 font-mono text-xs"
                 />
               </div>
 
@@ -233,7 +233,7 @@ const AdminContactUs = () => {
                   value={formData.contact_telegram}
                   onChange={(e) => setFormData({ ...formData, contact_telegram: e.target.value })}
                   placeholder="e.g. t.me/khmeramericaschoolcambodia"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 font-mono text-xs"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 font-mono text-xs"
                 />
               </div>
             </div>
@@ -246,7 +246,7 @@ const AdminContactUs = () => {
                 value={formData.contact_address}
                 onChange={(e) => setFormData({ ...formData, contact_address: e.target.value })}
                 placeholder="Write the physical school address..."
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 resize-none leading-relaxed"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 resize-none leading-relaxed"
               />
             </div>
           </div>
@@ -266,7 +266,7 @@ const AdminContactUs = () => {
                   value={formData.contact_linkedin}
                   onChange={(e) => setFormData({ ...formData, contact_linkedin: e.target.value })}
                   placeholder="e.g. @khmeramericaschoolcambodia"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -278,7 +278,7 @@ const AdminContactUs = () => {
                   value={formData.contact_facebook}
                   onChange={(e) => setFormData({ ...formData, contact_facebook: e.target.value })}
                   placeholder="e.g. Khmer America School, Cambodia"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -290,7 +290,7 @@ const AdminContactUs = () => {
                   value={formData.contact_instagram}
                   onChange={(e) => setFormData({ ...formData, contact_instagram: e.target.value })}
                   placeholder="e.g. @khmeramericaschool"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -302,7 +302,7 @@ const AdminContactUs = () => {
                   value={formData.contact_tiktok}
                   onChange={(e) => setFormData({ ...formData, contact_tiktok: e.target.value })}
                   placeholder="e.g. @khmeramericaschool"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
             </div>
@@ -311,7 +311,7 @@ const AdminContactUs = () => {
           {/* Map Location Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-red-600" />
+              <MapPin className="w-5 h-5 text-blue-600" />
               Google Map Settings
             </h2>
             <div>
@@ -322,7 +322,7 @@ const AdminContactUs = () => {
                 value={formData.contact_map_iframe}
                 onChange={(e) => setFormData({ ...formData, contact_map_iframe: e.target.value })}
                 placeholder="https://www.google.com/maps/embed?pb=..."
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 font-mono text-xs resize-none"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 font-mono text-xs resize-none"
               />
               <p className="text-[10px] text-gray-400 mt-2">Paste the google maps source path (the src attribute inside the iframe tag).</p>
             </div>
@@ -333,7 +333,7 @@ const AdminContactUs = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2.5 shadow-md active:scale-[0.98] transition-all disabled:opacity-75 cursor-pointer text-sm"
+              className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2.5 shadow-md active:scale-[0.98] transition-all disabled:opacity-75 cursor-pointer text-sm"
             >
               {isSubmitting ? (
                 <>

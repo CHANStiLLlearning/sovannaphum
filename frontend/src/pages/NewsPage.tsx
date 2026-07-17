@@ -71,11 +71,11 @@ const NewsPage = () => {
           <div className="lg:col-span-8">
             <h2 className="text-[22px] font-bold text-gray-800 flex items-center justify-between border-b-2 border-gray-100 pb-3 mb-8">
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-6 bg-[#9A2220] rounded-full shadow-sm"></div>
+                <div className="w-1.5 h-6 bg-[#1E3A8A] rounded-full shadow-sm"></div>
                 <span>{search ? `Search Results for "${search}"` : 'News & Update'}</span>
               </div>
               {search && (
-                <Link to="/news" className="text-sm font-semibold text-[#9A2220] hover:underline">
+                <Link to="/news" className="text-sm font-semibold text-[#1E3A8A] hover:underline">
                   Clear Search
                 </Link>
               )}
@@ -102,14 +102,14 @@ const NewsPage = () => {
                 ))}
               </div>
             )}
-            {error && <p className="text-red-500">Error: {error}</p>}
+            {error && <p className="text-blue-500">Error: {error}</p>}
 
             {!loading && !error && newsArticles.length === 0 && (
               <div className="text-center py-16 bg-[#f9fafb] rounded-2xl border border-gray-100 px-4">
                 <Search className="w-10 h-10 text-gray-300 mx-auto mb-3" />
                 <p className="text-lg font-semibold text-gray-700">No articles found</p>
                 <p className="text-sm text-gray-500 mt-1">We couldn't find any news articles matching "{search}".</p>
-                <Link to="/news" className="inline-block mt-4 bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2 rounded-xl text-sm font-semibold transition-colors">
+                <Link to="/news" className="inline-block mt-4 bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2 rounded-xl text-sm font-semibold transition-colors">
                   View All News
                 </Link>
               </div>
@@ -129,10 +129,10 @@ const NewsPage = () => {
                       </div>
                       <div className="p-5 flex flex-col gap-2">
                         <div className="flex items-center gap-2 text-gray-500 text-sm font-medium">
-                          <Calendar className="w-4 h-4 text-[#9A2220]" />
+                          <Calendar className="w-4 h-4 text-[#1E3A8A]" />
                           <span>{article.date}</span>
                         </div>
-                        <h3 className="font-bold text-gray-800 leading-snug group-hover:text-[#9A2220] transition-colors line-clamp-2">
+                        <h3 className="font-bold text-gray-800 leading-snug group-hover:text-[#1E3A8A] transition-colors line-clamp-2">
                           {article.title}
                         </h3>
                         <p className="text-gray-600 text-sm mt-2 line-clamp-3">
@@ -152,7 +152,7 @@ const NewsPage = () => {
                   <div className="flex justify-center mt-6">
                     <button
                       onClick={() => setVisibleCount((prev) => prev + 6)}
-                      className="bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3.5 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                      className="bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold py-3.5 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
                     >
                       View More
                     </button>
@@ -170,7 +170,7 @@ const NewsPage = () => {
             {/* Recent News */}
             <div>
               <h2 className="text-[22px] font-bold text-gray-800 flex items-center gap-3 border-b-2 border-gray-100 pb-3 mb-8">
-                <div className="w-1.5 h-6 bg-[#9A2220] rounded-full shadow-sm"></div>
+                <div className="w-1.5 h-6 bg-[#1E3A8A] rounded-full shadow-sm"></div>
                 Recent News
               </h2>
               <div className="flex flex-col gap-4">
@@ -184,7 +184,7 @@ const NewsPage = () => {
                       />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <h4 className="font-bold text-gray-800 text-sm leading-tight line-clamp-3 group-hover:text-[#9A2220] transition-colors">
+                      <h4 className="font-bold text-gray-800 text-sm leading-tight line-clamp-3 group-hover:text-[#1E3A8A] transition-colors">
                         {news.title}
                       </h4>
                       <div className="flex items-center gap-1.5 text-gray-400 text-xs mt-1">

@@ -224,11 +224,11 @@ const AdminFaculty = () => {
             placeholder="Search teachers..."
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-sm w-full sm:w-64 font-sans text-gray-900"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-sm w-full sm:w-64 font-sans text-gray-900"
           />
           <button
             onClick={() => handleOpenModal()}
-            className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans"
+            className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans"
           >
             <Plus className="w-5 h-5" /> Add Teacher
           </button>
@@ -238,7 +238,7 @@ const AdminFaculty = () => {
       {/* Page Header Settings Card */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 mb-8 space-y-6 font-sans">
         <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-[#9A2220]" />
+          <BookOpen className="w-5 h-5 text-[#1E3A8A]" />
           Faculty Page Header Settings
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -248,7 +248,7 @@ const AdminFaculty = () => {
               type="text"
               value={facultySettings.faculty_hero_title}
               onChange={(e) => setFacultySettings({ ...facultySettings, faculty_hero_title: e.target.value })}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
             />
           </div>
           <div>
@@ -257,7 +257,7 @@ const AdminFaculty = () => {
               type="text"
               value={facultySettings.faculty_hero_subtitle}
               onChange={(e) => setFacultySettings({ ...facultySettings, faculty_hero_subtitle: e.target.value })}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
             />
           </div>
         </div>
@@ -279,13 +279,13 @@ const AdminFaculty = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => { if (e.target.files?.[0]) setBannerFile(e.target.files[0]); }}
-                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
               />
               <button
                 type="button"
                 disabled={isSavingSettings}
                 onClick={handleSaveSettings}
-                className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
+                className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
               >
                 {isSavingSettings ? (
                   <>
@@ -367,12 +367,12 @@ const AdminFaculty = () => {
                         <td className="p-5 align-middle text-gray-600 font-medium">{teacher.role}</td>
                         <td className="p-5 align-middle text-gray-600">
                           <span className="flex items-center gap-1.5">
-                            <BookOpen className="w-4 h-4 text-[#9A2220]" /> {teacher.subject}
+                            <BookOpen className="w-4 h-4 text-[#1E3A8A]" /> {teacher.subject}
                           </span>
                         </td>
                         <td className="p-5 align-middle text-gray-600">
                           <span className="flex items-center gap-1.5">
-                            <Globe className="w-4 h-4 text-[#9A2220]" /> {teacher.nationality}
+                            <Globe className="w-4 h-4 text-[#1E3A8A]" /> {teacher.nationality}
                           </span>
                         </td>
                         <td className="p-5 align-middle text-right whitespace-nowrap">
@@ -380,7 +380,7 @@ const AdminFaculty = () => {
                             <button onClick={() => handleOpenModal(teacher)} className="p-2 text-blue-600 hover:bg-blue-100 hover:text-blue-700 rounded-lg transition-colors outline-none" title="Edit">
                               <Edit className="w-5 h-5" />
                             </button>
-                            <button onClick={() => setTeacherToDelete(teacher.id)} className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors outline-none" title="Delete">
+                            <button onClick={() => setTeacherToDelete(teacher.id)} className="p-2 text-blue-600 hover:bg-blue-100 hover:text-red-700 rounded-lg transition-colors outline-none" title="Delete">
                               <Trash2 className="w-5 h-5" />
                             </button>
                           </div>
@@ -409,7 +409,7 @@ const AdminFaculty = () => {
       {teacherToDelete !== null && (
         <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl font-sans">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-bold text-center text-gray-900 mb-2">Delete Teacher?</h2>
@@ -427,7 +427,7 @@ const AdminFaculty = () => {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl font-sans my-8">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center gap-2">
-              <User className="w-6 h-6 text-[#9A2220]" />
+              <User className="w-6 h-6 text-[#1E3A8A]" />
               {editingTeacher ? 'Edit Teacher' : 'Add New Teacher'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -438,7 +438,7 @@ const AdminFaculty = () => {
                   type="text" required
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                   placeholder="e.g. Sophea Chea"
                 />
               </div>
@@ -450,7 +450,7 @@ const AdminFaculty = () => {
                     type="text" required
                     value={formData.role}
                     onChange={e => setFormData({ ...formData, role: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                     placeholder="e.g. Senior Teacher"
                   />
                 </div>
@@ -460,7 +460,7 @@ const AdminFaculty = () => {
                     type="text" required
                     value={formData.subject}
                     onChange={e => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                     placeholder="e.g. Mathematics"
                   />
                 </div>
@@ -472,7 +472,7 @@ const AdminFaculty = () => {
                   type="text" required
                   value={formData.nationality}
                   onChange={e => setFormData({ ...formData, nationality: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                   placeholder="e.g. Cambodian, American, Chinese..."
                 />
               </div>
@@ -495,7 +495,7 @@ const AdminFaculty = () => {
                       type="file"
                       accept="image/*"
                       onChange={(e) => { if (e.target.files?.[0]) setImageFile(e.target.files[0]); }}
-                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
                     />
                     <p className="text-[10px] text-gray-400 mt-2">Upload a profile picture for this teacher.</p>
                   </div>
@@ -506,7 +506,7 @@ const AdminFaculty = () => {
                 <button type="button" disabled={isSubmitting} onClick={handleCloseModal} className="flex-1 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium disabled:opacity-50">
                   Cancel
                 </button>
-                <button type="submit" disabled={isSubmitting} className="flex-1 py-2.5 bg-[#9A2220] text-white rounded-lg hover:bg-[#8A1A18] font-semibold flex items-center justify-center gap-2 disabled:opacity-75">
+                <button type="submit" disabled={isSubmitting} className="flex-1 py-2.5 bg-[#1E3A8A] text-white rounded-lg hover:bg-[#172554] font-semibold flex items-center justify-center gap-2 disabled:opacity-75">
                   {isSubmitting ? <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : editingTeacher ? 'Save Changes' : 'Add Teacher'}
                 </button>
               </div>

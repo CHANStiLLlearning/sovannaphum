@@ -15,7 +15,15 @@ type SchoolEvent = {
 };
 
 const stripStyles = (html: string) =>
-  html.replace(/ style="[^"]*"/gi, '').replace(/<span\b[^>]*>([^<]*)<\/span>/gi, '$1').replace(/<[^>]+>/g, '');
+  (html || '')
+    .replace(/ style="[^"]*"/gi, '')
+    .replace(/<span\b[^>]*>([^<]*)<\/span>/gi, '$1')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;nbsp;/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&nbsp/g, ' ')
+    .replace(/\u00A0/g, ' ')
+    .trim();
 
 const EventsSection = () => {
   const [events, setEvents] = useState<SchoolEvent[]>([]);
@@ -39,12 +47,12 @@ const EventsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-12 border-b-2 border-gray-200 pb-4">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-2">Upcoming Events</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-2">Upcoming Events</h2>
             <div className="w-24 h-1 bg-[#EBA525] rounded-full"></div>
           </div>
           <Link 
             to="/eventpage" 
-            className="hidden sm:inline-flex items-center gap-2 px-6 py-2 border-2 border-[#9A2220] text-[#9A2220] font-semibold rounded-lg hover:bg-[#9A2220] hover:text-white transition-colors text-sm"
+            className="hidden sm:inline-flex items-center gap-2 px-6 py-2 border-2 border-[#1E3A8A] text-[#1E3A8A] font-semibold rounded-lg hover:bg-[#1E3A8A] hover:text-white transition-colors text-sm"
           >
             All Events
             <ArrowRight className="w-4 h-4" />
@@ -103,15 +111,15 @@ const EventsSection = () => {
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">
                     <span className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5 text-[#9A2220]" />
+                      <Calendar className="w-3.5 h-3.5 text-[#1E3A8A]" />
                       {event.date}
                     </span>
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#9A2220]" />
+                      <MapPin className="w-3.5 h-3.5 text-[#1E3A8A]" />
                       {event.location}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#9A2220] transition-colors line-clamp-2 leading-tight">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#1E3A8A] transition-colors line-clamp-2 leading-tight">
                     {event.title}
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
@@ -133,7 +141,7 @@ const EventsSection = () => {
         <div className="mt-8 text-center sm:hidden">
           <Link 
             to="/eventpage" 
-            className="w-full inline-flex justify-center items-center gap-2 px-6 py-3 border-2 border-[#9A2220] text-[#9A2220] font-semibold rounded-lg hover:bg-[#9A2220] hover:text-white transition-colors"
+            className="w-full inline-flex justify-center items-center gap-2 px-6 py-3 border-2 border-[#1E3A8A] text-[#1E3A8A] font-semibold rounded-lg hover:bg-[#1E3A8A] hover:text-white transition-colors"
           >
             All Events
             <ArrowRight className="w-4 h-4" />

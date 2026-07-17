@@ -22,9 +22,9 @@ const colorOptions = [
   { value: 'bg-blue-50/70 text-blue-600 border border-blue-100/50', label: 'Blue Theme' },
   { value: 'bg-amber-50/70 text-amber-500 border border-amber-100/50', label: 'Amber Theme' },
   { value: 'bg-emerald-50/70 text-emerald-600 border border-emerald-100/50', label: 'Emerald Theme' },
-  { value: 'bg-red-50/70 text-[#9A2220] border border-red-100/50', label: 'Burgundy Theme' },
+  { value: 'bg-blue-50/70 text-[#1E3A8A] border border-blue-100/50', label: 'Burgundy Theme' },
   { value: 'bg-violet-50/70 text-violet-600 border border-violet-100/50', label: 'Violet Theme' },
-  { value: 'bg-rose-50/70 text-rose-600 border border-rose-100/50', label: 'Rose Theme' },
+  { value: 'bg-blue-50/70 text-blue-600 border border-rose-100/50', label: 'Rose Theme' },
 ];
 
 const AdminPrograms = () => {
@@ -232,7 +232,7 @@ const AdminPrograms = () => {
       {/* Programs Page Header Settings Card */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 mb-8 space-y-6 font-sans">
         <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-[#9A2220]" />
+          <BookOpen className="w-5 h-5 text-[#1E3A8A]" />
           Programs Page Header Settings
         </h2>
         <div>
@@ -241,7 +241,7 @@ const AdminPrograms = () => {
             type="text"
             value={programSettings.program_hero_title}
             onChange={(e) => setProgramSettings({ ...programSettings, program_hero_title: e.target.value })}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
           />
         </div>
         <div>
@@ -261,13 +261,13 @@ const AdminPrograms = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => { if (e.target.files?.[0]) setBannerFile(e.target.files[0]); }}
-                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
               />
               <button
                 type="button"
                 disabled={isSavingSettings}
                 onClick={handleSaveProgramSettings}
-                className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
+                className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-75 text-sm cursor-pointer"
               >
                 {isSavingSettings ? (
                   <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>Saving...</>
@@ -286,7 +286,7 @@ const AdminPrograms = () => {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans"
+          className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap font-sans"
         >
           <Plus className="w-5 h-5" /> Add Program
         </button>
@@ -295,7 +295,7 @@ const AdminPrograms = () => {
       {/* Table */}
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden font-sans">
@@ -341,7 +341,7 @@ const AdminPrograms = () => {
                           </button>
                           <button
                             onClick={() => setProgramToDelete(program.id)}
-                            className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-red-200 outline-none"
+                            className="p-2 text-blue-600 hover:bg-blue-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-blue-200 outline-none"
                             title="Delete Program"
                           >
                             <Trash2 className="w-5 h-5" />
@@ -361,7 +361,7 @@ const AdminPrograms = () => {
       {programToDelete !== null && (
         <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative font-sans">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-bold text-center text-gray-900 mb-2">Delete Program?</h2>
@@ -398,7 +398,7 @@ const AdminPrograms = () => {
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g. Khmer General Education"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -410,7 +410,7 @@ const AdminPrograms = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="A brief description of this program..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 resize-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 resize-none"
                 />
               </div>
 
@@ -423,7 +423,7 @@ const AdminPrograms = () => {
                     value={formData.path}
                     onChange={(e) => setFormData({ ...formData, path: e.target.value })}
                     placeholder="e.g. /programs/kge"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 font-mono text-xs"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 font-mono text-xs"
                   />
                 </div>
 
@@ -432,7 +432,7 @@ const AdminPrograms = () => {
                   <select
                     value={formData.iconName}
                     onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none bg-white text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none bg-white text-gray-900"
                   >
                     {iconOptions.map((opt) => (
                       <option key={opt.value} value={opt.value}>
@@ -444,11 +444,11 @@ const AdminPrograms = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-[#9A2220] mb-2 uppercase tracking-wide text-xs">Color Theme Style</label>
+                <label className="block text-sm font-semibold text-[#1E3A8A] mb-2 uppercase tracking-wide text-xs">Color Theme Style</label>
                 <select
                   value={formData.colorClass}
                   onChange={(e) => setFormData({ ...formData, colorClass: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none bg-white text-gray-900 font-medium"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none bg-white text-gray-900 font-medium"
                 >
                   {colorOptions.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -470,7 +470,7 @@ const AdminPrograms = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 py-2.5 bg-[#9A2220] text-white rounded-lg hover:bg-[#8A1A18] transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-75"
+                  className="flex-1 py-2.5 bg-[#1E3A8A] text-white rounded-lg hover:bg-[#172554] transition-colors font-semibold flex items-center justify-center gap-2 disabled:opacity-75"
                 >
                   {isSubmitting ? (
                     <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>

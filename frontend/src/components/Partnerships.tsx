@@ -23,7 +23,7 @@ const Partnerships = () => {
     return (
       <section className="py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div></div>
+          <div className="flex justify-center"><div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div></div>
         </div>
       </section>
     );
@@ -35,7 +35,7 @@ const Partnerships = () => {
     <section className="py-16 bg-gray-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-4">Our Partnerships</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-4">Our Partnerships</h2>
           <div className="w-24 h-1 bg-[#EBA525] mx-auto rounded-full"></div>
           <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
             We collaborate with leading educational institutions and organizations to ensure our curriculum meets both national and international standards.

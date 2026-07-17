@@ -140,10 +140,10 @@ const AdminDashboard = () => {
       value: filteredStats.teachers,
       icon: <GraduationCap className="w-6 h-6" />,
       path: '/admin/faculty',
-      gradient: 'from-rose-500 to-[#9A2220]',
-      lightBg: 'bg-rose-50',
-      lightText: 'text-rose-600',
-      shadowColor: 'shadow-rose-200',
+      gradient: 'from-blue-500 to-[#1E3A8A]',
+      lightBg: 'bg-blue-50',
+      lightText: 'text-blue-600',
+      shadowColor: 'shadow-blue-200',
     },
     {
       title: 'Programs',
@@ -162,7 +162,7 @@ const AdminDashboard = () => {
     { name: 'Events', count: filteredStats.events, color: '#10b981' },
     { name: 'Contacts', count: filteredStats.contacts, color: '#8b5cf6' },
     { name: 'Subscribers', count: filteredStats.subscribers, color: '#f59e0b' },
-    { name: 'Faculty', count: filteredStats.teachers, color: '#9A2220' },
+    { name: 'Faculty', count: filteredStats.teachers, color: '#1E3A8A' },
     { name: 'Programs', count: filteredStats.programs, color: '#6366f1' },
   ];
 
@@ -180,7 +180,7 @@ const AdminDashboard = () => {
       {/* ── Header ── */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-8">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#9A2220] mb-1">Admin Panel</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#1E3A8A] mb-1">Admin Panel</p>
           <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Dashboard Overview</h1>
           <p className="text-gray-400 mt-1 text-sm">Welcome back — here's what's happening with your school.</p>
         </div>
@@ -189,7 +189,7 @@ const AdminDashboard = () => {
         <div className="flex flex-wrap items-center gap-3">
           {/* Clock */}
           <div className="flex items-center gap-2 bg-white border border-gray-100 shadow-sm rounded-xl px-4 py-2.5">
-            <Clock className="w-4 h-4 text-[#9A2220]" />
+            <Clock className="w-4 h-4 text-[#1E3A8A]" />
             <span className="text-sm font-bold text-gray-700 tabular-nums">{currentTime.toLocaleTimeString()}</span>
           </div>
           {/* Date */}
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="text-xs border border-gray-200 rounded-lg px-2 py-1 text-gray-700 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220]"
+                className="text-xs border border-gray-200 rounded-lg px-2 py-1 text-gray-700 outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
               />
             )}
           </div>
@@ -225,7 +225,7 @@ const AdminDashboard = () => {
 
       {loading ? (
         <div className="flex justify-center py-24">
-          <div className="w-10 h-10 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
         <>
@@ -265,7 +265,7 @@ const AdminDashboard = () => {
             <div className="xl:col-span-2 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-[#9A2220]" />
+                  <TrendingUp className="w-5 h-5 text-[#1E3A8A]" />
                   <h2 className="text-lg font-bold text-gray-900">Content Distribution</h2>
                 </div>
                 <span className="px-3 py-1 bg-gray-50 border border-gray-100 text-gray-500 text-xs font-semibold rounded-full uppercase tracking-wider">

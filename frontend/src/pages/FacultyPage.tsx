@@ -119,7 +119,7 @@ const FacultyPage = () => {
               placeholder="Search by teacher name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900 placeholder-gray-400 transition-all"
+              className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] outline-none text-sm text-gray-900 placeholder-gray-400 transition-all"
             />
             {searchQuery && (
               <button onClick={() => setSearchQuery('')} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
@@ -132,7 +132,7 @@ const FacultyPage = () => {
             <select
               value={selectedSubject}
               onChange={(e) => setSelectedSubject(e.target.value)}
-              className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+              className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] font-semibold text-sm cursor-pointer"
             >
               {subjects.map(s => (
                 <option key={s} value={s}>{s === 'all' ? 'All Subjects' : s}</option>
@@ -142,7 +142,7 @@ const FacultyPage = () => {
             <select
               value={selectedNationality}
               onChange={(e) => setSelectedNationality(e.target.value)}
-              className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+              className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] font-semibold text-sm cursor-pointer"
             >
               {nationalities.map(n => (
                 <option key={n} value={n}>{n === 'all' ? 'All Nationalities' : n}</option>
@@ -170,8 +170,8 @@ const FacultyPage = () => {
         {/* Error */}
         {error && (
           <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm px-6 max-w-lg mx-auto">
-            <p className="text-red-500 font-semibold mb-4">Error: {error}</p>
-            <button onClick={fetchTeachers} className="px-6 py-2.5 bg-[#9A2220] text-white font-semibold rounded-xl hover:bg-[#8A1A18] transition-colors">
+            <p className="text-blue-500 font-semibold mb-4">Error: {error}</p>
+            <button onClick={fetchTeachers} className="px-6 py-2.5 bg-[#1E3A8A] text-white font-semibold rounded-xl hover:bg-[#172554] transition-colors">
               Try Again
             </button>
           </div>
@@ -213,19 +213,19 @@ const FacultyPage = () => {
                         />
                         {/* Nationality flag badge */}
                         <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm text-gray-700 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1">
-                          <Globe className="w-3 h-3 text-[#9A2220]" />
+                          <Globe className="w-3 h-3 text-[#1E3A8A]" />
                           {teacher.nationality}
                         </div>
                       </div>
 
                       {/* Info */}
                       <div className="p-5 flex flex-col flex-grow">
-                        <h3 className="text-lg font-bold text-gray-900 mb-0.5 group-hover:text-[#9A2220] transition-colors leading-tight">
+                        <h3 className="text-lg font-bold text-gray-900 mb-0.5 group-hover:text-[#1E3A8A] transition-colors leading-tight">
                           {teacher.name}
                         </h3>
                         <p className="text-[#D76918] font-semibold text-sm mb-3">{teacher.role}</p>
                         <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-                          <BookOpen className="w-3.5 h-3.5 text-[#9A2220] shrink-0" />
+                          <BookOpen className="w-3.5 h-3.5 text-[#1E3A8A] shrink-0" />
                           {teacher.subject}
                         </div>
                       </div>

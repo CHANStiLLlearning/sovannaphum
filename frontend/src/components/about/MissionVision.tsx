@@ -35,10 +35,10 @@ const MissionVision = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           
           {/* Mission Card */}
-          <div className="bg-gray-50 rounded-2xl p-8 md:p-12 border-t-8 border-[#9A2220] shadow-md hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-gray-50 rounded-2xl p-8 md:p-12 border-t-8 border-[#1E3A8A] shadow-md hover:shadow-xl transition-shadow duration-300">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-[#9A2220]/10 flex items-center justify-center">
-                <Target className="w-8 h-8 text-[#9A2220]" />
+              <div className="w-16 h-16 rounded-full bg-[#1E3A8A]/10 flex items-center justify-center">
+                <Target className="w-8 h-8 text-[#1E3A8A]" />
               </div>
               <h2 className="text-3xl font-bold text-gray-800">{settings.about_mission_title}</h2>
             </div>

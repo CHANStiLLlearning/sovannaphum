@@ -16,7 +16,13 @@ type SchoolEvent = {
 
 // Strip inline style attributes from HTML to avoid editor color overrides
 const stripStyles = (html: string) =>
-  html.replace(/ style="[^"]*"/gi, '').replace(/<span\b[^>]*>([^<]*)<\/span>/gi, '$1');
+  (html || '')
+    .replace(/ style="[^"]*"/gi, '')
+    .replace(/<span\b[^>]*>([^<]*)<\/span>/gi, '$1')
+    .replace(/&amp;nbsp;/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&nbsp/g, ' ')
+    .replace(/\u00A0/g, ' ');
 
 const EventPage = () => {
   const [events, setEvents] = useState<SchoolEvent[]>([]);
@@ -131,7 +137,7 @@ const EventPage = () => {
           </div>
         ) : (
           <>
-            <div className="absolute inset-0 bg-[#9A2220]"></div>
+            <div className="absolute inset-0 bg-[#1E3A8A]"></div>
             <div className="absolute inset-0 bg-black/35"></div>
             {/* Decorative background elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -170,7 +176,7 @@ const EventPage = () => {
               placeholder="Search events by title or keyword..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] outline-none text-sm text-gray-900 placeholder-gray-400 transition-all"
+              className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] outline-none text-sm text-gray-900 placeholder-gray-400 transition-all"
             />
             {searchQuery && (
               <button 
@@ -191,7 +197,7 @@ const EventPage = () => {
               <select
                 value={selectedCampus}
                 onChange={(e) => setSelectedCampus(e.target.value)}
-                className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+                className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] font-semibold text-sm cursor-pointer"
               >
                 <option value="all">All Campuses</option>
                 <option value="Phnom Penh">Phnom Penh Campus</option>
@@ -206,7 +212,7 @@ const EventPage = () => {
               <select
                 value={selectedDateFilter}
                 onChange={(e) => setSelectedDateFilter(e.target.value)}
-                className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#9A2220]/20 focus:border-[#9A2220] font-semibold text-sm cursor-pointer"
+                className="w-full sm:w-auto bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A] font-semibold text-sm cursor-pointer"
               >
                 <option value="all">All Events</option>
                 <option value="upcoming">Upcoming Events</option>
@@ -244,10 +250,10 @@ const EventPage = () => {
         {/* Error message */}
         {error && (
           <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm px-6 max-w-lg mx-auto">
-            <p className="text-red-500 font-semibold mb-4">Error loading events: {error}</p>
+            <p className="text-blue-500 font-semibold mb-4">Error loading events: {error}</p>
             <button 
               onClick={fetchEvents}
-              className="px-6 py-2.5 bg-[#9A2220] text-white font-semibold rounded-xl hover:bg-[#8A1A18] transition-colors"
+              className="px-6 py-2.5 bg-[#1E3A8A] text-white font-semibold rounded-xl hover:bg-[#172554] transition-colors"
             >
               Try Again
             </button>
@@ -301,16 +307,16 @@ const EventPage = () => {
                       {/* Meta dates and location */}
                       <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">
                         <div className="flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5 text-[#9A2220]" />
+                          <Calendar className="w-3.5 h-3.5 text-[#1E3A8A]" />
                           {event.date}
                         </div>
                         <div className="flex items-center gap-1">
-                          <MapPin className="w-3.5 h-3.5 text-[#9A2220]" />
+                          <MapPin className="w-3.5 h-3.5 text-[#1E3A8A]" />
                           {event.location}
                         </div>
                       </div>
 
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#9A2220] transition-colors leading-snug">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#1E3A8A] transition-colors leading-snug">
                         {event.title}
                       </h3>
 
@@ -321,13 +327,13 @@ const EventPage = () => {
 
                       <div className="pt-4 border-t border-gray-50 mt-auto flex items-center justify-between">
                         <span className={`text-xs font-bold uppercase tracking-wider ${
-                          event.status === 'Closed' ? 'text-gray-500' : 'text-[#9A2220]'
+                          event.status === 'Closed' ? 'text-gray-500' : 'text-[#1E3A8A]'
                         }`}>
                           {event.status === 'Closed' ? 'Closed Event' : 'Open Event'}
                         </span>
                         <NavLink 
                           to="/contact" 
-                          className="inline-flex items-center gap-1 text-sm font-bold text-gray-900 hover:text-[#9A2220] transition-colors"
+                          className="inline-flex items-center gap-1 text-sm font-bold text-gray-900 hover:text-[#1E3A8A] transition-colors"
                         >
                           Inquire Details
                           <ChevronRight className="w-4 h-4" />
@@ -352,7 +358,7 @@ const EventPage = () => {
           </p>
           <NavLink 
             to="/contact" 
-            className="inline-flex items-center justify-center gap-2 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+            className="inline-flex items-center justify-center gap-2 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
           >
             Contact Admissions
             <ChevronRight className="w-4 h-4" />

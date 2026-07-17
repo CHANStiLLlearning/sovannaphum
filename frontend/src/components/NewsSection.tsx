@@ -34,10 +34,10 @@ const NewsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-12 border-b-2 border-gray-100 pb-4">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-2">News & Updates</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-2">News & Updates</h2>
             <div className="w-24 h-1 bg-[#EBA525] rounded-full"></div>
           </div>
-          <Link to="/news" className="hidden sm:block px-6 py-2 border-2 border-[#9A2220] text-[#9A2220] font-semibold rounded-lg hover:bg-[#9A2220] hover:text-white transition-colors">
+          <Link to="/news" className="hidden sm:block px-6 py-2 border-2 border-[#1E3A8A] text-[#1E3A8A] font-semibold rounded-lg hover:bg-[#1E3A8A] hover:text-white transition-colors">
             View All News
           </Link>
         </div>
@@ -82,7 +82,7 @@ const NewsSection = () => {
                     <Calendar className="w-4 h-4 mr-2" />
                     {news.date}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-[#9A2220] cursor-pointer transition-colors line-clamp-2">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-[#1E3A8A] cursor-pointer transition-colors line-clamp-2">
                     {news.title}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
@@ -103,7 +103,7 @@ const NewsSection = () => {
         )}
         
         <div className="mt-8 text-center sm:hidden">
-          <Link to="/news" className="px-6 py-2 border-2 border-[#9A2220] text-[#9A2220] font-semibold rounded-lg hover:bg-[#9A2220] hover:text-white transition-colors">
+          <Link to="/news" className="px-6 py-2 border-2 border-[#1E3A8A] text-[#1E3A8A] font-semibold rounded-lg hover:bg-[#1E3A8A] hover:text-white transition-colors">
             View All News
           </Link>
         </div>

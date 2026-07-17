@@ -7,7 +7,7 @@ const IntegratedEnglish = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link 
           to="/programs" 
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-[#9A2220] mb-6 font-bold transition-all hover:-translate-x-1 group text-sm"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-[#1E3A8A] mb-6 font-bold transition-all hover:-translate-x-1 group text-sm"
         >
           <ChevronLeft className="w-5 h-5" /> Back to Programs
         </Link>

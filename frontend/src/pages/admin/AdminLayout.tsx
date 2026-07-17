@@ -85,7 +85,7 @@ const AdminLayout = () => {
               className={({ isActive }) => 
                 `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans font-medium outline-none ${
                   isActive 
-                    ? 'bg-white text-[#9A2220] shadow-md' 
+                    ? 'bg-white text-[#1E3A8A] shadow-md' 
                     : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`
               }
@@ -110,7 +110,7 @@ const AdminLayout = () => {
               setIsSidebarOpen(false);
               navigate('/kas-portal-entry');
             }} 
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-300 hover:bg-red-500/20 hover:text-red-100 transition-all duration-200 font-sans font-medium w-full text-left outline-none"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-300 hover:bg-blue-500/20 hover:text-red-100 transition-all duration-200 font-sans font-medium w-full text-left outline-none"
           >
             <LogOut className="w-5 h-5" />
             Logout

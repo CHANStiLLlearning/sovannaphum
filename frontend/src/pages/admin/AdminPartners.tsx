@@ -114,14 +114,14 @@ const AdminPartners = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Handshake className="w-6 h-6 text-[#9A2220]" />
+            <Handshake className="w-6 h-6 text-[#1E3A8A]" />
             Partners Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">Manage school partner logos and names.</p>
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm transition-colors text-sm"
+          className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm transition-colors text-sm"
         >
           <Plus className="w-4 h-4" />
           Add Partner
@@ -138,7 +138,7 @@ const AdminPartners = () => {
 
       {/* Grid */}
       {loading ? (
-        <div className="flex justify-center p-12"><div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center p-12"><div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin" /></div>
       ) : partners.length === 0 ? (
         <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-500">
           <Handshake className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -161,7 +161,7 @@ const AdminPartners = () => {
                 <button onClick={() => handleOpenModal(partner)} className="flex-1 py-2 flex items-center justify-center text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg text-sm font-semibold transition-colors">
                   <Edit2 className="w-4 h-4 mr-1.5" /> Edit
                 </button>
-                <button onClick={() => handleDelete(partner.id)} className="flex-1 py-2 flex items-center justify-center text-red-600 bg-red-50 hover:bg-red-100 rounded-lg text-sm font-semibold transition-colors">
+                <button onClick={() => handleDelete(partner.id)} className="flex-1 py-2 flex items-center justify-center text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg text-sm font-semibold transition-colors">
                   <Trash2 className="w-4 h-4 mr-1.5" /> Delete
                 </button>
               </div>
@@ -190,7 +190,7 @@ const AdminPartners = () => {
                     required type="text"
                     value={formData.name}
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none"
                     placeholder="e.g. Cambridge Assessment"
                   />
                 </div>
@@ -216,7 +216,7 @@ const AdminPartners = () => {
               <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-200 rounded-lg">
                 Cancel
               </button>
-              <button type="submit" form="partner-form" disabled={isSubmitting} className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2 rounded-lg font-bold text-sm shadow-sm flex items-center gap-2 disabled:opacity-70">
+              <button type="submit" form="partner-form" disabled={isSubmitting} className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2 rounded-lg font-bold text-sm shadow-sm flex items-center gap-2 disabled:opacity-70">
                 {isSubmitting ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
                 Save
               </button>

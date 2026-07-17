@@ -74,7 +74,7 @@ const AdminLogin = () => {
         <div className="bg-white rounded-3xl border border-gray-200/60 shadow-xl shadow-slate-200/50 p-6 sm:p-10">
           <form className="space-y-5" onSubmit={handleLogin}>
             {error && (
-              <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm text-center font-medium transition-all duration-300">
+              <div className="bg-blue-50 border border-blue-100 text-blue-600 px-4 py-3 rounded-xl text-sm text-center font-medium transition-all duration-300">
                 {error}
               </div>
             )}
@@ -90,7 +90,7 @@ const AdminLogin = () => {
                   required 
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="pl-10.5 w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/10 focus:border-[#9A2220] transition-all outline-none text-gray-900 text-sm placeholder:text-gray-400 bg-gray-50/30 focus:bg-white" 
+                  className="pl-10.5 w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/10 focus:border-[#1E3A8A] transition-all outline-none text-gray-900 text-sm placeholder:text-gray-400 bg-gray-50/30 focus:bg-white" 
                   placeholder="admin"
                 />
               </div>
@@ -107,7 +107,7 @@ const AdminLogin = () => {
                   required 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10.5 pr-11 w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#9A2220]/10 focus:border-[#9A2220] transition-all outline-none text-gray-900 text-sm placeholder:text-gray-400 bg-gray-50/30 focus:bg-white" 
+                  className="pl-10.5 pr-11 w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E3A8A]/10 focus:border-[#1E3A8A] transition-all outline-none text-gray-900 text-sm placeholder:text-gray-400 bg-gray-50/30 focus:bg-white" 
                   placeholder="••••••••"
                 />
                 <button
@@ -127,7 +127,7 @@ const AdminLogin = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-semibold text-white bg-[#9A2220] hover:bg-[#8A1A18] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9A2220] transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg shadow-[#9A2220]/10 mt-2"
+              className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-semibold text-white bg-[#1E3A8A] hover:bg-[#172554] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E3A8A] transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg shadow-[#1E3A8A]/10 mt-2"
             >
               {loading ? (
                 <>

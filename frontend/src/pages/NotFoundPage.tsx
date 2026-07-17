@@ -8,9 +8,9 @@ const NotFoundPage = () => {
         
         {/* Animated Icon Container */}
         <div className="relative flex justify-center">
-          <div className="absolute inset-0 bg-[#9A2220]/10 rounded-full blur-2xl w-32 h-32 mx-auto animate-pulse"></div>
+          <div className="absolute inset-0 bg-[#1E3A8A]/10 rounded-full blur-2xl w-32 h-32 mx-auto animate-pulse"></div>
           <div className="relative w-28 h-28 rounded-3xl bg-white border border-gray-100 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <ShieldAlert className="w-14 h-14 text-[#9A2220]" />
+            <ShieldAlert className="w-14 h-14 text-[#1E3A8A]" />
           </div>
         </div>
 
@@ -31,7 +31,7 @@ const NotFoundPage = () => {
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-4">
           <NavLink
             to="/"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
           >
             <Home className="w-4 h-4" />
             Go to Home

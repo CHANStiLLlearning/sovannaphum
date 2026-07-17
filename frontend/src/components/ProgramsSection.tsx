@@ -53,10 +53,10 @@ const ProgramsSection = () => {
     if (colorClass.includes('blue')) return 'text-blue-600 group-hover:bg-blue-600';
     if (colorClass.includes('amber')) return 'text-[#EBA525] group-hover:bg-[#EBA525]';
     if (colorClass.includes('emerald')) return 'text-emerald-600 group-hover:bg-emerald-600';
-    if (colorClass.includes('red')) return 'text-[#9A2220] group-hover:bg-[#9A2220]';
+    if (colorClass.includes('red')) return 'text-[#1E3A8A] group-hover:bg-[#1E3A8A]';
     if (colorClass.includes('violet')) return 'text-violet-600 group-hover:bg-violet-600';
-    if (colorClass.includes('rose')) return 'text-rose-600 group-hover:bg-rose-600';
-    return 'text-[#9A2220] group-hover:bg-[#9A2220]'; // Default fallback
+    if (colorClass.includes('rose')) return 'text-blue-600 group-hover:bg-rose-600';
+    return 'text-[#1E3A8A] group-hover:bg-[#1E3A8A]'; // Default fallback
   };
 
   return (
@@ -64,7 +64,7 @@ const ProgramsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold font-serif text-[#9A2220]">
+          <h2 className="text-3xl md:text-4xl font-bold font-serif text-[#1E3A8A]">
             Explore Our Programs
           </h2>
           <div className="w-16 h-1 bg-[#EBA525] mx-auto rounded-full mt-3"></div>
@@ -76,7 +76,7 @@ const ProgramsSection = () => {
         {/* Programs Grid */}
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="w-10 h-10 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : programs.length === 0 ? (
           <div className="text-center py-12 text-gray-500 font-medium bg-white rounded-2xl border border-gray-100 shadow-sm max-w-5xl mx-auto">
@@ -109,7 +109,7 @@ const ProgramsSection = () => {
                     </div>
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-[#9A2220] transition-colors">{program.title}</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-[#1E3A8A] transition-colors">{program.title}</h3>
                   <p className="text-gray-600 leading-relaxed">
                     {program.description}
                   </p>

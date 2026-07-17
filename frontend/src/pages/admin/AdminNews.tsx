@@ -169,11 +169,11 @@ const AdminNews = () => {
               setSearchQuery(e.target.value);
               setPage(1);
             }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-sm w-full sm:w-64"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-sm w-full sm:w-64"
           />
           <button 
             onClick={() => handleOpenModal()}
-            className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap"
+            className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors whitespace-nowrap"
           >
             <Plus className="w-5 h-5" /> Add Article
           </button>
@@ -255,7 +255,7 @@ const AdminNews = () => {
                             <button onClick={() => handleOpenModal(article)} className="p-2 text-blue-600 hover:bg-blue-100 hover:text-blue-700 rounded-lg transition-colors focus:ring-2 focus:ring-blue-200 outline-none" title="Edit Article">
                               <Edit className="w-5 h-5" />
                             </button>
-                            <button onClick={() => setArticleToDelete(article.id)} className="p-2 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-red-200 outline-none" title="Delete Article">
+                            <button onClick={() => setArticleToDelete(article.id)} className="p-2 text-blue-600 hover:bg-blue-100 hover:text-red-700 rounded-lg transition-colors focus:ring-2 focus:ring-blue-200 outline-none" title="Delete Article">
                               <Trash2 className="w-5 h-5" />
                             </button>
                           </div>
@@ -299,7 +299,7 @@ const AdminNews = () => {
       {articleToDelete !== null && (
         <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-bold text-center text-gray-900 mb-2">Delete Article?</h2>
@@ -334,7 +334,7 @@ const AdminNews = () => {
                 <input 
                   type="text" required
                   value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
               <div>
@@ -352,7 +352,7 @@ const AdminNews = () => {
                       setImageFile(e.target.files[0]);
                     }
                   }}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 bg-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 bg-white"
                   required={!editingArticle && !imageFile}
                 />
               </div>
@@ -361,7 +361,7 @@ const AdminNews = () => {
                 <input 
                   type="text" required
                   value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
               <div className="pb-10">
@@ -378,7 +378,7 @@ const AdminNews = () => {
                 <button type="button" onClick={handleCloseModal} className="flex-1 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
                   Cancel
                 </button>
-                <button type="submit" disabled={isSubmitting} className="flex-1 py-2.5 bg-[#9A2220] text-white rounded-lg hover:bg-[#8A1A18] transition-colors font-medium disabled:opacity-70">
+                <button type="submit" disabled={isSubmitting} className="flex-1 py-2.5 bg-[#1E3A8A] text-white rounded-lg hover:bg-[#172554] transition-colors font-medium disabled:opacity-70">
                   {isSubmitting ? 'Saving...' : (editingArticle ? 'Save Changes' : 'Create Article')}
                 </button>
               </div>

@@ -139,7 +139,7 @@ const HeroBanner = () => {
                   {slide.primaryBtnText && (
                     <NavLink 
                       to={slide.primaryBtnLink || '#'}
-                      className="inline-flex items-center justify-center gap-2 bg-[#9A2220] hover:bg-[#8A1A18] text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+                      className="inline-flex items-center justify-center gap-2 bg-[#1E3A8A] hover:bg-[#172554] text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-0.5"
                     >
                       {slide.primaryBtnText}
                       <ArrowRight className="w-4 h-4" />

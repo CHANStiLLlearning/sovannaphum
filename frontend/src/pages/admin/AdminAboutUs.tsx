@@ -155,14 +155,14 @@ const AdminAboutUs = () => {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 border-4 border-[#9A2220] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-8 font-sans max-w-4xl">
           {/* Hero Section Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-              <Info className="w-5 h-5 text-[#9A2220]" />
+              <Info className="w-5 h-5 text-[#1E3A8A]" />
               Hero Banner Section
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -174,7 +174,7 @@ const AdminAboutUs = () => {
                   value={formData.about_hero_title}
                   onChange={(e) => setFormData({ ...formData, about_hero_title: e.target.value })}
                   placeholder="e.g. About Us"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -195,7 +195,7 @@ const AdminAboutUs = () => {
                       type="file"
                       accept="image/*"
                       onChange={(e) => { if (e.target.files?.[0]) setImageFile(e.target.files[0]); }}
-                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                      className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
                     />
                   </div>
                 </div>
@@ -206,7 +206,7 @@ const AdminAboutUs = () => {
           {/* Mission Card Settings */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-              <Target className="w-5 h-5 text-[#9A2220]" />
+              <Target className="w-5 h-5 text-[#1E3A8A]" />
               Our Mission Statement
             </h2>
             <div className="space-y-4">
@@ -218,7 +218,7 @@ const AdminAboutUs = () => {
                   value={formData.about_mission_title}
                   onChange={(e) => setFormData({ ...formData, about_mission_title: e.target.value })}
                   placeholder="e.g. Our Mission"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -230,7 +230,7 @@ const AdminAboutUs = () => {
                   value={formData.about_mission_desc}
                   onChange={(e) => setFormData({ ...formData, about_mission_desc: e.target.value })}
                   placeholder="Write the school mission statement..."
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 resize-none leading-relaxed"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 resize-none leading-relaxed"
                 />
               </div>
             </div>
@@ -251,7 +251,7 @@ const AdminAboutUs = () => {
                   value={formData.about_vision_title}
                   onChange={(e) => setFormData({ ...formData, about_vision_title: e.target.value })}
                   placeholder="e.g. Our Vision"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
 
@@ -263,7 +263,7 @@ const AdminAboutUs = () => {
                   value={formData.about_vision_desc}
                   onChange={(e) => setFormData({ ...formData, about_vision_desc: e.target.value })}
                   placeholder="Write the school vision statement..."
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 resize-none leading-relaxed"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 resize-none leading-relaxed"
                 />
               </div>
             </div>
@@ -272,7 +272,7 @@ const AdminAboutUs = () => {
           {/* Management Team Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
-              <Info className="w-5 h-5 text-[#9A2220]" />
+              <Info className="w-5 h-5 text-[#1E3A8A]" />
               Management Team Section
             </h2>
 
@@ -284,7 +284,7 @@ const AdminAboutUs = () => {
                   value={formData.mgmt_name}
                   onChange={(e) => setFormData({ ...formData, mgmt_name: e.target.value })}
                   placeholder="e.g. Mr. CHAN"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
               <div>
@@ -294,7 +294,7 @@ const AdminAboutUs = () => {
                   value={formData.mgmt_title}
                   onChange={(e) => setFormData({ ...formData, mgmt_title: e.target.value })}
                   placeholder="e.g. Chief Executive Officer"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
                 />
               </div>
             </div>
@@ -306,7 +306,7 @@ const AdminAboutUs = () => {
                 value={formData.mgmt_welcome_title}
                 onChange={(e) => setFormData({ ...formData, mgmt_welcome_title: e.target.value })}
                 placeholder="e.g. Welcome to Khmer America School"
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
               />
             </div>
 
@@ -326,7 +326,7 @@ const AdminAboutUs = () => {
                   type="file"
                   accept="image/*"
                   onChange={(e) => { if (e.target.files?.[0]) setMgmtPhotoFile(e.target.files[0]); }}
-                  className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#9A2220]/10 file:text-[#9A2220] hover:file:bg-[#9A2220]/20 file:cursor-pointer"
+                  className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20 file:cursor-pointer"
                 />
               </div>
             </div>
@@ -339,7 +339,7 @@ const AdminAboutUs = () => {
                   value={formData[key]}
                   onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
                   placeholder={`Paragraph ${i + 1}...`}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9A2220] outline-none text-gray-900 resize-none leading-relaxed"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900 resize-none leading-relaxed"
                 />
               </div>
             ))}
@@ -350,7 +350,7 @@ const AdminAboutUs = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#9A2220] hover:bg-[#8A1A18] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2.5 shadow-md active:scale-[0.98] transition-all disabled:opacity-75 cursor-pointer text-sm"
+              className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2.5 shadow-md active:scale-[0.98] transition-all disabled:opacity-75 cursor-pointer text-sm"
             >
               {isSubmitting ? (
                 <>

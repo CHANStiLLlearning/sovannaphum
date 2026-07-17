@@ -90,7 +90,7 @@ const NewsDetailPage = () => {
     return (
       <div className="w-full min-h-[60vh] flex flex-col justify-center items-center gap-4">
         <h2 className="text-3xl font-bold text-gray-900">Article not found</h2>
-        <Link to="/news" className="text-[#9A2220] font-medium hover:underline flex items-center gap-2">
+        <Link to="/news" className="text-[#1E3A8A] font-medium hover:underline flex items-center gap-2">
           <ChevronLeft className="w-4 h-4" /> Back to News
         </Link>
       </div>
@@ -128,7 +128,7 @@ const NewsDetailPage = () => {
         .premium-article p:first-of-type::first-letter {
           font-size: 3.8rem;
           font-weight: 900;
-          color: #9A2220;
+          color: #1E3A8A;
           float: left;
           line-height: 0.9;
           margin-right: 0.65rem;
@@ -140,7 +140,7 @@ const NewsDetailPage = () => {
       {/* Reading Progress Scrollbar */}
       <div className="fixed top-0 left-0 w-full h-[4px] z-50 bg-gray-100">
         <div 
-          className="h-full bg-[#9A2220] transition-all duration-100"
+          className="h-full bg-[#1E3A8A] transition-all duration-100"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -181,7 +181,7 @@ const NewsDetailPage = () => {
           {/* Article Meta / Actions Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-6 mb-8 gap-4">
             <div className="flex items-center gap-3 text-gray-500 text-sm font-semibold">
-              <BookOpen className="w-4 h-4 text-[#9A2220]" />
+              <BookOpen className="w-4 h-4 text-[#1E3A8A]" />
               <span>Reading time: {readingTime} min read</span>
             </div>
             
@@ -216,7 +216,7 @@ const NewsDetailPage = () => {
 
           {/* Render Rich Text Content with Drop-Cap class styling */}
           <div 
-            className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:text-[#9A2220] prose-a:text-[#D76918] hover:prose-a:text-[#9A2220] break-words premium-article text-justify"
+            className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:text-[#1E3A8A] prose-a:text-[#D76918] hover:prose-a:text-[#1E3A8A] break-words premium-article text-justify"
             dangerouslySetInnerHTML={{ __html: cleanDescription }}
           />
 
@@ -228,7 +228,7 @@ const NewsDetailPage = () => {
         <div className="bg-white border-t border-gray-100 py-16 mt-auto">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
             <h3 className="text-2xl font-black text-gray-900 mb-8 tracking-tight flex items-center gap-3">
-              <div className="w-2 h-6 bg-[#9A2220] rounded-full"></div>
+              <div className="w-2 h-6 bg-[#1E3A8A] rounded-full"></div>
               Read Next
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -246,7 +246,7 @@ const NewsDetailPage = () => {
                     />
                   </div>
                   <div className="p-5 flex flex-col flex-grow gap-3 justify-between">
-                    <h4 className="font-bold text-gray-800 leading-snug line-clamp-3 group-hover:text-[#9A2220] transition-colors text-sm sm:text-base">
+                    <h4 className="font-bold text-gray-800 leading-snug line-clamp-3 group-hover:text-[#1E3A8A] transition-colors text-sm sm:text-base">
                       {news.title}
                     </h4>
                     <span className="text-[10px] font-black text-[#EBA525] uppercase tracking-wider">{news.date}</span>

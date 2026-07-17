@@ -27,7 +27,7 @@ const features = [
     title: 'Student Registration',
     icon: studentRegiIcon,
     description: 'Seamless online enrollment, registration, and documentation designed to make school onboarding easy for parents.',
-    bgColor: 'bg-[#9A2220]/10 text-[#9A2220] border-[#9A2220]/20'
+    bgColor: 'bg-[#1E3A8A]/10 text-[#1E3A8A] border-[#1E3A8A]/20'
   },
   {
     title: 'Advanced Settings',
@@ -44,7 +44,7 @@ const KeyFeatures = () => {
         
         {/* Title */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-4">Our Key School Features</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-4">Our Key School Features</h2>
           <div className="w-24 h-1 bg-[#EBA525] mx-auto rounded-full"></div>
           <p className="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">
             We provide a highly structured, modern, and student-focused environment to maximize academic achievement.
@@ -64,7 +64,7 @@ const KeyFeatures = () => {
                 <img src={feature.icon} className="w-9 h-9 object-contain" alt="" />
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#9A2220] transition-colors">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#1E3A8A] transition-colors">
                 {feature.title}
               </h3>
               

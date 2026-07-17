@@ -35,13 +35,13 @@ const ManagementTeam = () => {
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-4">Message from Management</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-4">Message from Management</h2>
           <div className="w-24 h-1 bg-[#EBA525] mx-auto rounded-full"></div>
         </div>
 
         <div className="flex flex-col md:flex-row items-center gap-12 bg-gray-50 rounded-2xl p-8 md:p-12 border border-gray-100 shadow-sm">
           <div className="w-full md:w-1/3 flex flex-col items-center">
-            <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-[#9A2220] mb-6 shadow-xl">
+            <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-[#1E3A8A] mb-6 shadow-xl">
               <img
                 src={settings.mgmt_photo}
                 alt={settings.mgmt_name}
@@ -56,7 +56,7 @@ const ManagementTeam = () => {
           </div>
 
           <div className="w-full md:w-2/3">
-            <h4 className="text-2xl font-bold text-[#9A2220] mb-4">{settings.mgmt_welcome_title}</h4>
+            <h4 className="text-2xl font-bold text-[#1E3A8A] mb-4">{settings.mgmt_welcome_title}</h4>
             <div className="prose prose-lg text-gray-600 text-justify">
               {settings.mgmt_message_1 && <p className="mb-4">{settings.mgmt_message_1}</p>}
               {settings.mgmt_message_2 && <p className="mb-4">{settings.mgmt_message_2}</p>}

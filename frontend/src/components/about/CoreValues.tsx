@@ -23,7 +23,7 @@ const coreValues = [
     title: 'Professionalism',
     icon: <Briefcase className="w-8 h-8" />,
     description: 'We maintain high standards of integrity, ethical behavior, and dedication in everything we do, serving as role models for our students.',
-    color: 'bg-[#9A2220]'
+    color: 'bg-[#1E3A8A]'
   }
 ];
 
@@ -32,7 +32,7 @@ const CoreValues = () => {
     <section id="core-values" className="py-16 bg-gray-50 border-t border-gray-100 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#9A2220] mb-4">Our Core Values</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E3A8A] mb-4">Our Core Values</h2>
           <div className="w-24 h-1 bg-[#EBA525] mx-auto rounded-full"></div>
           <p className="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">
             These four pillars guide our daily actions, decisions, and the way we interact with one another at Khmer America School.

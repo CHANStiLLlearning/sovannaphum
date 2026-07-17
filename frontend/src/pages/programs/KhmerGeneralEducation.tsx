@@ -7,11 +7,11 @@ const KhmerGeneralEducation = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link 
           to="/programs" 
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-[#9A2220] mb-6 font-bold transition-all hover:-translate-x-1 group text-sm"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-[#1E3A8A] mb-6 font-bold transition-all hover:-translate-x-1 group text-sm"
         >
           <ChevronLeft className="w-5 h-5" /> Back to Programs
         </Link>
-        <h2 className="text-3xl font-bold text-[#9A2220] mb-6">Khmer General Education</h2>
+        <h2 className="text-3xl font-bold text-[#1E3A8A] mb-6">Khmer General Education</h2>
         <div className="prose prose-lg text-gray-600 max-w-none">
           <p>
             Our Khmer General Education program strictly follows the curriculum set by the Ministry of Education, Youth and Sport (MoEYS) of Cambodia. It is designed to provide students with a strong foundation in national subjects, fostering a deep understanding of Cambodian culture, history, and values while ensuring academic excellence in core subjects like Mathematics, Science, and Khmer Literature.
