@@ -148,7 +148,12 @@ const ContactPage = () => {
                   alert('Message sent successfully!');
                   form.reset();
                 } else {
-                  alert('Failed to send message.');
+                  try {
+                    const errResult = await res.json();
+                    alert(errResult.error || 'Failed to send message.');
+                  } catch {
+                    alert('Failed to send message.');
+                  }
                 }
               } catch (err) {
                 alert('An error occurred. Please try again later.');

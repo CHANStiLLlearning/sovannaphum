@@ -461,6 +461,24 @@ app.get('/api/contact', async (req, res) => {
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
+    
+    // Check if the same email sent a message in the last 15 minutes
+    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
+    const existingMessage = await prisma.contactMessage.findFirst({
+      where: {
+        email,
+        createdAt: {
+          gte: fifteenMinutesAgo
+        }
+      }
+    });
+
+    if (existingMessage) {
+      return res.status(429).json({ 
+        error: "You have already sent a message recently. Please wait 15 minutes before sending another one." 
+      });
+    }
+
     const contact = await prisma.contactMessage.create({
       data: { name, email, subject, message }
     });
