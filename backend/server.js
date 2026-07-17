@@ -829,54 +829,5 @@ app.post('/api/settings', async (req, res) => {
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`Server is running on port ${PORT}`);
   
-  // Static sample data generation for slides and programs removed as requested.
-
-  // Seed default settings if empty or missing
-  try {
-    const defaultSettings = [
-      { key: 'about_hero_image', value: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920' },
-      { key: 'about_hero_title', value: 'About Us' },
-      { key: 'about_mission_title', value: 'Our Mission' },
-      { key: 'about_mission_desc', value: 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values. We aim to nurture young minds to become innovative thinkers and responsible global citizens.' },
-      { key: 'about_vision_title', value: 'Our Vision' },
-      { key: 'about_vision_desc', value: 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence, character development, and equipping students with the essential skills to thrive in the 21st century.' },
-      { key: 'contact_hero_title', value: 'Contact Us' },
-      { key: 'contact_hero_subtitle', value: 'Get in touch with Khmer America School' },
-      { key: 'contact_hero_image', value: 'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1920' },
-      { key: 'contact_phone', value: '(+855) 15 838 015' },
-      { key: 'contact_email', value: 'info@khmeramericaschool.edu.kh' },
-      { key: 'contact_telegram', value: 't.me/khmeramericaschoolcambodia' },
-      { key: 'contact_address', value: 'St. 60CVV Dermkor Village, Sangkat Chrouy changvar, Khan Chrouy Changvar, Phnom Penh.' },
-      { key: 'contact_linkedin', value: '@khmeramericaschoolcambodia' },
-      { key: 'contact_facebook', value: 'Khmer America School, Cambodia' },
-      { key: 'contact_instagram', value: '@khmeramericaschool' },
-      { key: 'contact_tiktok', value: '@khmeramericaschool' },
-      { key: 'contact_map_iframe', value: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15635.882414777322!2d104.915725!3d11.5594002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109513e9a5a3a71%3A0x6e0988ccafcb89af!2sSovannaphumi%20School!5e0!3m2!1sen!2skh!4v1700000000000!5m2!1sen!2skh' },
-      { key: 'faculty_hero_title', value: 'Meet Our Faculty' },
-      { key: 'faculty_hero_subtitle', value: 'Dedicated educators shaping the next generation with passion, expertise, and care.' },
-      { key: 'faculty_hero_image', value: 'https://images.unsplash.com/photo-1580637182598-a836179cf7b9?auto=format&fit=crop&q=80&w=1920' },
-      { key: 'event_hero_title', value: 'School Events & Activities' },
-      { key: 'event_hero_subtitle', value: 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.' },
-      { key: 'event_hero_image', value: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1920' },
-      { key: 'program_hero_title', value: 'Academic Programs' },
-      { key: 'program_hero_image', value: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1920' },
-      { key: 'mgmt_name', value: 'Mr. CHAN' },
-      { key: 'mgmt_title', value: 'Chief Executive Officer' },
-      { key: 'mgmt_photo', value: 'https://portfolio-web-eosin-alpha.vercel.app/assets/keokimchan-CZlzWr5F.png' },
-      { key: 'mgmt_welcome_title', value: 'Welcome to Khmer America School' },
-      { key: 'mgmt_message_1', value: 'Education is the most powerful weapon which you can use to change the world. At Khmer America School, we are committed to providing the highest quality education to build the future leaders of Cambodia.' },
-      { key: 'mgmt_message_2', value: 'Since our founding, we have continuously strived for excellence, expanding our reach and improving our curriculum to meet international standards while preserving our rich Khmer culture and heritage.' },
-      { key: 'mgmt_message_3', value: 'I invite you to join our growing community of learners, educators, and parents who share a common vision: empowering the next generation with knowledge, character, and skills for success in a rapidly changing world.' }
-    ];
-    const promises = defaultSettings.map(async (s) => {
-      const exists = await prisma.setting.findUnique({ where: { key: s.key } });
-      if (!exists) {
-        await prisma.setting.create({ data: s });
-      }
-    });
-    await Promise.all(promises);
-    console.log("Sample settings seeded successfully.");
-  } catch (err) {
-    console.warn("Failed to automatically seed settings:", err.message);
-  }
+  // Static sample data generation and settings seeding logic removed as requested.
 });
