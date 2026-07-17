@@ -829,5 +829,4 @@ app.post('/api/settings', async (req, res) => {
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`Server is running on port ${PORT}`);
   
-  // Static sample data generation and settings seeding logic removed as requested.
 });
