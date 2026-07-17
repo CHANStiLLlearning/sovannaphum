@@ -18,6 +18,8 @@ model NewsArticle {
   date        String
   description String   @default("Discover the latest updates, achievements, and upcoming events in our school community.")
   createdAt   DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Event {
@@ -30,6 +32,8 @@ model Event {
   status      String   @default("Open")
   badge       String   @default("None")
   createdAt   DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Teacher {
@@ -40,6 +44,8 @@ model Teacher {
   nationality String   @default("Cambodian")
   image       String?
   createdAt   DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model ContactMessage {
@@ -49,12 +55,16 @@ model ContactMessage {
   subject   String?
   message   String
   createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Subscriber {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Admin {
@@ -83,6 +93,8 @@ model Slide {
   secondaryBtnText String   @default("Contact Us")
   secondaryBtnLink String   @default("/contact")
   createdAt        DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Program {
@@ -93,6 +105,8 @@ model Program {
   iconName    String   @default("book-open")
   colorClass  String   @default("bg-blue-50/70 text-blue-600 border border-blue-100/50")
   createdAt   DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Testimonial {
@@ -102,6 +116,8 @@ model Testimonial {
   image     String?
   quote     String
   createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model FAQ {
@@ -110,6 +126,8 @@ model FAQ {
   answer_kh String
   answer_en String
   createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model Partner {
@@ -117,4 +135,6 @@ model Partner {
   name      String
   logo      String
   createdAt DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
 }
