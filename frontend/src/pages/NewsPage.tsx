@@ -17,6 +17,7 @@ const NewsPage = () => {
   const [newsArticles, setNewsArticles] = useState<Article[]>([]);
   const [recentNews, setRecentNews] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [recentLoading, setRecentLoading] = useState(true);
   const [error, setError] = useState('');
   const [visibleCount, setVisibleCount] = useState(6);
   const [searchParams] = useSearchParams();
@@ -25,6 +26,7 @@ const NewsPage = () => {
   // Fetch recent news once
   useEffect(() => {
     const fetchRecentNews = async () => {
+      setRecentLoading(true);
       try {
         const response = await fetch(`${API_BASE_URL}/api/news?limit=5`);
         if (response.ok) {
@@ -33,6 +35,8 @@ const NewsPage = () => {
         }
       } catch (err) {
         console.error('Failed to fetch recent news', err);
+      } finally {
+        setRecentLoading(false);
       }
     };
     fetchRecentNews();
@@ -174,26 +178,43 @@ const NewsPage = () => {
                 Recent News
               </h2>
               <div className="flex flex-col gap-4">
-                {recentNews.map((news) => (
-                  <Link to={`/news/${news.id}`} key={news.id} className="flex gap-4 items-start p-3 rounded-xl hover:bg-[#f9fafb] transition-colors cursor-pointer group">
-                    <div className="w-24 h-20 shrink-0 overflow-hidden rounded-lg">
-                      <img 
-                        src={news.image} 
-                        alt={news.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <h4 className="font-bold text-gray-800 text-sm leading-tight line-clamp-3 group-hover:text-[#1E3A8A] transition-colors">
-                        {news.title}
-                      </h4>
-                      <div className="flex items-center gap-1.5 text-gray-400 text-xs mt-1">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{news.date}</span>
+                {recentLoading ? (
+                  // Loading Skeleton for Recent News
+                  [1, 2, 3, 4].map((index) => (
+                    <div key={index} className="flex gap-4 items-start p-3 rounded-xl animate-pulse">
+                      <div className="w-24 h-20 shrink-0 bg-gray-200 rounded-lg"></div>
+                      <div className="flex flex-col gap-2 w-full mt-1">
+                        <div className="h-4 bg-gray-200 rounded w-11/12"></div>
+                        <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                        <div className="flex items-center gap-1.5 mt-2">
+                          <div className="w-3.5 h-3.5 bg-gray-200 rounded-full"></div>
+                          <div className="h-3 bg-gray-200 rounded w-16"></div>
+                        </div>
                       </div>
                     </div>
-                  </Link>
-                ))}
+                  ))
+                ) : (
+                  recentNews.map((news) => (
+                    <Link to={`/news/${news.id}`} key={news.id} className="flex gap-4 items-start p-3 rounded-xl hover:bg-[#f9fafb] transition-colors cursor-pointer group">
+                      <div className="w-24 h-20 shrink-0 overflow-hidden rounded-lg">
+                        <img 
+                          src={news.image} 
+                          alt={news.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <h4 className="font-bold text-gray-800 text-sm leading-tight line-clamp-3 group-hover:text-[#1E3A8A] transition-colors">
+                          {news.title}
+                        </h4>
+                        <div className="flex items-center gap-1.5 text-gray-400 text-xs mt-1">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>{news.date}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+                )}
               </div>
             </div>
 
