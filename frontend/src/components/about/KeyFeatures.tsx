@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
 import { Star } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
 
 import classroomIcon from '../../assets/icons/classroom-management.svg';
 import examIcon from '../../assets/icons/exam.svg';
@@ -24,22 +22,12 @@ const iconMap: Record<string, string> = {
   'setting': settingIcon
 };
 
-const KeyFeatures = () => {
-  const [features, setFeatures] = useState<Feature[]>([]);
-  const [loading, setLoading] = useState(true);
+interface KeyFeaturesProps {
+  features: Feature[];
+  loading: boolean;
+}
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/features`)
-      .then(res => res.json())
-      .then(data => {
-        setFeatures(data || []);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to load key features:", err);
-        setLoading(false);
-      });
-  }, []);
+const KeyFeatures = ({ features, loading }: KeyFeaturesProps) => {
 
   if (loading) {
     return (

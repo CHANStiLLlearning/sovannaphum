@@ -6,7 +6,9 @@ import { API_BASE_URL } from '../config';
 
 const AboutPage = () => {
   const [settings, setSettings] = useState<any>(null);
+  const [features, setFeatures] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [featuresLoading, setFeaturesLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/settings`)
@@ -19,9 +21,9 @@ const AboutPage = () => {
           about_hero_title: data.about_hero_title || 'About Us',
           about_hero_image: data.about_hero_image || 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
           about_mission_title: data.about_mission_title || 'Our Mission',
-          about_mission_desc: data.about_mission_desc || 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values.',
+          about_mission_desc: data.about_mission_desc || 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values. We aim to nurture young minds to become innovative thinkers and responsible global citizens.',
           about_vision_title: data.about_vision_title || 'Our Vision',
-          about_vision_desc: data.about_vision_desc || 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence.',
+          about_vision_desc: data.about_vision_desc || 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence, character development, and equipping students with the essential skills to thrive in the 21st century.',
         });
         setLoading(false);
       })
@@ -31,11 +33,22 @@ const AboutPage = () => {
           about_hero_title: 'About Us',
           about_hero_image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
           about_mission_title: 'Our Mission',
-          about_mission_desc: 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values.',
+          about_mission_desc: 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values. We aim to nurture young minds to become innovative thinkers and responsible global citizens.',
           about_vision_title: 'Our Vision',
-          about_vision_desc: 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence.',
+          about_vision_desc: 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence, character development, and equipping students with the essential skills to thrive in the 21st century.',
         });
         setLoading(false);
+      });
+
+    fetch(`${API_BASE_URL}/api/features`)
+      .then(res => res.json())
+      .then(data => {
+        setFeatures(data || []);
+        setFeaturesLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to load key features:', err);
+        setFeaturesLoading(false);
       });
   }, []);
 
@@ -130,7 +143,7 @@ const AboutPage = () => {
         visionTitle={settings.about_vision_title}
         visionDesc={settings.about_vision_desc}
       />
-      <KeyFeatures />
+      <KeyFeatures features={features} loading={featuresLoading} />
       <FAQ />
     </div>
   );
