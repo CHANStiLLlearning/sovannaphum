@@ -659,12 +659,13 @@ app.get('/api/programs', async (req, res) => {
 
 app.post('/api/programs', async (req, res) => {
   try {
-    const { title, description, path, iconName, colorClass } = req.body;
+    const { title, description, path, iconName, colorClass, ageRange, gradeLevel, image } = req.body;
     const program = await prisma.program.create({
-      data: { title, description, path, iconName, colorClass }
+      data: { title, description, path, iconName, colorClass, ageRange, gradeLevel, image }
     });
     res.status(201).json(program);
   } catch (error) {
+    console.error("Program create error:", error);
     res.status(500).json({ error: "Failed to create program" });
   }
 });
@@ -672,13 +673,14 @@ app.post('/api/programs', async (req, res) => {
 app.put('/api/programs/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const { title, description, path, iconName, colorClass } = req.body;
+    const { title, description, path, iconName, colorClass, ageRange, gradeLevel, image } = req.body;
     const program = await prisma.program.update({
       where: { id },
-      data: { title, description, path, iconName, colorClass }
+      data: { title, description, path, iconName, colorClass, ageRange, gradeLevel, image }
     });
     res.json(program);
   } catch (error) {
+    console.error("Program update error:", error);
     res.status(500).json({ error: "Failed to update program" });
   }
 });

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap, Menu, X, Sliders, Info, Phone, Handshake, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, Newspaper, Calendar, Mail, Users, LogOut, GraduationCap, Menu, X, Sliders, Info, Phone, Handshake, HelpCircle, Search } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 
 const AdminLayout = () => {
@@ -13,6 +13,7 @@ const AdminLayout = () => {
     { name: 'Hero Slides', path: '/admin/slides', icon: <Sliders className="w-5 h-5" /> },
     { name: 'About Us', path: '/admin/about-us', icon: <Info className="w-5 h-5" /> },
     { name: 'Contact Info', path: '/admin/contact-us', icon: <Phone className="w-5 h-5" /> },
+    { name: 'SEO Settings', path: '/admin/seo', icon: <Search className="w-5 h-5" /> },
     { name: 'FAQ', path: '/admin/faq', icon: <HelpCircle className="w-5 h-5" /> },
     { name: 'Partners', path: '/admin/partners', icon: <Handshake className="w-5 h-5" /> },
     { name: 'News Articles', path: '/admin/news', icon: <Newspaper className="w-5 h-5" /> },

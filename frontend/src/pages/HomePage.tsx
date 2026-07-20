@@ -5,8 +5,10 @@ import NewsSection from '../components/NewsSection'
 import EventsSection from '../components/EventsSection'
 import ManagementTeam from '../components/ManagementTeam'
 import Partnerships from '../components/Partnerships'
+import { useSEO } from '../hooks/useSEO'
 
 const HomePage = () => {
+  useSEO('home');
   return (
     <>
       <HeroBanner />

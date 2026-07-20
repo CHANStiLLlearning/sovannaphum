@@ -38,6 +38,7 @@ import AdminAboutUs from './pages/admin/school-info/AdminAboutUs';
 import AdminContactUs from './pages/admin/school-info/AdminContactUs';
 import AdminFAQ from './pages/admin/school-info/AdminFAQ';
 import AdminPartners from './pages/admin/school-info/AdminPartners';
+import AdminSEO from './pages/admin/school-info/AdminSEO';
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-white font-sans flex flex-col">
@@ -70,6 +71,7 @@ function App() {
                 <Route path="programs" element={<AdminPrograms />} />
                 <Route path="about-us" element={<AdminAboutUs />} />
                 <Route path="contact-us" element={<AdminContactUs />} />
+                <Route path="seo" element={<AdminSEO />} />
                 <Route path="faq" element={<AdminFAQ />} />
                 <Route path="partners" element={<AdminPartners />} />
                 <Route path="contacts" element={<AdminContacts />} />

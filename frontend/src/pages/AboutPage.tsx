@@ -3,8 +3,10 @@ import MissionVision from '../components/about/MissionVision';
 import KeyFeatures from '../components/about/KeyFeatures';
 import FAQ from '../components/FAQ';
 import { API_BASE_URL } from '../config';
+import { useSEO } from '../hooks/useSEO';
 
 const AboutPage = () => {
+  useSEO('about');
   const [settings, setSettings] = useState<any>(null);
   const [features, setFeatures] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

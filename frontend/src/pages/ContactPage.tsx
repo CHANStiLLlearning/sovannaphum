@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { FaTelegramPlane, FaTiktok, FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { API_BASE_URL } from '../config';
+import { useSEO } from '../hooks/useSEO';
 
 const ContactPage = () => {
+  useSEO('contact');
   const [settings, setSettings] = useState({
     contact_hero_title: 'Contact Us',
     contact_hero_subtitle: 'Get in touch with Khmer America School',

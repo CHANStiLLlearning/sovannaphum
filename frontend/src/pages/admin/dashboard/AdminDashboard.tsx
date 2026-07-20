@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Newspaper, Mail, Users, Clock, Calendar as CalendarIcon, Filter, GraduationCap, ArrowUpRight, TrendingUp } from 'lucide-react';
+import { Newspaper, Mail, Users, Clock, Calendar as CalendarIcon, Filter, GraduationCap, ArrowUpRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 import { API_BASE_URL } from '../../../config';
@@ -10,6 +10,7 @@ const AdminDashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [filterMode, setFilterMode] = useState('all');
   const [selectedDate, setSelectedDate] = useState('');
+  const [activeTab, setActiveTab] = useState<'events' | 'distribution'>('events');
 
   const [rawData, setRawData] = useState({
     news: [] as DataItem[],
@@ -166,6 +167,34 @@ const AdminDashboard = () => {
     { name: 'Programs', count: filteredStats.programs, color: '#6366f1' },
   ];
 
+  const getMonthlyEvents = () => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const counts = Array(12).fill(0);
+    
+    rawData.events.forEach((ev: any) => {
+      if (!ev.date) return;
+      const parts = ev.date.split('-');
+      if (parts.length >= 2) {
+        const monthIdx = parseInt(parts[1]) - 1;
+        if (monthIdx >= 0 && monthIdx < 12) {
+          counts[monthIdx]++;
+        }
+      } else {
+        const d = new Date(ev.date || ev.createdAt);
+        if (!isNaN(d.getTime())) {
+          counts[d.getMonth()]++;
+        }
+      }
+    });
+
+    return months.map((name, i) => ({
+      name,
+      count: counts[i]
+    }));
+  };
+
+  const monthlyEventsData = getMonthlyEvents();
+
   const filterLabel =
     filterMode === 'all' ? 'All Time'
     : filterMode === 'today' ? 'Today'
@@ -261,42 +290,32 @@ const AdminDashboard = () => {
           {/* ── Chart + Quick Links Row ── */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-            {/* Bar Chart */}
+            {/* Bar / Monthly Events Chart */}
             <div className="xl:col-span-2 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-[#1E3A8A]" />
-                  <h2 className="text-lg font-bold text-gray-900">Content Distribution</h2>
+              <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setActiveTab('events')}
+                    className={`text-lg font-bold pb-1.5 transition-all border-b-2 ${activeTab === 'events' ? 'text-[#1E3A8A] border-[#1E3A8A]' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
+                  >
+                    Events Scheduled (Monthly)
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('distribution')}
+                    className={`text-lg font-bold pb-1.5 transition-all border-b-2 ${activeTab === 'distribution' ? 'text-[#1E3A8A] border-[#1E3A8A]' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
+                  >
+                    Content Distribution
+                  </button>
                 </div>
                 <span className="px-3 py-1 bg-gray-50 border border-gray-100 text-gray-500 text-xs font-semibold rounded-full uppercase tracking-wider">
                   {filterLabel}
                 </span>
               </div>
+
               <div className="h-72 w-full flex items-center justify-center">
                 <ResponsiveContainer width="100%" height="100%">
-                  {isMobile ? (
-                    <PieChart>
-                      <Pie
-                        data={chartData.filter(d => d.count > 0)}
-                        dataKey="count"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={90}
-                        paddingAngle={5}
-                      >
-                        {chartData.filter(d => d.count > 0).map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <RechartsTooltip 
-                        contentStyle={{ borderRadius: '12px', border: '1px solid #f0f0f0', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '13px' }}
-                      />
-                      <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
-                    </PieChart>
-                  ) : (
-                    <BarChart data={chartData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
+                  {activeTab === 'events' ? (
+                    <BarChart data={monthlyEventsData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                       <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 11, fontWeight: 600 }} />
                       <YAxis axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 11 }} allowDecimals={false} width={28} />
@@ -304,12 +323,46 @@ const AdminDashboard = () => {
                         cursor={{ fill: '#f9fafb', radius: 8 }}
                         contentStyle={{ borderRadius: '12px', border: '1px solid #f0f0f0', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '13px' }}
                       />
-                      <Bar dataKey="count" radius={[8, 8, 0, 0]} maxBarSize={52}>
-                        {chartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Bar>
+                      <Bar dataKey="count" fill="#1E3A8A" radius={[8, 8, 0, 0]} maxBarSize={48} />
                     </BarChart>
+                  ) : (
+                    isMobile ? (
+                      <PieChart>
+                        <Pie
+                          data={chartData.filter(d => d.count > 0)}
+                          dataKey="count"
+                          nameKey="name"
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={90}
+                          paddingAngle={5}
+                        >
+                          {chartData.filter(d => d.count > 0).map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <RechartsTooltip 
+                          contentStyle={{ borderRadius: '12px', border: '1px solid #f0f0f0', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '13px' }}
+                        />
+                        <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
+                      </PieChart>
+                    ) : (
+                      <BarChart data={chartData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 11, fontWeight: 600 }} />
+                        <YAxis axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 11 }} allowDecimals={false} width={28} />
+                        <RechartsTooltip
+                          cursor={{ fill: '#f9fafb', radius: 8 }}
+                          contentStyle={{ borderRadius: '12px', border: '1px solid #f0f0f0', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '13px' }}
+                        />
+                        <Bar dataKey="count" radius={[8, 8, 0, 0]} maxBarSize={52}>
+                          {chartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    )
                   )}
                 </ResponsiveContainer>
               </div>
@@ -335,6 +388,59 @@ const AdminDashboard = () => {
                 </NavLink>
               ))}
             </div>
+          </div>
+
+          {/* ── Recent Inbox Feed Row ── */}
+          <div className="mt-8 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <Mail className="w-5 h-5 text-[#1E3A8A]" />
+                <h2 className="text-lg font-bold text-gray-900">Recent Messages Inbox</h2>
+              </div>
+              <NavLink 
+                to="/admin/contacts" 
+                className="text-xs font-bold text-[#1E3A8A] hover:text-[#172554] flex items-center gap-1 hover:underline"
+              >
+                View All Messages
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </NavLink>
+            </div>
+            
+            {rawData.contacts.length === 0 ? (
+              <p className="text-gray-400 text-sm text-center py-6">No contact messages received yet.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50/70">
+                    <tr>
+                      <th className="px-4 py-3 font-semibold rounded-l-lg">Sender</th>
+                      <th className="px-4 py-3 font-semibold">Subject</th>
+                      <th className="px-4 py-3 font-semibold">Message</th>
+                      <th className="px-4 py-3 font-semibold rounded-r-lg">Received</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {rawData.contacts.slice(0, 5).map((msg: any) => (
+                      <tr key={msg.id} className="hover:bg-gray-50/50 transition-colors">
+                        <td className="px-4 py-3.5">
+                          <p className="font-bold text-gray-800">{msg.name}</p>
+                          <p className="text-xs text-gray-400 font-mono">{msg.email}</p>
+                        </td>
+                        <td className="px-4 py-3.5 text-gray-700 font-medium">
+                          {msg.subject || 'No Subject'}
+                        </td>
+                        <td className="px-4 py-3.5 text-gray-500 max-w-xs truncate">
+                          {msg.message}
+                        </td>
+                        <td className="px-4 py-3.5 text-gray-400 text-xs font-semibold">
+                          {new Date(msg.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </>
       )}

@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Globe, Languages, MessageSquare } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
+import { useSEO } from '../../hooks/useSEO';
 
 const ProgramsIndex = () => {
+  useSEO('programs');
   const [programs, setPrograms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,26 +66,59 @@ const ProgramsIndex = () => {
                 <Link 
                   key={program.id} 
                   to={program.path || '#'}
-                  className="bg-white rounded-2xl p-8 flex flex-col justify-between shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group overflow-hidden relative"
+                  className="bg-white rounded-3xl overflow-hidden flex flex-col shadow-sm border border-gray-150/60 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group relative font-sans"
                 >
-                  <div className="absolute -right-20 -top-20 w-40 h-40 bg-gray-50 rounded-full group-hover:scale-150 transition-transform duration-700 ease-out z-0"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className={`w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center ${theme.text} ${theme.hoverBg} group-hover:text-white transition-colors duration-300 shadow-sm`}>
-                        {resolveIcon(program.iconName)}
+                  {/* Card Image Banner */}
+                  <div className="h-48 w-full bg-gray-100 relative overflow-hidden shrink-0">
+                    {program.image ? (
+                      <img 
+                        src={program.image} 
+                        alt={program.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                    ) : (
+                      <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100/50`}>
+                        <div className={`w-16 h-16 rounded-2xl bg-white flex items-center justify-center ${theme.text} shadow-sm border border-gray-100`}>
+                          {resolveIcon(program.iconName, "w-8 h-8")}
+                        </div>
                       </div>
-                      <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 group-hover:border-[#EBA525] group-hover:text-[#EBA525] group-hover:bg-yellow-50 transition-colors">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
+                    )}
+                    {/* Floating badge for icon if image exists */}
+                    {program.image && (
+                      <div className={`absolute bottom-4 left-6 w-12 h-12 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center ${theme.text} shadow-md border border-white/20`}>
+                        {resolveIcon(program.iconName, "w-6 h-6")}
                       </div>
+                    )}
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                      {/* Meta stats badges */}
+                      <div className="flex gap-2.5 mb-4 flex-wrap">
+                        <span className="text-[10px] uppercase font-bold tracking-wider bg-blue-50/80 text-[#1E3A8A] border border-blue-100/60 px-3 py-1 rounded-full">
+                          Age: {program.ageRange || '3 - 18 Years'}
+                        </span>
+                        <span className="text-[10px] uppercase font-bold tracking-wider bg-amber-50/80 text-amber-700 border border-amber-100/60 px-3 py-1 rounded-full">
+                          Grades: {program.gradeLevel || 'Nursery - Grade 12'}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl font-black text-gray-800 mb-3 group-hover:text-[#1E3A8A] transition-colors line-clamp-1">
+                        {program.title}
+                      </h3>
+                      
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-3">
+                        {program.description}
+                      </p>
                     </div>
-                    
-                    <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-[#1E3A8A] transition-colors">{program.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {program.description}
-                    </p>
+
+                    <div className="flex items-center gap-1.5 text-sm font-bold text-[#1E3A8A] mt-6 group-hover:translate-x-1 transition-transform duration-300">
+                      Learn Program Details
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
                 </Link>
               );

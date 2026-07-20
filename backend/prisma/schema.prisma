@@ -104,6 +104,9 @@ model Program {
   path        String   @default("/programs")
   iconName    String   @default("book-open")
   colorClass  String   @default("bg-blue-50/70 text-blue-600 border border-blue-100/50")
+  ageRange    String   @default("3 - 18 Years")
+  gradeLevel  String   @default("Nursery - Grade 12")
+  image       String?
   createdAt   DateTime @default(now())
 
   @@index([createdAt(sort: Desc)])

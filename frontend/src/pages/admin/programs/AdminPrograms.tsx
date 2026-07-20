@@ -9,6 +9,9 @@ type Program = {
   path: string;
   iconName: string;
   colorClass: string;
+  ageRange?: string;
+  gradeLevel?: string;
+  image?: string;
 };
 
 const iconOptions = [
@@ -40,7 +43,11 @@ const AdminPrograms = () => {
     path: '',
     iconName: 'book-open',
     colorClass: 'bg-blue-50/70 text-blue-600 border border-blue-100/50',
+    ageRange: '3 - 18 Years',
+    gradeLevel: 'Nursery - Grade 12',
+    image: '',
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Delete Confirmation State
@@ -130,6 +137,7 @@ const AdminPrograms = () => {
   }, []);
 
   const handleOpenModal = (program?: Program) => {
+    setImageFile(null);
     if (program) {
       setEditingProgram(program);
       setFormData({
@@ -138,6 +146,9 @@ const AdminPrograms = () => {
         path: program.path,
         iconName: program.iconName,
         colorClass: program.colorClass,
+        ageRange: program.ageRange || '3 - 18 Years',
+        gradeLevel: program.gradeLevel || 'Nursery - Grade 12',
+        image: program.image || '',
       });
     } else {
       setEditingProgram(null);
@@ -147,6 +158,9 @@ const AdminPrograms = () => {
         path: '/programs',
         iconName: 'book-open',
         colorClass: 'bg-blue-50/70 text-blue-600 border border-blue-100/50',
+        ageRange: '3 - 18 Years',
+        gradeLevel: 'Nursery - Grade 12',
+        image: '',
       });
     }
     setIsModalOpen(true);
@@ -155,6 +169,7 @@ const AdminPrograms = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingProgram(null);
+    setImageFile(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,6 +177,21 @@ const AdminPrograms = () => {
     setIsSubmitting(true);
 
     try {
+      let uploadedImageUrl = formData.image;
+      if (imageFile) {
+        const uploadData = new FormData();
+        uploadData.append('image', imageFile);
+        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
+        if (uploadRes.ok) {
+          const uploadResult = await uploadRes.json();
+          uploadedImageUrl = uploadResult.url;
+        } else {
+          showToast('Image upload failed');
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       const url = editingProgram
         ? `${API_BASE_URL}/api/programs/${editingProgram.id}`
         : `${API_BASE_URL}/api/programs`;
@@ -170,7 +200,7 @@ const AdminPrograms = () => {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, image: uploadedImageUrl }),
       });
 
       if (res.ok) {
@@ -304,8 +334,8 @@ const AdminPrograms = () => {
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 uppercase tracking-wider text-xs font-semibold">
                   <th className="p-5 w-24">ID</th>
-                  <th className="p-5 w-16">Icon</th>
-                  <th className="p-5">Title</th>
+                  <th className="p-5 w-24">Thumbnail</th>
+                  <th className="p-5">Program Details</th>
                   <th className="p-5">Route Path</th>
                   <th className="p-5 text-right">Actions</th>
                 </tr>
@@ -324,11 +354,23 @@ const AdminPrograms = () => {
                         </span>
                       </td>
                       <td className="p-5 align-middle">
-                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${program.colorClass || 'bg-gray-100'}`}>
-                          {resolveIcon(program.iconName, 'w-4 h-4')}
+                        <div className="w-12 h-10 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex items-center justify-center shrink-0">
+                          {program.image ? (
+                            <img src={program.image} alt={program.title} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className={`w-full h-full flex items-center justify-center ${program.colorClass || 'bg-gray-100'}`}>
+                              {resolveIcon(program.iconName, 'w-4 h-4')}
+                            </div>
+                          )}
                         </div>
                       </td>
-                      <td className="p-5 align-middle font-bold text-gray-800">{program.title}</td>
+                      <td className="p-5 align-middle">
+                        <p className="font-bold text-gray-800 text-sm">{program.title}</p>
+                        <div className="flex gap-2 mt-1.5 flex-wrap">
+                          <span className="text-[10px] font-bold bg-blue-50 text-[#1E3A8A] border border-blue-100 px-2 py-0.5 rounded-full">Age: {program.ageRange || '3-18 Years'}</span>
+                          <span className="text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100 px-2 py-0.5 rounded-full">Grades: {program.gradeLevel || 'Nursery - Grade 12'}</span>
+                        </div>
+                      </td>
                       <td className="p-5 align-middle text-gray-500 font-mono text-xs">{program.path}</td>
                       <td className="p-5 align-middle text-right whitespace-nowrap">
                         <div className="flex justify-end gap-2">
@@ -440,6 +482,53 @@ const AdminPrograms = () => {
                       </option>
                     ))}
                   </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Age Range</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.ageRange}
+                    onChange={(e) => setFormData({ ...formData, ageRange: e.target.value })}
+                    placeholder="e.g. 3 - 5 Years"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Grade Level</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.gradeLevel}
+                    onChange={(e) => setFormData({ ...formData, gradeLevel: e.target.value })}
+                    placeholder="e.g. Nursery - Kindergarten"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1E3A8A] outline-none text-gray-900"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Program Thumbnail Image</label>
+                <div className="flex gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+                  <div className="w-16 h-12 bg-gray-200 border border-gray-300 rounded-lg overflow-hidden shrink-0 flex items-center justify-center">
+                    {imageFile ? (
+                      <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
+                    ) : formData.image ? (
+                      <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <ImageIcon className="w-5 h-5 text-gray-400" />
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => { if (e.target.files?.[0]) setImageFile(e.target.files[0]); }}
+                    className="text-xs text-gray-500 cursor-pointer w-full file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1E3A8A]/10 file:text-[#1E3A8A] hover:file:bg-[#1E3A8A]/20"
+                  />
                 </div>
               </div>
 

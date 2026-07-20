@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, MapPin, Search, Sparkles, ChevronRight, X, Star } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
+import { useSEO } from '../hooks/useSEO';
 
 type SchoolEvent = {
   id: number;
@@ -25,6 +26,7 @@ const stripStyles = (html: string) =>
     .replace(/\u00A0/g, ' ');
 
 const EventPage = () => {
+  useSEO('events');
   const [events, setEvents] = useState<SchoolEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
