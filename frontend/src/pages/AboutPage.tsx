@@ -5,14 +5,8 @@ import FAQ from '../components/FAQ';
 import { API_BASE_URL } from '../config';
 
 const AboutPage = () => {
-  const [settings, setSettings] = useState({
-    about_hero_title: 'About Us',
-    about_hero_image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
-    about_mission_title: 'Our Mission',
-    about_mission_desc: 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values. We aim to nurture young minds to become innovative thinkers and responsible global citizens.',
-    about_vision_title: 'Our Vision',
-    about_vision_desc: 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence, character development, and equipping students with the essential skills to thrive in the 21st century.',
-  });
+  const [settings, setSettings] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/settings`)
@@ -21,20 +15,92 @@ const AboutPage = () => {
         return res.json();
       })
       .then(data => {
-        setSettings(prev => ({
-          ...prev,
-          about_hero_title: data.about_hero_title || prev.about_hero_title,
-          about_hero_image: data.about_hero_image || prev.about_hero_image,
-          about_mission_title: data.about_mission_title || prev.about_mission_title,
-          about_mission_desc: data.about_mission_desc || prev.about_mission_desc,
-          about_vision_title: data.about_vision_title || prev.about_vision_title,
-          about_vision_desc: data.about_vision_desc || prev.about_vision_desc,
-        }));
+        setSettings({
+          about_hero_title: data.about_hero_title || 'About Us',
+          about_hero_image: data.about_hero_image || 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
+          about_mission_title: data.about_mission_title || 'Our Mission',
+          about_mission_desc: data.about_mission_desc || 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values.',
+          about_vision_title: data.about_vision_title || 'Our Vision',
+          about_vision_desc: data.about_vision_desc || 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence.',
+        });
+        setLoading(false);
       })
       .catch(err => {
         console.warn('Fallback to local About page settings:', err);
+        setSettings({
+          about_hero_title: 'About Us',
+          about_hero_image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
+          about_mission_title: 'Our Mission',
+          about_mission_desc: 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values.',
+          about_vision_title: 'Our Vision',
+          about_vision_desc: 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence.',
+        });
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full bg-white flex flex-col min-h-screen">
+        {/* Shimmer Hero Banner */}
+        <section className="relative w-full bg-gray-200 h-[70vh] flex items-center justify-center animate-pulse">
+          <div className="relative z-10 text-center px-4 max-w-xl flex flex-col items-center gap-4">
+            <div className="h-10 bg-gray-300 rounded w-64"></div>
+            <div className="flex gap-2 items-center">
+              <div className="h-4 bg-gray-300 rounded w-16"></div>
+              <span className="text-gray-300">/</span>
+              <div className="h-4 bg-gray-300 rounded w-20"></div>
+            </div>
+          </div>
+        </section>
+
+        {/* Shimmer Mission & Vision */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {[1, 2].map((idx) => (
+                <div key={idx} className="bg-gray-50 rounded-2xl p-8 md:p-12 border-t-8 border-gray-200 shadow-sm animate-pulse">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 rounded-full bg-gray-200 shrink-0"></div>
+                    <div className="h-8 bg-gray-200 rounded w-48"></div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    <div className="h-4 bg-gray-200 rounded w-11/12"></div>
+                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                    <div className="h-4 bg-gray-200 rounded w-4/5"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Shimmer Key Features */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-pulse">
+            <div className="text-center mb-16 flex flex-col items-center gap-3">
+              <div className="h-9 bg-gray-200 rounded w-72"></div>
+              <div className="w-24 h-1 bg-gray-200 rounded-full"></div>
+              <div className="h-5 bg-gray-200 rounded w-96 mt-3"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((idx) => (
+                <div key={idx} className="bg-gray-50 rounded-3xl p-8 border border-gray-100 flex flex-col gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gray-200"></div>
+                  <div className="h-6 bg-gray-200 rounded w-32"></div>
+                  <div className="space-y-2">
+                    <div className="h-3.5 bg-gray-200 rounded w-full"></div>
+                    <div className="h-3.5 bg-gray-200 rounded w-11/12"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-white flex flex-col">
