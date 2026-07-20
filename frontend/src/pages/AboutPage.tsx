@@ -9,6 +9,7 @@ const AboutPage = () => {
   const [features, setFeatures] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [featuresLoading, setFeaturesLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/settings`)
@@ -22,7 +23,7 @@ const AboutPage = () => {
       })
       .catch(err => {
         console.error('Failed to fetch settings from API:', err);
-        setSettings({});
+        setError('Failed to load page settings. Please check your internet connection or try again later.');
         setLoading(false);
       });
 
@@ -37,6 +38,21 @@ const AboutPage = () => {
         setFeaturesLoading(false);
       });
   }, []);
+
+  if (error) {
+    return (
+      <div className="w-full bg-white flex flex-col items-center justify-center min-h-[60vh] py-20 font-sans text-center px-4">
+        <p className="text-red-500 font-bold text-lg mb-2">Oops! Something went wrong</p>
+        <p className="text-gray-500 text-sm mb-6 max-w-md">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="bg-[#1E3A8A] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#172554] transition-all active:scale-[0.98] shadow-md cursor-pointer"
+        >
+          Reload Page
+        </button>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
