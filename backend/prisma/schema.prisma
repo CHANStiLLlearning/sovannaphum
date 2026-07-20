@@ -138,3 +138,14 @@ model Partner {
 
   @@index([createdAt(sort: Desc)])
 }
+
+model Feature {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  iconName    String   @default("star")
+  bgColor     String   @default("bg-blue-500/10 text-blue-600 border-blue-100")
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+}

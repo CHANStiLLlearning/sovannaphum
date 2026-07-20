@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, Image as ImageIcon, Save, Info, Target, Eye } from 'lucide-react';
+import { CheckCircle2, Image as ImageIcon, Save, Info, Target, Eye, Trash2, Edit2, Star, Sparkles } from 'lucide-react';
 import { API_BASE_URL } from '../../../config';
 
 const AdminAboutUs = () => {
@@ -26,6 +26,18 @@ const AdminAboutUs = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [mgmtPhotoFile, setMgmtPhotoFile] = useState<File | null>(null);
+
+  // Dynamic Key Features States
+  const [features, setFeatures] = useState<any[]>([]);
+  const [isEditingFeature, setIsEditingFeature] = useState(false);
+  const [featureForm, setFeatureForm] = useState({
+    id: 0,
+    title: '',
+    description: '',
+    iconName: 'classroom-management',
+    bgColor: 'bg-blue-500/10 text-blue-600 border-blue-100',
+  });
+  const [featureSubmitting, setFeatureSubmitting] = useState(false);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -60,8 +72,73 @@ const AdminAboutUs = () => {
     }
   };
 
+  const fetchFeatures = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/features`);
+      if (res.ok) {
+        const data = await res.json();
+        setFeatures(data || []);
+      }
+    } catch (err) {
+      console.error('Failed to load features:', err);
+    }
+  };
+
+  const handleSaveFeature = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFeatureSubmitting(true);
+    try {
+      const url = isEditingFeature
+        ? `${API_BASE_URL}/api/features/${featureForm.id}`
+        : `${API_BASE_URL}/api/features`;
+      const method = isEditingFeature ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: featureForm.title,
+          description: featureForm.description,
+          iconName: featureForm.iconName,
+          bgColor: featureForm.bgColor,
+        }),
+      });
+
+      if (res.ok) {
+        showToast(isEditingFeature ? 'Feature updated successfully!' : 'Feature created successfully!');
+        setFeatureForm({ id: 0, title: '', description: '', iconName: 'classroom-management', bgColor: 'bg-blue-500/10 text-blue-600 border-blue-100' });
+        setIsEditingFeature(false);
+        fetchFeatures();
+      } else {
+        showToast('Failed to save feature');
+      }
+    } catch (err) {
+      showToast('An error occurred');
+    } finally {
+      setFeatureSubmitting(false);
+    }
+  };
+
+  const handleDeleteFeature = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this feature?')) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/features/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        showToast('Feature deleted successfully!');
+        fetchFeatures();
+      } else {
+        showToast('Failed to delete feature');
+      }
+    } catch (err) {
+      showToast('An error occurred');
+    }
+  };
+
   useEffect(() => {
     fetchSettings();
+    fetchFeatures();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -158,7 +235,8 @@ const AdminAboutUs = () => {
           <div className="w-8 h-8 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-8 font-sans max-w-4xl">
+        <>
+          <form onSubmit={handleSubmit} className="space-y-8 font-sans max-w-4xl">
           {/* Hero Section Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6">
             <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
@@ -366,6 +444,158 @@ const AdminAboutUs = () => {
             </button>
           </div>
         </form>
+
+        {/* Dynamic Key Features CRUD Panel */}
+        <div className="mt-12 bg-white rounded-2xl p-6 shadow-sm border border-gray-150 space-y-6 font-sans max-w-4xl">
+          <h2 className="text-lg font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-[#1E3A8A]" />
+            Manage Key School Features
+          </h2>
+
+          {/* Form to add/edit features */}
+          <form onSubmit={handleSaveFeature} className="bg-gray-50/50 border border-gray-200/50 rounded-2xl p-6 space-y-4">
+            <h3 className="text-sm font-black text-gray-800 uppercase tracking-wider">
+              {isEditingFeature ? 'Edit Key Feature' : 'Create New Key Feature'}
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Feature Title</label>
+                <input
+                  type="text"
+                  required
+                  value={featureForm.title}
+                  onChange={(e) => setFeatureForm({ ...featureForm, title: e.target.value })}
+                  placeholder="e.g. Classroom Management"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm text-gray-900 bg-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Icon Style</label>
+                <select
+                  value={featureForm.iconName}
+                  onChange={(e) => setFeatureForm({ ...featureForm, iconName: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm text-gray-700 bg-white"
+                >
+                  <option value="classroom-management">Classroom Management Icon</option>
+                  <option value="exam">Exam & Assessments Icon</option>
+                  <option value="payment">Flexible Payments Icon</option>
+                  <option value="student-regi">Student Registration Icon</option>
+                  <option value="setting">Advanced Settings Icon</option>
+                  <option value="star">Default Star Icon</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Theme (Background & Border)</label>
+                <select
+                  value={featureForm.bgColor}
+                  onChange={(e) => setFeatureForm({ ...featureForm, bgColor: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm text-gray-700 bg-white"
+                >
+                  <option value="bg-blue-500/10 text-blue-600 border-blue-100">Blue Theme</option>
+                  <option value="bg-amber-500/10 text-amber-600 border-amber-100">Amber Theme</option>
+                  <option value="bg-emerald-500/10 text-emerald-600 border-emerald-100">Emerald Theme</option>
+                  <option value="bg-[#1E3A8A]/10 text-[#1E3A8A] border-[#1E3A8A]/20">Royal Blue Theme</option>
+                  <option value="bg-purple-500/10 text-purple-600 border-purple-100">Purple Theme</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-600 mb-1">Description</label>
+              <textarea
+                required
+                rows={2}
+                value={featureForm.description}
+                onChange={(e) => setFeatureForm({ ...featureForm, description: e.target.value })}
+                placeholder="Briefly describe this school feature..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm text-gray-900 resize-none leading-relaxed bg-white"
+              />
+            </div>
+
+            <div className="flex justify-end gap-3">
+              {isEditingFeature && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditingFeature(false);
+                    setFeatureForm({ id: 0, title: '', description: '', iconName: 'classroom-management', bgColor: 'bg-blue-500/10 text-blue-600 border-blue-100' });
+                  }}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-150 transition-colors text-xs font-semibold cursor-pointer"
+                >
+                  Cancel
+                </button>
+              )}
+              <button
+                type="submit"
+                disabled={featureSubmitting}
+                className="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-70 text-xs shrink-0 cursor-pointer"
+              >
+                {featureSubmitting ? 'Saving...' : (isEditingFeature ? 'Update Feature' : 'Create Feature')}
+              </button>
+            </div>
+          </form>
+
+          {/* List of active features */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-black text-gray-800 uppercase tracking-wider">
+              Active Key Features ({features.length})
+            </h3>
+            
+            {features.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-6 font-sans">No key features defined. Add one above.</p>
+            ) : (
+              <div className="grid grid-cols-1 gap-3">
+                {features.map((feature) => (
+                  <div key={feature.id} className="flex items-start justify-between p-4 bg-gray-50/50 border border-gray-200/60 rounded-xl hover:shadow-sm transition-shadow">
+                    <div className="flex gap-4 items-start">
+                      <div className={`w-10 h-10 shrink-0 rounded-lg ${feature.bgColor} border flex items-center justify-center`}>
+                        <Star className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-sm">{feature.title}</h4>
+                        <p className="text-gray-500 text-xs mt-1 leading-relaxed">{feature.description}</p>
+                        <div className="flex gap-2 mt-2">
+                          <span className="text-[10px] bg-gray-100 text-gray-600 font-bold px-2 py-0.5 rounded uppercase">Icon: {feature.iconName}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsEditingFeature(true);
+                          setFeatureForm({
+                            id: feature.id,
+                            title: feature.title,
+                            description: feature.description,
+                            iconName: feature.iconName,
+                            bgColor: feature.bgColor,
+                          });
+                        }}
+                        className="p-1.5 text-gray-500 hover:text-[#1E3A8A] hover:bg-gray-150 rounded-lg transition-colors cursor-pointer"
+                        title="Edit Feature"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteFeature(feature.id)}
+                        className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                        title="Delete Feature"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        </>
       )}
     </div>
   );

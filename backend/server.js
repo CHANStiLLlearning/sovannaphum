@@ -862,6 +862,94 @@ app.post('/api/settings', async (req, res) => {
   }
 });
 
+// --- Features API ---
+app.get('/api/features', async (req, res) => {
+  try {
+    let features = await prisma.feature.findMany({
+      orderBy: { id: 'asc' }
+    });
+    
+    // Auto-seed defaults if table is empty
+    if (features.length === 0) {
+      const defaultFeatures = [
+        {
+          title: 'Classroom Management',
+          iconName: 'classroom-management',
+          description: 'Nurturing student interaction and positive behaviors to create a highly collaborative classroom learning environment.',
+          bgColor: 'bg-blue-500/10 text-blue-600 border-blue-100'
+        },
+        {
+          title: 'Exam & Assessments',
+          iconName: 'exam',
+          description: 'Comprehensive testing and tracking systems to measure academic milestones and ensure success for every student.',
+          bgColor: 'bg-amber-500/10 text-amber-600 border-amber-100'
+        },
+        {
+          title: 'Flexible Payments',
+          iconName: 'payment',
+          description: 'Providing modern, secure, and hassle-free payment structures for convenient tuitions and school services.',
+          bgColor: 'bg-emerald-500/10 text-emerald-600 border-emerald-100'
+        },
+        {
+          title: 'Student Registration',
+          iconName: 'student-regi',
+          description: 'Seamless online enrollment, registration, and documentation designed to make school onboarding easy for parents.',
+          bgColor: 'bg-[#1E3A8A]/10 text-[#1E3A8A] border-[#1E3A8A]/20'
+        },
+        {
+          title: 'Advanced Settings',
+          iconName: 'setting',
+          description: 'Tailored school rules, configurations, and state-of-the-art facilities adapted to individual student needs.',
+          bgColor: 'bg-purple-500/10 text-purple-600 border-purple-100'
+        }
+      ];
+      
+      await Promise.all(defaultFeatures.map(f => prisma.feature.create({ data: f })));
+      features = await prisma.feature.findMany({ orderBy: { id: 'asc' } });
+    }
+    
+    res.json(features);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch features" });
+  }
+});
+
+app.post('/api/features', async (req, res) => {
+  try {
+    const { title, description, iconName, bgColor } = req.body;
+    const feature = await prisma.feature.create({
+      data: { title, description, iconName, bgColor }
+    });
+    res.status(201).json(feature);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create feature" });
+  }
+});
+
+app.put('/api/features/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { title, description, iconName, bgColor } = req.body;
+    const feature = await prisma.feature.update({
+      where: { id },
+      data: { title, description, iconName, bgColor }
+    });
+    res.json(feature);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update feature" });
+  }
+});
+
+app.delete('/api/features/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    await prisma.feature.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete feature" });
+  }
+});
+
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`Server is running on port ${PORT}`);
   
