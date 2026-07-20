@@ -17,26 +17,12 @@ const AboutPage = () => {
         return res.json();
       })
       .then(data => {
-        setSettings({
-          about_hero_title: data.about_hero_title || 'About Us',
-          about_hero_image: data.about_hero_image || 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
-          about_mission_title: data.about_mission_title || 'Our Mission',
-          about_mission_desc: data.about_mission_desc || 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values. We aim to nurture young minds to become innovative thinkers and responsible global citizens.',
-          about_vision_title: data.about_vision_title || 'Our Vision',
-          about_vision_desc: data.about_vision_desc || 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence, character development, and equipping students with the essential skills to thrive in the 21st century.',
-        });
+        setSettings(data || {});
         setLoading(false);
       })
       .catch(err => {
-        console.warn('Fallback to local About page settings:', err);
-        setSettings({
-          about_hero_title: 'About Us',
-          about_hero_image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1920',
-          about_mission_title: 'Our Mission',
-          about_mission_desc: 'To provide our students with the highest quality of education, combining international academic standards with rich Cambodian cultural values. We aim to nurture young minds to become innovative thinkers and responsible global citizens.',
-          about_vision_title: 'Our Vision',
-          about_vision_desc: 'To be the leading educational institution in Cambodia that is recognized internationally for academic excellence, character development, and equipping students with the essential skills to thrive in the 21st century.',
-        });
+        console.error('Failed to fetch settings from API:', err);
+        setSettings({});
         setLoading(false);
       });
 
