@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, BookOpen, Globe, X, Users } from 'lucide-react';
-import { API_BASE_URL } from '../config';
+import { facultyService } from '../services/facultyService';
+import { settingsService } from '../services/settingsService';
 
 type Teacher = {
   id: number;
@@ -29,10 +30,8 @@ const FacultyPage = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`${API_BASE_URL}/api/teachers?limit=100`);
-      if (!response.ok) throw new Error('Failed to fetch teachers');
-      const result = await response.json();
-      setTeachers(result.data || []);
+      const result = await facultyService.getAll({ limit: 100 });
+      setTeachers((result as any).data || result);
     } catch (err: any) {
       setError(err.message || 'Something went wrong.');
     } finally {
@@ -42,15 +41,12 @@ const FacultyPage = () => {
 
   const fetchFacultySettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setSettings({
-          faculty_hero_title: data.faculty_hero_title || settings.faculty_hero_title,
-          faculty_hero_subtitle: data.faculty_hero_subtitle || settings.faculty_hero_subtitle,
-          faculty_hero_image: data.faculty_hero_image || settings.faculty_hero_image,
-        });
-      }
+      const data = await settingsService.get();
+      setSettings({
+        faculty_hero_title: data.faculty_hero_title || settings.faculty_hero_title,
+        faculty_hero_subtitle: data.faculty_hero_subtitle || settings.faculty_hero_subtitle,
+        faculty_hero_image: data.faculty_hero_image || settings.faculty_hero_image,
+      });
     } catch (err) {
       console.warn('Fallback to local faculty page settings:', err);
     }

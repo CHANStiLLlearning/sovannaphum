@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import MissionVision from '../components/about/MissionVision';
 import KeyFeatures from '../components/about/KeyFeatures';
 import FAQ from '../components/FAQ';
-import { API_BASE_URL } from '../config';
+import { settingsService } from '../services/settingsService';
+import { featureService } from '../services/featureService';
 import { useSEO } from '../hooks/useSEO';
 
 const AboutPage = () => {
@@ -14,11 +15,7 @@ const AboutPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch settings');
-        return res.json();
-      })
+    settingsService.get()
       .then(data => {
         setSettings(data || {});
         setLoading(false);
@@ -29,8 +26,7 @@ const AboutPage = () => {
         setLoading(false);
       });
 
-    fetch(`${API_BASE_URL}/api/features`)
-      .then(res => res.json())
+    featureService.getAll()
       .then(data => {
         setFeatures(data || []);
         setFeaturesLoading(false);

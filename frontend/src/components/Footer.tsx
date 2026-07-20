@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaFacebook, FaYoutube, FaInstagram, FaTelegram } from 'react-icons/fa';
-import { API_BASE_URL } from '../config';
+import { settingsService } from '../services/settingsService';
+import { subscriberService } from '../services/subscriberService';
 import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
@@ -18,17 +19,14 @@ const Footer = () => {
   });
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings`)
-      .then(res => res.ok ? res.json() : null)
+    settingsService.get()
       .then(data => {
-        if (data) {
-          setSocials({
-            contact_facebook: data.contact_facebook || '#',
-            contact_instagram: data.contact_instagram || '#',
-            contact_telegram: data.contact_telegram ? `https://${data.contact_telegram.replace(/^https?:\/\//, '')}` : '#',
-            contact_youtube: data.contact_youtube || '#',
-          });
-        }
+        setSocials({
+          contact_facebook: data.contact_facebook || '#',
+          contact_instagram: data.contact_instagram || '#',
+          contact_telegram: data.contact_telegram ? `https://${data.contact_telegram.replace(/^https?:\/\//, '')}` : '#',
+          contact_youtube: data.contact_youtube || '#',
+        });
       })
       .catch(() => {});
   }, []);
@@ -98,20 +96,11 @@ const Footer = () => {
               const email = emailInput.value;
               
               try {
-                const res = await fetch(`${API_BASE_URL}/api/subscribe`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ email })
-                });
-                if (res.ok) {
-                  setModal({ open: true, message: 'Thank you! You have subscribed successfully to our newsletter.', type: 'success' });
-                  form.reset();
-                } else {
-                  const data = await res.json();
-                  setModal({ open: true, message: data.error || 'Failed to subscribe. Please verify your details.', type: 'error' });
-                }
-              } catch (err) {
-                setModal({ open: true, message: 'An error occurred while subscribing. Please try again later.', type: 'error' });
+                await subscriberService.subscribe(email);
+                setModal({ open: true, message: 'Thank you! You have subscribed successfully to our newsletter.', type: 'success' });
+                form.reset();
+              } catch (err: any) {
+                setModal({ open: true, message: err?.message || 'Failed to subscribe. Please verify your details.', type: 'error' });
               }
             }}>
               <label htmlFor="footer-email" className="block text-sm mb-2 text-white/90">Email</label>

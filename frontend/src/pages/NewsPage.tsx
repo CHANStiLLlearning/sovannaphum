@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Search } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
+import { newsService } from '../services/newsService';
 import HeroBanner from '../components/HeroBanner';
 
 // Define the type for the article
@@ -28,11 +28,8 @@ const NewsPage = () => {
     const fetchRecentNews = async () => {
       setRecentLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/api/news?limit=5`);
-        if (response.ok) {
-          const result = await response.json();
-          setRecentNews(result.data || []);
-        }
+        const result = await newsService.getAll({ limit: 5 });
+        setRecentNews((result as any).data || result);
       } catch (err) {
         console.error('Failed to fetch recent news', err);
       } finally {
@@ -47,10 +44,8 @@ const NewsPage = () => {
     const fetchNews = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/api/news?search=${encodeURIComponent(search)}`);
-        if (!response.ok) throw new Error('Failed to fetch news');
-        const result = await response.json();
-        const data = result.data || [];
+        const result = await newsService.getAll({ search });
+        const data = (result as any).data || result;
         setNewsArticles(data);
         setVisibleCount(6);
       } catch (err: any) {
@@ -59,7 +54,6 @@ const NewsPage = () => {
         setLoading(false);
       }
     };
-
     fetchNews();
   }, [search]);
 

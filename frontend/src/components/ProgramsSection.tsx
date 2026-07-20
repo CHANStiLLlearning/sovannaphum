@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Globe, MessageSquare, Languages } from 'lucide-react';
-import { API_BASE_URL } from '../config';
+import { programService } from '../services/programService';
 
 type BackendProgram = {
   id: number;
@@ -19,19 +19,9 @@ const ProgramsSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/programs`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch programs');
-        return res.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          setPrograms(data);
-        }
-      })
-      .catch(err => {
-        console.warn('Failed to fetch programs:', err);
-      })
+    programService.getAll()
+      .then(data => setPrograms(data))
+      .catch(err => console.warn('Failed to fetch programs:', err))
       .finally(() => setLoading(false));
   }, []);
 

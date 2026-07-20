@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, CheckCircle2, BookOpen, Globe, MessageSquare, Languages, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { programService } from '../../../services/programService';
+import { settingsService } from '../../../services/settingsService';
+import { api } from '../../../services/api';
 
 type Program = {
   id: number;
@@ -69,14 +71,11 @@ const AdminPrograms = () => {
 
   const fetchProgramSettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setProgramSettings({
-          program_hero_title: data.program_hero_title || 'Academic Programs',
-          program_hero_image: data.program_hero_image || '',
-        });
-      }
+      const data = await settingsService.get();
+      setProgramSettings({
+        program_hero_title: data.program_hero_title || 'Academic Programs',
+        program_hero_image: data.program_hero_image || '',
+      });
     } catch (err) {
       console.error('Failed to load program settings:', err);
     }
@@ -87,30 +86,12 @@ const AdminPrograms = () => {
     let uploadedImageUrl = programSettings.program_hero_image;
     try {
       if (bannerFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', bannerFile);
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Banner image upload failed');
-          setIsSavingSettings(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(bannerFile);
       }
-      const res = await fetch(`${API_BASE_URL}/api/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...programSettings, program_hero_image: uploadedImageUrl }),
-      });
-      if (res.ok) {
-        showToast('Programs header saved successfully!');
-        setBannerFile(null);
-        fetchProgramSettings();
-      } else {
-        showToast('Failed to save header settings');
-      }
+      await settingsService.save({ ...programSettings, program_hero_image: uploadedImageUrl });
+      showToast('Programs header saved successfully!');
+      setBannerFile(null);
+      fetchProgramSettings();
     } catch {
       showToast('An error occurred');
     } finally {
@@ -120,9 +101,7 @@ const AdminPrograms = () => {
 
   const fetchPrograms = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/programs`);
-      if (!res.ok) throw new Error('Failed to load programs');
-      const data = await res.json();
+      const data = await programService.getAll();
       setPrograms(data || []);
     } catch (err) {
       console.error(err);
@@ -179,37 +158,20 @@ const AdminPrograms = () => {
     try {
       let uploadedImageUrl = formData.image;
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Image upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(imageFile);
       }
 
-      const url = editingProgram
-        ? `${API_BASE_URL}/api/programs/${editingProgram.id}`
-        : `${API_BASE_URL}/api/programs`;
-      const method = editingProgram ? 'PUT' : 'POST';
+      const payload = { ...formData, image: uploadedImageUrl };
 
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, image: uploadedImageUrl }),
-      });
-
-      if (res.ok) {
-        handleCloseModal();
-        fetchPrograms();
-        showToast(editingProgram ? 'Program updated successfully!' : 'Program added successfully!');
+      if (editingProgram) {
+        await programService.update(editingProgram.id, payload);
       } else {
-        showToast('Failed to save program');
+        await programService.create(payload);
       }
+
+      handleCloseModal();
+      fetchPrograms();
+      showToast(editingProgram ? 'Program updated successfully!' : 'Program added successfully!');
     } catch (err) {
       console.error(err);
       showToast('An error occurred');
@@ -221,14 +183,10 @@ const AdminPrograms = () => {
   const confirmDelete = async () => {
     if (programToDelete === null) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/programs/${programToDelete}`, { method: 'DELETE' });
-      if (res.ok) {
-        setProgramToDelete(null);
-        fetchPrograms();
-        showToast('Program deleted successfully!');
-      } else {
-        showToast('Failed to delete program');
-      }
+      await programService.delete(programToDelete);
+      setProgramToDelete(null);
+      fetchPrograms();
+      showToast('Program deleted successfully!');
     } catch (err) {
       console.error(err);
       showToast('An error occurred');
@@ -533,7 +491,7 @@ const AdminPrograms = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-[#1E3A8A] mb-2 uppercase tracking-wide text-xs">Color Theme Style</label>
+                <label className="block font-semibold text-[#1E3A8A] mb-2 uppercase tracking-wide text-xs">Color Theme Style</label>
                 <select
                   value={formData.colorClass}
                   onChange={(e) => setFormData({ ...formData, colorClass: e.target.value })}

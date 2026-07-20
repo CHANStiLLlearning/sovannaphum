@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Image as ImageIcon, Save, Info, Target, Eye, Trash2, Edit2, Star, Sparkles } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { settingsService } from '../../../services/settingsService';
+import { featureService } from '../../../services/featureService';
+import { api } from '../../../services/api';
 
 const AdminAboutUs = () => {
   const [loading, setLoading] = useState(true);
@@ -46,25 +48,22 @@ const AdminAboutUs = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setFormData({
-          about_hero_title: data.about_hero_title || 'About Us',
-          about_hero_image: data.about_hero_image || '',
-          about_mission_title: data.about_mission_title || 'Our Mission',
-          about_mission_desc: data.about_mission_desc || '',
-          about_vision_title: data.about_vision_title || 'Our Vision',
-          about_vision_desc: data.about_vision_desc || '',
-          mgmt_name: data.mgmt_name || 'Mr. CHAN',
-          mgmt_title: data.mgmt_title || 'Chief Executive Officer',
-          mgmt_photo: data.mgmt_photo || '',
-          mgmt_welcome_title: data.mgmt_welcome_title || 'Welcome to Khmer America School',
-          mgmt_message_1: data.mgmt_message_1 || '',
-          mgmt_message_2: data.mgmt_message_2 || '',
-          mgmt_message_3: data.mgmt_message_3 || '',
-        });
-      }
+      const data = await settingsService.get();
+      setFormData({
+        about_hero_title: data.about_hero_title || 'About Us',
+        about_hero_image: data.about_hero_image || '',
+        about_mission_title: data.about_mission_title || 'Our Mission',
+        about_mission_desc: data.about_mission_desc || '',
+        about_vision_title: data.about_vision_title || 'Our Vision',
+        about_vision_desc: data.about_vision_desc || '',
+        mgmt_name: data.mgmt_name || 'Mr. CHAN',
+        mgmt_title: data.mgmt_title || 'Chief Executive Officer',
+        mgmt_photo: data.mgmt_photo || '',
+        mgmt_welcome_title: data.mgmt_welcome_title || 'Welcome to Khmer America School',
+        mgmt_message_1: data.mgmt_message_1 || '',
+        mgmt_message_2: data.mgmt_message_2 || '',
+        mgmt_message_3: data.mgmt_message_3 || '',
+      });
     } catch (err) {
       console.error('Failed to load settings:', err);
     } finally {
@@ -74,11 +73,8 @@ const AdminAboutUs = () => {
 
   const fetchFeatures = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/features`);
-      if (res.ok) {
-        const data = await res.json();
-        setFeatures(data || []);
-      }
+      const data = await featureService.getAll();
+      setFeatures(data || []);
     } catch (err) {
       console.error('Failed to load features:', err);
     }
@@ -88,32 +84,25 @@ const AdminAboutUs = () => {
     e.preventDefault();
     setFeatureSubmitting(true);
     try {
-      const url = isEditingFeature
-        ? `${API_BASE_URL}/api/features/${featureForm.id}`
-        : `${API_BASE_URL}/api/features`;
-      const method = isEditingFeature ? 'PUT' : 'POST';
+      const payload = {
+        title: featureForm.title,
+        description: featureForm.description,
+        iconName: featureForm.iconName,
+        colorClass: featureForm.bgColor,
+      };
 
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: featureForm.title,
-          description: featureForm.description,
-          iconName: featureForm.iconName,
-          bgColor: featureForm.bgColor,
-        }),
-      });
-
-      if (res.ok) {
-        showToast(isEditingFeature ? 'Feature updated successfully!' : 'Feature created successfully!');
-        setFeatureForm({ id: 0, title: '', description: '', iconName: 'classroom-management', bgColor: 'bg-blue-500/10 text-blue-600 border-blue-100' });
-        setIsEditingFeature(false);
-        fetchFeatures();
+      if (isEditingFeature) {
+        await featureService.update(featureForm.id, payload);
       } else {
-        showToast('Failed to save feature');
+        await featureService.create(payload);
       }
+
+      showToast(isEditingFeature ? 'Feature updated successfully!' : 'Feature created successfully!');
+      setFeatureForm({ id: 0, title: '', description: '', iconName: 'classroom-management', bgColor: 'bg-blue-500/10 text-blue-600 border-blue-100' });
+      setIsEditingFeature(false);
+      fetchFeatures();
     } catch (err) {
-      showToast('An error occurred');
+      showToast('Failed to save feature');
     } finally {
       setFeatureSubmitting(false);
     }
@@ -122,17 +111,11 @@ const AdminAboutUs = () => {
   const handleDeleteFeature = async (id: number) => {
     if (!window.confirm('Are you sure you want to delete this feature?')) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/features/${id}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        showToast('Feature deleted successfully!');
-        fetchFeatures();
-      } else {
-        showToast('Failed to delete feature');
-      }
+      await featureService.delete(id);
+      showToast('Feature deleted successfully!');
+      fetchFeatures();
     } catch (err) {
-      showToast('An error occurred');
+      showToast('Failed to delete feature');
     }
   };
 
@@ -150,37 +133,12 @@ const AdminAboutUs = () => {
     try {
       // 1. Handle hero image upload if a file was chosen
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
-          body: uploadData,
-        });
-
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Image upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(imageFile);
       }
 
       // 2. Handle management photo upload if a file was chosen
       if (mgmtPhotoFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', mgmtPhotoFile);
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedMgmtPhotoUrl = uploadResult.url;
-        } else {
-          showToast('Management photo upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedMgmtPhotoUrl = await api.upload(mgmtPhotoFile);
       }
 
       // 2. Save settings to DB
@@ -190,20 +148,11 @@ const AdminAboutUs = () => {
         mgmt_photo: uploadedMgmtPhotoUrl,
       };
 
-      const saveRes = await fetch(`${API_BASE_URL}/api/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(finalSettings),
-      });
-
-      if (saveRes.ok) {
-        showToast('Settings saved successfully!');
-        setImageFile(null);
-        setMgmtPhotoFile(null);
-        fetchSettings();
-      } else {
-        showToast('Failed to save settings');
-      }
+      await settingsService.save(finalSettings);
+      showToast('Settings saved successfully!');
+      setImageFile(null);
+      setMgmtPhotoFile(null);
+      fetchSettings();
     } catch (err) {
       console.error(err);
       showToast('An error occurred');

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, CheckCircle2, Calendar, MapPin, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { eventService } from '../../../services/eventService';
+import { settingsService } from '../../../services/settingsService';
+import { api } from '../../../services/api';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -55,15 +57,12 @@ const AdminEvents = () => {
 
   const fetchEventSettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setEventSettings({
-          event_hero_title: data.event_hero_title || 'School Events & Activities',
-          event_hero_subtitle: data.event_hero_subtitle || 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
-          event_hero_image: data.event_hero_image || '',
-        });
-      }
+      const data = await settingsService.get();
+      setEventSettings({
+        event_hero_title: data.event_hero_title || 'School Events & Activities',
+        event_hero_subtitle: data.event_hero_subtitle || 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
+        event_hero_image: data.event_hero_image || '',
+      });
     } catch (err) {
       console.error('Failed to load event settings:', err);
     }
@@ -72,36 +71,15 @@ const AdminEvents = () => {
   const handleSaveEventSettings = async () => {
     setIsSavingSettings(true);
     let uploadedImageUrl = eventSettings.event_hero_image;
-
     try {
       if (bannerFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', bannerFile);
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Banner image upload failed');
-          setIsSavingSettings(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(bannerFile);
       }
-
-      const res = await fetch(`${API_BASE_URL}/api/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...eventSettings, event_hero_image: uploadedImageUrl }),
-      });
-
-      if (res.ok) {
-        showToast('Event header saved successfully!');
-        setBannerFile(null);
-        fetchEventSettings();
-      } else {
-        showToast('Failed to save header settings');
-      }
-    } catch (err) {
+      await settingsService.save({ ...eventSettings, event_hero_image: uploadedImageUrl });
+      showToast('Event header saved successfully!');
+      setBannerFile(null);
+      fetchEventSettings();
+    } catch {
       showToast('An error occurred');
     } finally {
       setIsSavingSettings(false);
@@ -110,13 +88,10 @@ const AdminEvents = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/events?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}&timeframe=${selectedDateFilter}&date=${selectedSpecificDate}`);
-      const result = await res.json();
-      setEvents(result.data || []);
-      setTotalPages(result?.pagination?.totalPages || 1);
-    } catch (err) {
-      // Silently handle
-    } finally {
+      const result = await eventService.getAll({ search: searchQuery, date: selectedSpecificDate });
+      setEvents((result as any).data || result);
+      setTotalPages((result as any)?.pagination?.totalPages || 1);
+    } catch { /* Silently handle */ } finally {
       setLoading(false);
     }
   };
@@ -170,44 +145,18 @@ const AdminEvents = () => {
 
     try {
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
-          body: uploadData,
-        });
-        
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Image upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(imageFile);
       }
-
-      const url = editingEvent 
-        ? `${API_BASE_URL}/api/events/${editingEvent.id}` 
-        : `${API_BASE_URL}/api/events`;
-      
-      const method = editingEvent ? 'PUT' : 'POST';
       const finalData = { ...formData, image: uploadedImageUrl };
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(finalData)
-      });
-      if (res.ok) {
-        handleCloseModal();
-        fetchEvents();
-        showToast(editingEvent ? 'Event updated successfully!' : 'Event created successfully!');
+      if (editingEvent) {
+        await eventService.update(editingEvent.id, finalData);
+      } else {
+        await eventService.create(finalData);
       }
-    } catch (err) {
-      // Silently handle
-    } finally {
+      handleCloseModal();
+      fetchEvents();
+      showToast(editingEvent ? 'Event updated successfully!' : 'Event created successfully!');
+    } catch { /* Silently handle */ } finally {
       setIsSubmitting(false);
     }
   };
@@ -215,15 +164,11 @@ const AdminEvents = () => {
   const confirmDelete = async () => {
     if (eventToDelete === null) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/events/${eventToDelete}`, { method: 'DELETE' });
-      if (res.ok) {
-        setEventToDelete(null);
-        fetchEvents();
-        showToast('Event deleted successfully!');
-      }
-    } catch (err) {
-      // Silently handle
-    }
+      await eventService.delete(eventToDelete);
+      setEventToDelete(null);
+      fetchEvents();
+      showToast('Event deleted successfully!');
+    } catch { /* Silently handle */ }
   };
 
   return (

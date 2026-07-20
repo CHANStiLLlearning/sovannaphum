@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { Newspaper, Mail, Users, Clock, Calendar as CalendarIcon, Filter, GraduationCap, ArrowUpRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
-import { API_BASE_URL } from '../../../config';
+import { newsService } from '../../../services/newsService';
+import { eventService } from '../../../services/eventService';
+import { contactService } from '../../../services/contactService';
+import { subscriberService } from '../../../services/subscriberService';
+import { facultyService } from '../../../services/facultyService';
+import { programService } from '../../../services/programService';
 
 type DataItem = { createdAt: string };
 
@@ -38,31 +43,25 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [newsRes, eventsRes, contactsRes, subsRes, teachersRes, programsRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/news?limit=10000`),
-          fetch(`${API_BASE_URL}/api/events?limit=10000`),
-          fetch(`${API_BASE_URL}/api/contact`),
-          fetch(`${API_BASE_URL}/api/subscribe`),
-          fetch(`${API_BASE_URL}/api/teachers?limit=10000`),
-          fetch(`${API_BASE_URL}/api/programs`).catch(() => null), // Catch if not implemented yet
+        const [newsData, eventsData, contacts, subs, teachers, programs] = await Promise.all([
+          newsService.getAll({ limit: 10000 }).catch(() => []),
+          eventService.getAll({ limit: 10000 }).catch(() => []),
+          contactService.getAll().catch(() => []),
+          subscriberService.getAll().catch(() => []),
+          facultyService.getAll({ limit: 10000 }).catch(() => []),
+          programService.getAll().catch(() => []),
         ]);
-        const news = await newsRes.json();
-        const events = await eventsRes.json();
-        const contacts = await contactsRes.json();
-        const subs = await subsRes.json();
-        const teachers = await teachersRes.json();
-        const programs = programsRes && programsRes.ok ? await programsRes.json() : [];
         
         setRawData({
-          news: news.data || [],
-          events: events.data || [],
+          news: (newsData as any).data || newsData,
+          events: (eventsData as any).data || eventsData,
           contacts,
           subscribers: subs,
-          teachers: teachers.data || [],
-          programs: Array.isArray(programs) ? programs : [],
+          teachers: (teachers as any).data || teachers,
+          programs: programs as any,
         });
       } catch (err) {
-        console.error('Failed to fetch dashboard stats', err);
+        console.error('Failed to fetch dashboard stats:', err);
       } finally {
         setLoading(false);
       }

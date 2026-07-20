@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ChevronLeft, Calendar, BookOpen } from 'lucide-react';
-import { API_BASE_URL } from '../config';
+import { newsService } from '../services/newsService';
 
 type Article = {
   id: number;
@@ -37,9 +37,8 @@ const NewsDetailPage = () => {
     const fetchArticle = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${API_BASE_URL}/api/news`);
-        const result = await res.json();
-        const data = result.data || [];
+        const result = await newsService.getAll();
+        const data = (result as any).data || result;
         const found = data.find((item: Article) => item.id.toString() === id);
         setArticle(found || null);
 

@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HelpCircle, Plus, Edit2, Trash2, X, Save } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
-
-type FAQ = {
-  id: number;
-  question: string;
-  answer_kh: string;
-  answer_en: string;
-};
+import { faqService, type FAQ } from '../../../services/faqService';
 
 const AdminFAQ = () => {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
@@ -25,8 +18,8 @@ const AdminFAQ = () => {
 
   const fetchFaqs = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/faqs`);
-      if (res.ok) setFaqs(await res.json());
+      const data = await faqService.getAll();
+      setFaqs(data);
     } catch (err) {
       console.error('Failed to fetch FAQs', err);
     } finally {
@@ -52,26 +45,17 @@ const AdminFAQ = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    const url = editingId ? `${API_BASE_URL}/api/faqs/${editingId}` : `${API_BASE_URL}/api/faqs`;
-    const method = editingId ? 'PUT' : 'POST';
-
     try {
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
-        showToast(editingId ? 'FAQ updated!' : 'FAQ added!');
-        setIsModalOpen(false);
-        fetchFaqs();
+      if (editingId) {
+        await faqService.update(editingId, formData);
       } else {
-        showToast('Failed to save FAQ');
+        await faqService.create(formData);
       }
-    } catch (err) {
-      showToast('Error saving FAQ');
+      showToast(editingId ? 'FAQ updated!' : 'FAQ added!');
+      setIsModalOpen(false);
+      fetchFaqs();
+    } catch {
+      showToast('Failed to save FAQ');
     } finally {
       setIsSubmitting(false);
     }
@@ -80,12 +64,10 @@ const AdminFAQ = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this FAQ?')) {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/faqs/${id}`, { method: 'DELETE' });
-        if (res.ok) {
-          showToast('FAQ deleted');
-          fetchFaqs();
-        }
-      } catch (err) {
+        await faqService.delete(id);
+        showToast('FAQ deleted');
+        fetchFaqs();
+      } catch {
         showToast('Failed to delete FAQ');
       }
     }

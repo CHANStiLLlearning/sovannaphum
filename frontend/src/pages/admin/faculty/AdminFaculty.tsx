@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, CheckCircle2, User, BookOpen, Globe, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { facultyService } from '../../../services/facultyService';
+import { settingsService } from '../../../services/settingsService';
+import { api } from '../../../services/api';
 
 type Teacher = {
   id: number;
@@ -44,28 +46,22 @@ const AdminFaculty = () => {
 
   const fetchTeachers = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/teachers?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}`);
-      const result = await res.json();
-      setTeachers(result.data || []);
-      setTotalPages(result?.pagination?.totalPages || 1);
-    } catch {
-      // silent
-    } finally {
+      const result = await facultyService.getAll();
+      setTeachers((result as any).data || result);
+      setTotalPages((result as any)?.pagination?.totalPages || 1);
+    } catch { /* silent */ } finally {
       setLoading(false);
     }
   };
 
   const fetchFacultySettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setFacultySettings({
-          faculty_hero_title: data.faculty_hero_title || 'Meet Our Faculty',
-          faculty_hero_subtitle: data.faculty_hero_subtitle || 'Dedicated educators shaping the next generation with passion, expertise, and care.',
-          faculty_hero_image: data.faculty_hero_image || '',
-        });
-      }
+      const data = await settingsService.get();
+      setFacultySettings({
+        faculty_hero_title: data.faculty_hero_title || 'Meet Our Faculty',
+        faculty_hero_subtitle: data.faculty_hero_subtitle || 'Dedicated educators shaping the next generation with passion, expertise, and care.',
+        faculty_hero_image: data.faculty_hero_image || '',
+      });
     } catch (err) {
       console.error('Failed to load settings:', err);
     }
@@ -74,43 +70,14 @@ const AdminFaculty = () => {
   const handleSaveSettings = async () => {
     setIsSavingSettings(true);
     let uploadedImageUrl = facultySettings.faculty_hero_image;
-
     try {
       if (bannerFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', bannerFile);
-
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
-          body: uploadData,
-        });
-
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Banner image upload failed');
-          setIsSavingSettings(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(bannerFile);
       }
-
-      const res = await fetch(`${API_BASE_URL}/api/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...facultySettings,
-          faculty_hero_image: uploadedImageUrl,
-        }),
-      });
-
-      if (res.ok) {
-        showToast('Faculty header saved successfully!');
-        setBannerFile(null);
-        fetchFacultySettings();
-      } else {
-        showToast('Failed to save header settings');
-      }
+      await settingsService.save({ ...facultySettings, faculty_hero_image: uploadedImageUrl });
+      showToast('Faculty header saved successfully!');
+      setBannerFile(null);
+      fetchFacultySettings();
     } catch (err) {
       console.error(err);
       showToast('An error occurred');
@@ -152,38 +119,18 @@ const AdminFaculty = () => {
 
     try {
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Image upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(imageFile);
       }
-
-      const url = editingTeacher
-        ? `${API_BASE_URL}/api/teachers/${editingTeacher.id}`
-        : `${API_BASE_URL}/api/teachers`;
-      const method = editingTeacher ? 'PUT' : 'POST';
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, image: uploadedImageUrl }),
-      });
-
-      if (res.ok) {
-        handleCloseModal();
-        fetchTeachers();
-        showToast(editingTeacher ? 'Teacher updated successfully!' : 'Teacher added successfully!');
+      const data = { ...formData, image: uploadedImageUrl };
+      if (editingTeacher) {
+        await facultyService.update(editingTeacher.id, data);
+      } else {
+        await facultyService.create(data);
       }
-    } catch {
-      // silent
-    } finally {
+      handleCloseModal();
+      fetchTeachers();
+      showToast(editingTeacher ? 'Teacher updated successfully!' : 'Teacher added successfully!');
+    } catch { /* silent */ } finally {
       setIsSubmitting(false);
     }
   };
@@ -191,15 +138,11 @@ const AdminFaculty = () => {
   const confirmDelete = async () => {
     if (teacherToDelete === null) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/teachers/${teacherToDelete}`, { method: 'DELETE' });
-      if (res.ok) {
-        setTeacherToDelete(null);
-        fetchTeachers();
-        showToast('Teacher deleted successfully!');
-      }
-    } catch {
-      // silent
-    }
+      await facultyService.delete(teacherToDelete);
+      setTeacherToDelete(null);
+      fetchTeachers();
+      showToast('Teacher deleted successfully!');
+    } catch { /* silent */ }
   };
 
   return (

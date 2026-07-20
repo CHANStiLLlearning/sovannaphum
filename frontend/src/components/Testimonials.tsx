@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Quote } from 'lucide-react';
-import { API_BASE_URL } from '../config';
+import { api } from '../services/api';
 
 type Testimonial = {
   id: number;
@@ -15,8 +15,7 @@ const Testimonials = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/testimonials`)
-      .then(res => res.json())
+    api.get<Testimonial[]>('/api/testimonials')
       .then(data => setTestimonials(data))
       .catch(err => console.error("Failed to fetch testimonials", err))
       .finally(() => setLoading(false));

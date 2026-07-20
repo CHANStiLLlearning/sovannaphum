@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
+import { newsService } from '../services/newsService';
 
 type NewsArticle = {
   id: number;
@@ -16,11 +16,11 @@ const NewsSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/news`)
-      .then(res => res.json())
+    newsService.getAll()
       .then(result => {
         // Only show the top 3 latest news items on the homepage
-        setNewsItems(result.data ? result.data.slice(0, 3) : []);
+        const data = (result as any).data || result;
+        setNewsItems(Array.isArray(data) ? data.slice(0, 3) : []);
         setLoading(false);
       })
       .catch(err => {

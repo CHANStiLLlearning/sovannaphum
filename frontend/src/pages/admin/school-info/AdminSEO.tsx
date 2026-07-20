@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Save, Globe } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { settingsService } from '../../../services/settingsService';
 
 const AdminSEO = () => {
   const [loading, setLoading] = useState(true);
@@ -33,31 +33,24 @@ const AdminSEO = () => {
 
   const fetchSEOSettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setSeoData({
-          seo_title_home: data.seo_title_home || 'Khmer America School | Premium International Education',
-          seo_desc_home: data.seo_desc_home || 'Welcome to Khmer America School in Phnom Penh. We provide high-quality bilingual education, nurturing young minds to become innovative global thinkers.',
-          seo_keywords_home: data.seo_keywords_home || 'khmer america school, education cambodia, international school phnom penh, bilingual school',
-          
-          seo_title_about: data.seo_title_about || 'About Us | Khmer America School',
-          seo_desc_about: data.seo_desc_about || 'Learn about the mission, vision, key features, and leadership history of Khmer America School.',
-          seo_keywords_about: data.seo_keywords_about || 'about kas, school mission, education values cambodia',
-          
-          seo_title_programs: data.seo_title_programs || 'Academic Programs | Khmer America School',
-          seo_desc_programs: data.seo_desc_programs || 'Explore our academic pathways including general education, computer science, and language programs.',
-          seo_keywords_programs: data.seo_keywords_programs || 'school curriculum, general education khmer, language class phnom penh',
-          
-          seo_title_events: data.seo_title_events || 'School Events & Activities | Khmer America School',
-          seo_desc_events: data.seo_desc_events || 'Stay updated with upcoming exhibitions, academic sports championships, and cultural holiday events at KAS.',
-          seo_keywords_events: data.seo_keywords_events || 'school calendar, activities, events phnom penh',
-          
-          seo_title_contact: data.seo_title_contact || 'Contact Us | Khmer America School',
-          seo_desc_contact: data.seo_desc_contact || 'Get in touch with the admissions and information office of Khmer America School.',
-          seo_keywords_contact: data.seo_keywords_contact || 'contact school, location, telephone, email address',
-        });
-      }
+      const data = await settingsService.get();
+      setSeoData({
+        seo_title_home: data.seo_title_home || 'Khmer America School | Premium International Education',
+        seo_desc_home: data.seo_desc_home || 'Welcome to Khmer America School in Phnom Penh. We provide high-quality bilingual education, nurturing young minds to become innovative global thinkers.',
+        seo_keywords_home: data.seo_keywords_home || 'khmer america school, education cambodia, international school phnom penh, bilingual school',
+        seo_title_about: data.seo_title_about || 'About Us | Khmer America School',
+        seo_desc_about: data.seo_desc_about || 'Learn about the mission, vision, key features, and leadership history of Khmer America School.',
+        seo_keywords_about: data.seo_keywords_about || 'about kas, school mission, education values cambodia',
+        seo_title_programs: data.seo_title_programs || 'Academic Programs | Khmer America School',
+        seo_desc_programs: data.seo_desc_programs || 'Explore our academic pathways including general education, computer science, and language programs.',
+        seo_keywords_programs: data.seo_keywords_programs || 'school curriculum, general education khmer, language class phnom penh',
+        seo_title_events: data.seo_title_events || 'School Events & Activities | Khmer America School',
+        seo_desc_events: data.seo_desc_events || 'Stay updated with upcoming exhibitions, academic sports championships, and cultural holiday events at KAS.',
+        seo_keywords_events: data.seo_keywords_events || 'school calendar, activities, events phnom penh',
+        seo_title_contact: data.seo_title_contact || 'Contact Us | Khmer America School',
+        seo_desc_contact: data.seo_desc_contact || 'Get in touch with the admissions and information office of Khmer America School.',
+        seo_keywords_contact: data.seo_keywords_contact || 'contact school, location, telephone, email address',
+      });
     } catch (err) {
       console.error('Failed to load SEO settings:', err);
     } finally {
@@ -73,18 +66,9 @@ const AdminSEO = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(seoData),
-      });
-
-      if (res.ok) {
-        showToast('SEO settings updated successfully!');
-      } else {
-        showToast('Failed to save SEO settings');
-      }
-    } catch (err) {
+      await settingsService.save(seoData);
+      showToast('SEO settings updated successfully!');
+    } catch {
       showToast('An error occurred');
     } finally {
       setIsSubmitting(false);

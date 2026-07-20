@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Save, Info, Phone, Share2, MapPin, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { settingsService } from '../../../services/settingsService';
+import { api } from '../../../services/api';
 
 const AdminContactUs = () => {
   const [loading, setLoading] = useState(true);
@@ -32,24 +33,21 @@ const AdminContactUs = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setFormData({
-          contact_hero_title: data.contact_hero_title || 'Contact Us',
-          contact_hero_subtitle: data.contact_hero_subtitle || 'Get in touch with Khmer America School',
-          contact_hero_image: data.contact_hero_image || '',
-          contact_phone: data.contact_phone || '',
-          contact_email: data.contact_email || '',
-          contact_telegram: data.contact_telegram || '',
-          contact_address: data.contact_address || '',
-          contact_linkedin: data.contact_linkedin || '',
-          contact_facebook: data.contact_facebook || '',
-          contact_instagram: data.contact_instagram || '',
-          contact_tiktok: data.contact_tiktok || '',
-          contact_map_iframe: data.contact_map_iframe || '',
-        });
-      }
+      const data = await settingsService.get();
+      setFormData({
+        contact_hero_title: data.contact_hero_title || 'Contact Us',
+        contact_hero_subtitle: data.contact_hero_subtitle || 'Get in touch with Khmer America School',
+        contact_hero_image: data.contact_hero_image || '',
+        contact_phone: data.contact_phone || '',
+        contact_email: data.contact_email || '',
+        contact_telegram: data.contact_telegram || '',
+        contact_address: data.contact_address || '',
+        contact_linkedin: data.contact_linkedin || '',
+        contact_facebook: data.contact_facebook || '',
+        contact_instagram: data.contact_instagram || '',
+        contact_tiktok: data.contact_tiktok || '',
+        contact_map_iframe: data.contact_map_iframe || '',
+      });
     } catch (err) {
       console.error('Failed to load settings:', err);
     } finally {
@@ -69,43 +67,13 @@ const AdminContactUs = () => {
     try {
       // 1. Handle image upload if a file was chosen
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
-          body: uploadData,
-        });
-
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Image upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(imageFile);
       }
-
       // 2. Save settings to DB
-      const finalSettings = {
-        ...formData,
-        contact_hero_image: uploadedImageUrl,
-      };
-
-      const res = await fetch(`${API_BASE_URL}/api/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(finalSettings),
-      });
-
-      if (res.ok) {
-        showToast('Settings saved successfully!');
-        setImageFile(null);
-        fetchSettings();
-      } else {
-        showToast('Failed to save settings');
-      }
+      await settingsService.save({ ...formData, contact_hero_image: uploadedImageUrl });
+      showToast('Settings saved successfully!');
+      setImageFile(null);
+      fetchSettings();
     } catch (err) {
       console.error(err);
       showToast('An error occurred');

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { API_BASE_URL } from '../../config';
+import { settingsService } from '../../services/settingsService';
 
 const ProgramsLayout = () => {
   const location = useLocation();
@@ -15,15 +15,12 @@ const ProgramsLayout = () => {
   });
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings`)
-      .then(res => res.ok ? res.json() : null)
+    settingsService.get()
       .then(data => {
-        if (data) {
-          setSettings({
-            program_hero_title: data.program_hero_title || 'Academic Programs',
-            program_hero_image: data.program_hero_image || 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1920',
-          });
-        }
+        setSettings({
+          program_hero_title: data.program_hero_title || 'Academic Programs',
+          program_hero_image: data.program_hero_image || 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1920',
+        });
       })
       .catch(() => {});
   }, []);

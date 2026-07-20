@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../config';
+import { settingsService } from '../services/settingsService';
 
 const ManagementTeam = () => {
   const [settings, setSettings] = useState({
@@ -13,20 +13,17 @@ const ManagementTeam = () => {
   });
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings`)
-      .then(res => res.ok ? res.json() : null)
+    settingsService.get()
       .then(data => {
-        if (data) {
-          setSettings(prev => ({
-            mgmt_name: data.mgmt_name || prev.mgmt_name,
-            mgmt_title: data.mgmt_title || prev.mgmt_title,
-            mgmt_photo: data.mgmt_photo || prev.mgmt_photo,
-            mgmt_welcome_title: data.mgmt_welcome_title || prev.mgmt_welcome_title,
-            mgmt_message_1: data.mgmt_message_1 || prev.mgmt_message_1,
-            mgmt_message_2: data.mgmt_message_2 || prev.mgmt_message_2,
-            mgmt_message_3: data.mgmt_message_3 || prev.mgmt_message_3,
-          }));
-        }
+        setSettings(prev => ({
+          mgmt_name: data.mgmt_name || prev.mgmt_name,
+          mgmt_title: data.mgmt_title || prev.mgmt_title,
+          mgmt_photo: data.mgmt_photo || prev.mgmt_photo,
+          mgmt_welcome_title: data.mgmt_welcome_title || prev.mgmt_welcome_title,
+          mgmt_message_1: data.mgmt_message_1 || prev.mgmt_message_1,
+          mgmt_message_2: data.mgmt_message_2 || prev.mgmt_message_2,
+          mgmt_message_3: data.mgmt_message_3 || prev.mgmt_message_3,
+        }));
       })
       .catch(() => {});
   }, []);

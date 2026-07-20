@@ -1,36 +1,18 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, Calendar, GraduationCap, Compass } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
-
-type BackendSlide = {
-  image: string;
-  tag: string;
-  title: string;
-  description: string;
-  iconName: string;
-  primaryBtnText: string;
-  primaryBtnLink: string;
-  secondaryBtnText: string;
-  secondaryBtnLink: string;
-};
+import { slidesService, type Slide } from '../services/slidesService';
 
 const HeroBanner = () => {
-  const [slides, setSlides] = useState<BackendSlide[]>([]);
+  const [slides, setSlides] = useState<Slide[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = slides.length;
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/slides`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch slides');
-        return res.json();
-      })
+    slidesService.getAll()
       .then(data => {
-        if (Array.isArray(data)) {
-          setSlides(data.slice(0, 4));
-        }
+        setSlides(data.slice(0, 4));
         setLoading(false);
       })
       .catch(err => {

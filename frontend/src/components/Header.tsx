@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-white text-black shadow-md sticky top-0 z-50 relative">
+    <header className="w-full bg-white text-black shadow-md sticky top-0 z-50">
       {/* Mobile Search Overlay */}
       {isSearchOpen && (
         <form

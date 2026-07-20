@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { FaTelegramPlane, FaTiktok, FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
-import { API_BASE_URL } from '../config';
+import { settingsService } from '../services/settingsService';
+import { contactService } from '../services/contactService';
 import { useSEO } from '../hooks/useSEO';
 
 const ContactPage = () => {
@@ -22,11 +23,7 @@ const ContactPage = () => {
   });
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch settings');
-        return res.json();
-      })
+    settingsService.get()
       .then(data => {
         setSettings({
           contact_hero_title: data.contact_hero_title || settings.contact_hero_title,
@@ -141,24 +138,11 @@ const ContactPage = () => {
               };
               
               try {
-                const res = await fetch(`${API_BASE_URL}/api/contact`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(data)
-                });
-                if (res.ok) {
-                  alert('Message sent successfully!');
-                  form.reset();
-                } else {
-                  try {
-                    const errResult = await res.json();
-                    alert(errResult.error || 'Failed to send message.');
-                  } catch {
-                    alert('Failed to send message.');
-                  }
-                }
-              } catch (err) {
-                alert('An error occurred. Please try again later.');
+                await contactService.send(data);
+                alert('Message sent successfully!');
+                form.reset();
+              } catch (err: any) {
+                alert(err?.message || 'An error occurred. Please try again later.');
               }
             }}
             className="space-y-4"

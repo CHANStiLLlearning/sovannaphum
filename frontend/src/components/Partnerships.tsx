@@ -1,19 +1,12 @@
 import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../config';
-
-type Partner = {
-  id: number;
-  name: string;
-  logo: string;
-};
+import { partnerService, type Partner } from '../services/partnerService';
 
 const Partnerships = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/partners`)
-      .then(res => res.json())
+    partnerService.getAll()
       .then(data => setPartners(data))
       .catch(err => console.error("Failed to fetch partners", err))
       .finally(() => setLoading(false));

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Globe, Languages, MessageSquare } from 'lucide-react';
-import { API_BASE_URL } from '../../config';
+import { programService } from '../../services/programService';
 import { useSEO } from '../../hooks/useSEO';
 
 const ProgramsIndex = () => {
@@ -10,13 +10,8 @@ const ProgramsIndex = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/programs`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setPrograms(data);
-        }
-      })
+    programService.getAll()
+      .then(data => setPrograms(data))
       .catch(err => console.error('Failed to fetch programs:', err))
       .finally(() => setLoading(false));
   }, []);

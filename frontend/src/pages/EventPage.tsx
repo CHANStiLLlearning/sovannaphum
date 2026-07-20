@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Calendar, MapPin, Search, Sparkles, ChevronRight, X, Star } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
+import { eventService } from '../services/eventService';
+import { settingsService } from '../services/settingsService';
 import { useSEO } from '../hooks/useSEO';
 
 type SchoolEvent = {
@@ -44,11 +45,8 @@ const EventPage = () => {
     setLoading(true);
     setError('');
     try {
-      // Fetch events from API
-      const response = await fetch(`${API_BASE_URL}/api/events?limit=50&search=${encodeURIComponent(searchQuery)}&date=${selectedSpecificDate}`);
-      if (!response.ok) throw new Error('Failed to fetch events');
-      const result = await response.json();
-      setEvents(result.data || []);
+      const result = await eventService.getAll({ limit: 50, search: searchQuery, date: selectedSpecificDate });
+      setEvents((result as any).data || result);
     } catch (err: any) {
       setError(err.message || 'Something went wrong while fetching events.');
     } finally {
@@ -58,15 +56,12 @@ const EventPage = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings`);
-      if (res.ok) {
-        const data = await res.json();
-        setSettings({
-          event_hero_title: data.event_hero_title || 'School Events & Activities',
-          event_hero_subtitle: data.event_hero_subtitle || 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
-          event_hero_image: data.event_hero_image || '',
-        });
-      }
+      const data = await settingsService.get();
+      setSettings({
+        event_hero_title: data.event_hero_title || 'School Events & Activities',
+        event_hero_subtitle: data.event_hero_subtitle || 'Stay updated with our upcoming events, academic exhibitions, sports championships, and cultural celebrations.',
+        event_hero_image: data.event_hero_image || '',
+      });
     } catch { /* silent */ }
   };
 

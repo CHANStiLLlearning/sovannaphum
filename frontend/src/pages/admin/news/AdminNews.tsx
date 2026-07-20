@@ -1,16 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, CheckCircle2 } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { newsService, type NewsArticle as Article } from '../../../services/newsService';
+import { api } from '../../../services/api';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
-
-type Article = {
-  id: number;
-  title: string;
-  image: string;
-  date: string;
-  description: string;
-};
 
 const AdminNews = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -43,13 +36,10 @@ const AdminNews = () => {
 
   const fetchNews = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/news?page=${page}&limit=10&search=${encodeURIComponent(searchQuery)}`);
-      const result = await res.json();
-      setArticles(result.data || []);
-      setTotalPages(result?.pagination?.totalPages || 1);
-    } catch (err) {
-      // Silently handle
-    } finally {
+      const result = await newsService.getAll({ search: searchQuery });
+      setArticles((result as any).data || result);
+      setTotalPages((result as any)?.pagination?.totalPages || 1);
+    } catch { /* Silently handle */ } finally {
       setLoading(false);
     }
   };
@@ -87,45 +77,19 @@ const AdminNews = () => {
 
     try {
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
-          body: uploadData,
-        });
-        
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedImageUrl = uploadResult.url;
-        } else {
-          showToast('Image upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedImageUrl = await api.upload(imageFile);
       }
-
-      const url = editingArticle 
-        ? `${API_BASE_URL}/api/news/${editingArticle.id}` 
-        : `${API_BASE_URL}/api/news`;
-      
-      const method = editingArticle ? 'PUT' : 'POST';
 
       const finalData = { ...formData, image: uploadedImageUrl };
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(finalData)
-      });
-      if (res.ok) {
-        handleCloseModal();
-        fetchNews();
-        showToast(editingArticle ? 'Article updated successfully!' : 'Article created successfully!');
+      if (editingArticle) {
+        await newsService.update(editingArticle.id, finalData);
+      } else {
+        await newsService.create(finalData);
       }
-    } catch (err) {
-      // Silently handle
-    } finally {
+      handleCloseModal();
+      fetchNews();
+      showToast(editingArticle ? 'Article updated successfully!' : 'Article created successfully!');
+    } catch { /* Silently handle */ } finally {
       setIsSubmitting(false);
     }
   };
@@ -133,15 +97,11 @@ const AdminNews = () => {
   const confirmDelete = async () => {
     if (articleToDelete === null) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/news/${articleToDelete}`, { method: 'DELETE' });
-      if (res.ok) {
-        setArticleToDelete(null);
-        fetchNews();
-        showToast('Article deleted successfully!');
-      }
-    } catch (err) {
-      // Silently handle
-    }
+      await newsService.delete(articleToDelete);
+      setArticleToDelete(null);
+      fetchNews();
+      showToast('Article deleted successfully!');
+    } catch { /* Silently handle */ }
   };
 
   return (

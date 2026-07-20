@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Handshake, Plus, Edit2, Trash2, X, Save, Image as ImageIcon } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
-
-type Partner = {
-  id: number;
-  name: string;
-  logo: string;
-};
+import { partnerService, type Partner } from '../../../services/partnerService';
+import { api } from '../../../services/api';
 
 const AdminPartners = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
@@ -25,8 +20,8 @@ const AdminPartners = () => {
 
   const fetchPartners = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/partners`);
-      if (res.ok) setPartners(await res.json());
+      const data = await partnerService.getAll();
+      setPartners(data);
     } catch (err) {
       console.error('Failed to fetch partners', err);
     } finally {
@@ -57,37 +52,18 @@ const AdminPartners = () => {
 
     try {
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: uploadData });
-        if (uploadRes.ok) {
-          const uploadResult = await uploadRes.json();
-          uploadedLogoUrl = uploadResult.url;
-        } else {
-          showToast('Logo upload failed');
-          setIsSubmitting(false);
-          return;
-        }
+        uploadedLogoUrl = await api.upload(imageFile);
       }
-
       const payload = { ...formData, logo: uploadedLogoUrl };
-      const url = editingId ? `${API_BASE_URL}/api/partners/${editingId}` : `${API_BASE_URL}/api/partners`;
-      const method = editingId ? 'PUT' : 'POST';
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        showToast(editingId ? 'Partner updated!' : 'Partner added!');
-        setIsModalOpen(false);
-        fetchPartners();
+      if (editingId) {
+        await partnerService.update(editingId, payload);
       } else {
-        showToast('Failed to save partner');
+        await partnerService.create(payload);
       }
-    } catch (err) {
+      showToast(editingId ? 'Partner updated!' : 'Partner added!');
+      setIsModalOpen(false);
+      fetchPartners();
+    } catch {
       showToast('Error saving partner');
     } finally {
       setIsSubmitting(false);
@@ -97,12 +73,10 @@ const AdminPartners = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this partner?')) {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/partners/${id}`, { method: 'DELETE' });
-        if (res.ok) {
-          showToast('Partner deleted');
-          fetchPartners();
-        }
-      } catch (err) {
+        await partnerService.delete(id);
+        showToast('Partner deleted');
+        fetchPartners();
+      } catch {
         showToast('Failed to delete partner');
       }
     }

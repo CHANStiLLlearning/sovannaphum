@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar, MapPin, ArrowRight, Sparkles, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
+import { eventService } from '../services/eventService';
 
 type SchoolEvent = {
   id: number;
@@ -30,10 +30,10 @@ const EventsSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/events?limit=3`)
-      .then(res => res.json())
+    eventService.getAll({ limit: 3 })
       .then(result => {
-        setEvents(result.data ? result.data.slice(0, 3) : []);
+        const data = (result as any).data || result;
+        setEvents(Array.isArray(data) ? data.slice(0, 3) : []);
         setLoading(false);
       })
       .catch(err => {

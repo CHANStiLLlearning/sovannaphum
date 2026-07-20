@@ -1,24 +1,18 @@
 import { useEffect } from 'react';
-import { API_BASE_URL } from '../config';
+import { settingsService } from '../services/settingsService';
 
 export const useSEO = (pageKey: 'home' | 'about' | 'programs' | 'events' | 'contact') => {
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch settings');
-        return res.json();
-      })
+    settingsService.get()
       .then((data) => {
         const title = data[`seo_title_${pageKey}`];
         const desc = data[`seo_desc_${pageKey}`];
         const keywords = data[`seo_keywords_${pageKey}`];
 
-        // Update Title
         if (title) {
           document.title = title;
         }
 
-        // Update Meta Description
         if (desc) {
           let metaDesc = document.querySelector('meta[name="description"]');
           if (!metaDesc) {
@@ -29,7 +23,6 @@ export const useSEO = (pageKey: 'home' | 'about' | 'programs' | 'events' | 'cont
           metaDesc.setAttribute('content', desc);
         }
 
-        // Update Meta Keywords
         if (keywords) {
           let metaKeywords = document.querySelector('meta[name="keywords"]');
           if (!metaKeywords) {
@@ -45,3 +38,4 @@ export const useSEO = (pageKey: 'home' | 'about' | 'programs' | 'events' | 'cont
       });
   }, [pageKey]);
 };
+

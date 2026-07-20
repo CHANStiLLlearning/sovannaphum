@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Trash2, CheckCircle2, Send } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { subscriberService } from '../../../services/subscriberService';
+import { api } from '../../../services/api';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -35,12 +36,9 @@ const AdminSubscribers = () => {
 
   const fetchSubscribers = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/subscribe`);
-      const data = await res.json();
+      const data = await subscriberService.getAll();
       setSubscribers(data);
-    } catch (err) {
-      // Silently handle
-    } finally {
+    } catch { /* Silently handle */ } finally {
       setLoading(false);
     }
   };
@@ -52,15 +50,11 @@ const AdminSubscribers = () => {
   const confirmDelete = async () => {
     if (subToDelete === null) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/subscribe/${subToDelete}`, { method: 'DELETE' });
-      if (res.ok) {
-        setSubToDelete(null);
-        fetchSubscribers();
-        showToast('Subscriber removed successfully!');
-      }
-    } catch (err) {
-      // Silently handle
-    }
+      await subscriberService.delete(subToDelete);
+      setSubToDelete(null);
+      fetchSubscribers();
+      showToast('Subscriber removed successfully!');
+    } catch { /* Silently handle */ }
   };
 
   const handleBroadcast = async (e: React.FormEvent) => {
@@ -69,25 +63,15 @@ const AdminSubscribers = () => {
       showToast('Subject and body are required.');
       return;
     }
-    
     setIsBroadcasting(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/subscribe/broadcast`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subject: broadcastSubject, body: broadcastBody })
-      });
-      
-      if (res.ok) {
-        showToast('Newsletter broadcasted successfully!');
-        setIsBroadcastModalOpen(false);
-        setBroadcastSubject('');
-        setBroadcastBody('');
-      } else {
-        showToast('Failed to broadcast newsletter.');
-      }
-    } catch (error) {
-      showToast('Error broadcasting newsletter.');
+      await api.post('/api/subscribe/broadcast', { subject: broadcastSubject, body: broadcastBody });
+      showToast('Newsletter broadcasted successfully!');
+      setIsBroadcastModalOpen(false);
+      setBroadcastSubject('');
+      setBroadcastBody('');
+    } catch {
+      showToast('Failed to broadcast newsletter.');
     } finally {
       setIsBroadcasting(false);
     }

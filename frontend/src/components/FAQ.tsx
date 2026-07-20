@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
-import { API_BASE_URL } from '../config';
+import { faqService } from '../services/faqService';
 
 interface FAQItem {
   id: number;
@@ -15,8 +15,7 @@ const FAQ = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/faqs`)
-      .then(res => res.json())
+    faqService.getAll()
       .then(data => setFaqs(data))
       .catch(err => console.error("Failed to fetch faqs", err))
       .finally(() => setLoading(false));

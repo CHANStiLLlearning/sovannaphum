@@ -10,20 +10,8 @@ import {
   Calendar,
   AlertCircle
 } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
-
-type Slide = {
-  id: number;
-  image: string;
-  tag: string;
-  title: string;
-  description: string;
-  iconName: string;
-  primaryBtnText: string;
-  primaryBtnLink: string;
-  secondaryBtnText: string;
-  secondaryBtnLink: string;
-};
+import { slidesService, type Slide } from '../../../services/slidesService';
+import { api } from '../../../services/api';
 
 const iconOptions = [
   { value: 'graduation-cap', label: 'Graduation Cap', component: <GraduationCap className="w-4 h-4" /> },
@@ -61,9 +49,7 @@ const AdminSlides = () => {
 
   const fetchSlides = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/slides`);
-      if (!res.ok) throw new Error('Failed to load slides');
-      const data = await res.json();
+      const data = await slidesService.getAll();
       setSlides(data || []);
     } catch (err) {
       console.error(err);
@@ -129,17 +115,7 @@ const AdminSlides = () => {
     try {
       // 1. Upload image if selected
       if (imageFile) {
-        const uploadData = new FormData();
-        uploadData.append('image', imageFile);
-        
-        const uploadRes = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
-          body: uploadData
-        });
-        
-        if (!uploadRes.ok) throw new Error('Image upload failed');
-        const uploadResult = await uploadRes.json();
-        uploadedImageUrl = uploadResult.url;
+        uploadedImageUrl = await api.upload(imageFile);
       }
 
       if (!uploadedImageUrl) {
@@ -151,19 +127,12 @@ const AdminSlides = () => {
       const bodyData = { ...formData, image: uploadedImageUrl };
 
       // 2. Save or Update Slide
-      const url = editingSlide 
-        ? `${API_BASE_URL}/api/slides/${editingSlide.id}` 
-        : `${API_BASE_URL}/api/slides`;
-      const method = editingSlide ? 'PUT' : 'POST';
+      if (editingSlide) {
+        await slidesService.update(editingSlide.id, bodyData);
+      } else {
+        await slidesService.create(bodyData);
+      }
 
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bodyData)
-      });
-
-      if (!res.ok) throw new Error('Failed to save slide');
-      
       showToast(editingSlide ? 'Slide updated successfully!' : 'Slide created successfully!');
       fetchSlides();
       handleCloseModal();
@@ -177,11 +146,7 @@ const AdminSlides = () => {
   const handleDelete = async () => {
     if (!slideToDelete) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/slides/${slideToDelete}`, {
-        method: 'DELETE'
-      });
-      if (!res.ok) throw new Error('Failed to delete slide');
-      
+      await slidesService.delete(slideToDelete);
       showToast('Slide deleted successfully!');
       fetchSlides();
       setSlideToDelete(null);

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Trash2, CheckCircle2 } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { contactService } from '../../../services/contactService';
 
 type ContactMessage = {
   id: number;
   name: string;
   email: string;
-  subject: string;
+  subject?: string;
   message: string;
   createdAt: string;
 };
@@ -30,12 +30,9 @@ const AdminContacts = () => {
 
   const fetchContacts = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/contact`);
-      const data = await res.json();
+      const data = await contactService.getAll();
       setContacts(data);
-    } catch (err) {
-      // Silently handle
-    } finally {
+    } catch { /* Silently handle */ } finally {
       setLoading(false);
     }
   };
@@ -47,15 +44,11 @@ const AdminContacts = () => {
   const confirmDelete = async () => {
     if (messageToDelete === null) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/contact/${messageToDelete}`, { method: 'DELETE' });
-      if (res.ok) {
-        setMessageToDelete(null);
-        fetchContacts();
-        showToast('Message deleted successfully!');
-      }
-    } catch (err) {
-      // Silently handle
-    }
+      await contactService.delete(messageToDelete);
+      setMessageToDelete(null);
+      fetchContacts();
+      showToast('Message deleted successfully!');
+    } catch { /* Silently handle */ }
   };
 
   return (

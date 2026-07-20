@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { Lock, User, Eye, EyeOff, ArrowLeft } from 'lucide-react';
-import { API_BASE_URL } from '../../../config';
+import { api } from '../../../services/api';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -20,22 +20,11 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      
-      const data = await res.json();
-      
-      if (res.ok) {
-        login(data.token);
-        navigate('/admin');
-      } else {
-        setError(data.error || 'Login failed');
-      }
-    } catch (err) {
-      setError('Network error. Please ensure the backend is running.');
+      const data = await api.post<{ token: string; error?: string }>('/api/auth/login', { username, password });
+      login(data.token);
+      navigate('/admin');
+    } catch (err: any) {
+      setError(err?.message || 'Login failed');
     } finally {
       setLoading(false);
     }
